@@ -10,40 +10,18 @@ venv/
 env/
 .venv/
 
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-
 # OS
 .DS_Store
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Type checking
-pyrefly.toml
 
 # Environment variables
 .env
 .env.local
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Logs
-*.log
-logs/
-
 # Claude Code configuration
 .claude/
 
 # User data
-data/
 local/
 
+# UV
+.python-version
