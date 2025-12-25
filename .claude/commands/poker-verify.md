@@ -1,1 +1,0 @@
-Verify poker logic correctness by running validation tests against known results. Check hand evaluations, equity calculations, and range operations against established poker calculators and solvers. Report any discrepancies found.

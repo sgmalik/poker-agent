@@ -1,1 +1,0 @@
-Create a new database migration using Alembic. Review the current database models, generate a migration script for any schema changes, and provide a summary of what will be migrated. Ask for confirmation before applying the migration.
