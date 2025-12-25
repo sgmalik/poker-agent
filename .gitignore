@@ -25,7 +25,7 @@ env/
 htmlcov/
 
 # Type checking
-.pyrefly/
+pyrefly.toml
 
 # Environment variables
 .env
@@ -46,3 +46,4 @@ logs/
 # User data
 data/
 local/
+
