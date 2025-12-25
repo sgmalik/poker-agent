@@ -1,0 +1,1 @@
+Generate or update documentation for the poker coach agent. Create API documentation, update README with new features, generate docstrings for undocumented functions, and ensure all public APIs are well-documented.

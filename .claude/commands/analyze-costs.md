@@ -1,0 +1,1 @@
+Analyze LLM API usage and costs. Review recent API calls, token consumption, and estimated costs. Provide recommendations for optimizing prompts, implementing caching, or adjusting models to reduce expenses while maintaining coaching quality.

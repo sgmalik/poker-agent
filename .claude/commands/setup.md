@@ -1,0 +1,1 @@
+Set up the development environment for the poker coach agent. Create a virtual environment, install all dependencies from requirements.txt, set up the database schema, and create a .env.example file with all required environment variables. Verify the setup is working correctly.
