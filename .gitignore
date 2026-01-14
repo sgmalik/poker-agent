@@ -25,3 +25,9 @@ local/
 
 # UV
 .python-version
+
+# pytest 
+.pytest_cache/
+
+# ruff
+.ruff_cache/
