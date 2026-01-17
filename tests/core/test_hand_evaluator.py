@@ -176,9 +176,7 @@ class TestEquityCalculator:
 
     def test_turn_equity(self, calculator):
         """Test equity on the turn."""
-        result = calculator.calculate(
-            "Ah Kh", "Qd Qc", "As 7s 2c 5d", iterations=5000
-        )
+        result = calculator.calculate("Ah Kh", "Qd Qc", "As 7s 2c 5d", iterations=5000)
         assert result["hero_equity"] > 70
 
     def test_river_equity(self, calculator):

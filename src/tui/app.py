@@ -1,7 +1,7 @@
 """Main TUI application for Poker Coach."""
 
 from textual.app import App, ComposeResult
-from textual.containers import Container, Vertical
+from textual.containers import Container
 from textual.widgets import Header, Footer, Button, Static
 from textual.binding import Binding
 
