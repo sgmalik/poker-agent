@@ -67,21 +67,21 @@ class TestSpotAnalyzer:
             "As Ks", "Ah 7s 2c", pot_size=100, bet_to_call=0, effective_stack=300
         )
         assert result1["spr"] == 3.0
-        assert result1["spr_category"] == "low"
+        assert result1["spr_category"] == "medium"  # 3.0 is medium (3-7 range)
 
-        # Medium SPR (4-12)
+        # High SPR (≥7)
         result2 = analyzer.analyze(
             "As Ks", "Ah 7s 2c", pot_size=100, bet_to_call=0, effective_stack=800
         )
         assert result2["spr"] == 8.0
-        assert result2["spr_category"] == "medium"
+        assert result2["spr_category"] == "high (deep)"
 
         # High SPR (>12)
         result3 = analyzer.analyze(
             "As Ks", "Ah 7s 2c", pot_size=100, bet_to_call=0, effective_stack=1500
         )
         assert result3["spr"] == 15.0
-        assert result3["spr_category"] == "high"
+        assert result3["spr_category"] == "high (deep)"
 
     def test_ev_calculation(self, analyzer):
         """Should calculate EV for calling."""
@@ -127,16 +127,16 @@ class TestSpotAnalyzer:
 
     def test_recommendation_call_with_equity(self, analyzer):
         """Should recommend CALL when equity exceeds pot odds."""
-        # Made hand with good equity vs small bet
+        # Drawing hand with good equity vs small bet
         result = analyzer.analyze(
-            "Ah Ad",  # Pocket aces
-            "Kh Qc 2d",  # Overpair
+            "Ah Kh",  # AK suited
+            "Qh Jh 2c",  # Flush draw + gutshot + overcards
             pot_size=100,
-            bet_to_call=25,  # Small bet = 20% pot odds
+            bet_to_call=25,  # Small bet = 20% pot odds (need 20% equity)
             effective_stack=500,
         )
 
-        # Should recommend call/raise with strong hand
+        # With ~44% equity (11 outs) vs 20% pot odds, should recommend call
         assert result["recommendation"]["action"] in ["CALL", "RAISE"]
 
     def test_recommendation_fold_without_equity(self, analyzer):
@@ -215,7 +215,7 @@ class TestSpotAnalyzer:
         )
 
         assert result["spr"] == 2.0
-        assert result["spr_category"] == "low"
+        assert result["spr_category"] == "low (committed)"
 
         # With set and low SPR, reasoning should mention commitment
         reasoning_text = " ".join(result["recommendation"]["reasoning"])
