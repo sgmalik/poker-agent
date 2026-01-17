@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 1.0
+> **Version**: 1.1
 > **Last Updated**: 2026-01-17
-> **Status**: Active Development - Mode 1 Core Complete, TUI in Progress
+> **Status**: Active Development - Mode 1 Complete (Core + TUI)
 
 ## Project Vision
 

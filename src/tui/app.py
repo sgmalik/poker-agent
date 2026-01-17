@@ -103,8 +103,9 @@ class PokerCoachApp(App):
 
     def action_mode_1(self) -> None:
         """Open Mode 1: Hand Evaluator & Spot Analyzer."""
-        # TODO: Implement Mode 1 screen
-        self.notify("Mode 1: Hand Evaluator (Coming soon!)")
+        from .screens import Mode1InputScreen
+
+        self.push_screen(Mode1InputScreen())
 
     def action_mode_2(self) -> None:
         """Open Mode 2: Range Tools."""
