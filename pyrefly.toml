@@ -2,3 +2,8 @@ project-includes = [
     "**/*.py*",
     "**/*.ipynb",
 ]
+
+# Exclude test imports from type checking (they use pytest's sys.path manipulation)
+project-excludes = [
+    "tests/**",
+]

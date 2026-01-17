@@ -46,7 +46,9 @@ class HandEvaluator:
             board_cards = self._parse_cards(board)
 
             if len(hero) != 2:
-                raise ValueError(f"Hero hand must have exactly 2 cards, got {len(hero)}")
+                raise ValueError(
+                    f"Hero hand must have exactly 2 cards, got {len(hero)}"
+                )
 
             if len(board_cards) < 3 or len(board_cards) > 5:
                 raise ValueError(f"Board must have 3-5 cards, got {len(board_cards)}")
@@ -86,7 +88,7 @@ class HandEvaluator:
             try:
                 card = Card.new(card_str)
                 cards.append(card)
-            except Exception as e:
+            except Exception:
                 raise ValueError(
                     f"Invalid card '{card_str}'. Expected format: rank (2-9, T, J, Q, K, A) "
                     f"+ suit (s, h, d, c). Example: 'As' for Ace of spades."

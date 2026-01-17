@@ -9,7 +9,7 @@ This module provides detailed analysis of poker situations including:
 - Decision recommendations
 """
 
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from treys import Card, Evaluator
 from .hand_evaluator import HandEvaluator, EquityCalculator
 
@@ -31,7 +31,7 @@ class SpotAnalyzer:
         bet_to_call: Optional[float] = None,
         effective_stack: Optional[float] = None,
         villain_range: Optional[str] = None,
-    ) -> Dict:
+    ) -> Dict[str, Any]:
         """
         Perform comprehensive spot analysis.
 
@@ -71,7 +71,7 @@ class SpotAnalyzer:
         if len(board_cards) < 3 or len(board_cards) > 5:
             raise ValueError("Board must have 3-5 cards")
 
-        result = {}
+        result: Dict[str, Any] = {}
 
         # 1. Hand strength evaluation
         hand_eval = self.hand_evaluator.evaluate(hero_hand, board)
@@ -122,7 +122,11 @@ class SpotAnalyzer:
             result["pot_odds"] = None
 
         # 4. Implied odds estimation
-        if pot_size is not None and bet_to_call is not None and effective_stack is not None:
+        if (
+            pot_size is not None
+            and bet_to_call is not None
+            and effective_stack is not None
+        ):
             implied_odds = self._estimate_implied_odds(
                 pot_size, bet_to_call, effective_stack, outs_data["count"]
             )
@@ -171,7 +175,9 @@ class SpotAnalyzer:
 
         return cards
 
-    def _calculate_outs(self, hero_cards: List[int], board_cards: List[int]) -> Dict:
+    def _calculate_outs(
+        self, hero_cards: List[int], board_cards: List[int]
+    ) -> Dict[str, Any]:
         """
         Calculate outs - cards that improve the hand.
 
@@ -192,7 +198,6 @@ class SpotAnalyzer:
 
         all_cards = hero_cards + board_cards
         known_ranks = hero_ranks + board_ranks
-        known_suits = hero_suits + board_suits
 
         # Calculate remaining cards in deck
         unknown_cards = 52 - len(all_cards)
@@ -211,7 +216,9 @@ class SpotAnalyzer:
         total_outs = 0
 
         # 1. FLUSH DRAW ANALYSIS
-        flush_outs = self._count_flush_outs(hero_suits, board_suits, known_ranks, all_cards)
+        flush_outs = self._count_flush_outs(
+            hero_suits, board_suits, known_ranks, all_cards
+        )
         outs_breakdown["flush_draw"] = flush_outs
         if flush_outs["count"] > 0:
             total_outs += flush_outs["count"]
@@ -229,7 +236,9 @@ class SpotAnalyzer:
             total_outs += overcard_outs["count"]
 
         # 4. PAIR IMPROVEMENT (pair to trips/two pair, trips to boat)
-        pair_outs = self._count_pair_improvement_outs(hero_ranks, board_ranks, known_ranks)
+        pair_outs = self._count_pair_improvement_outs(
+            hero_ranks, board_ranks, known_ranks
+        )
         outs_breakdown["pair_outs"] = pair_outs
         if pair_outs["count"] > 0:
             total_outs += pair_outs["count"]
@@ -245,7 +254,9 @@ class SpotAnalyzer:
             "unknown_cards": unknown_cards,
         }
 
-    def _count_flush_outs(self, hero_suits, board_suits, known_ranks, all_cards) -> Dict:
+    def _count_flush_outs(
+        self, hero_suits, board_suits, known_ranks, all_cards
+    ) -> Dict[str, Any]:
         """Count outs to make a flush."""
         from collections import Counter
 
@@ -272,9 +283,10 @@ class SpotAnalyzer:
 
         return {"count": 0, "cards_needed": 0}
 
-    def _count_straight_outs(self, hero_ranks, board_ranks, known_ranks) -> Dict:
+    def _count_straight_outs(
+        self, hero_ranks, board_ranks, known_ranks
+    ) -> Dict[str, Any]:
         """Count outs to make a straight."""
-        from collections import Counter
 
         all_ranks = hero_ranks + board_ranks
         unique_ranks = sorted(set(all_ranks), reverse=True)
@@ -311,7 +323,9 @@ class SpotAnalyzer:
 
         return False
 
-    def _count_overcard_outs(self, hero_ranks, board_ranks, known_ranks) -> Dict:
+    def _count_overcard_outs(
+        self, hero_ranks, board_ranks, known_ranks
+    ) -> Dict[str, Any]:
         """Count outs to pair an overcard."""
         if not board_ranks:
             return {"count": 0, "cards": []}
@@ -333,7 +347,9 @@ class SpotAnalyzer:
             "note": f"{len(unique_overcards)} overcard(s) with 3 outs each",
         }
 
-    def _count_pair_improvement_outs(self, hero_ranks, board_ranks, known_ranks) -> Dict:
+    def _count_pair_improvement_outs(
+        self, hero_ranks, board_ranks, known_ranks
+    ) -> Dict[str, Any]:
         """Count outs to improve a pair to trips or two pair."""
         from collections import Counter
 
@@ -360,7 +376,7 @@ class SpotAnalyzer:
 
         return {"count": total, "to_trips": to_trips, "to_two_pair": to_two_pair}
 
-    def _count_backdoor_flush(self, hero_suits, board_suits) -> Dict:
+    def _count_backdoor_flush(self, hero_suits, board_suits) -> Dict[str, Any]:
         """Count backdoor flush draws (need runner-runner)."""
         from collections import Counter
 
@@ -434,7 +450,7 @@ class SpotAnalyzer:
 
     def _estimate_implied_odds(
         self, pot_size: float, bet_to_call: float, effective_stack: float, outs: int
-    ) -> Dict:
+    ) -> Dict[str, Any]:
         """
         Estimate implied odds - potential future winnings.
 
@@ -477,7 +493,7 @@ class SpotAnalyzer:
         pot_size: float,
         bet_to_call: float,
         effective_stack: Optional[float],
-    ) -> Dict:
+    ) -> Dict[str, Any]:
         """
         Calculate expected value for different actions.
 
@@ -499,7 +515,7 @@ class SpotAnalyzer:
             "note": "Raise EV requires opponent modeling",
         }
 
-    def _generate_recommendation(self, analysis: Dict) -> Dict:
+    def _generate_recommendation(self, analysis: Dict) -> Dict[str, Any]:
         """
         Generate action recommendation based on analysis.
 
@@ -509,7 +525,7 @@ class SpotAnalyzer:
         3. Factor in implied odds for draws
         4. Consider hand strength
         """
-        recommendation = {
+        recommendation: Dict[str, Any] = {
             "action": "UNKNOWN",
             "confidence": "low",
             "reasoning": [],
@@ -546,7 +562,13 @@ class SpotAnalyzer:
                 )
 
                 # Check if we should raise instead
-                if hand_strength in ["Straight Flush", "Four of a Kind", "Full House", "Flush", "Straight"]:
+                if hand_strength in [
+                    "Straight Flush",
+                    "Four of a Kind",
+                    "Full House",
+                    "Flush",
+                    "Straight",
+                ]:
                     recommendation["reasoning"].append(
                         f"Strong hand ({hand_strength}) - consider raising for value"
                     )
@@ -593,7 +615,7 @@ def analyze_spot_simple(
     board: str,
     pot_size: float,
     bet_to_call: float,
-    effective_stack: float = None,
+    effective_stack: Optional[float] = None,
 ) -> str:
     """
     Simple spot analysis returning just the recommendation.
