@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
 > **Version**: 1.0
-> **Last Updated**: 2026-01-13
-> **Status**: Active Development
+> **Last Updated**: 2026-01-17
+> **Status**: Active Development - Mode 1 Core Complete, TUI in Progress
 
 ## Project Vision
 
@@ -56,14 +56,20 @@ $ poker-coach agent
 - Visual card selector or text input
 
 **Features**:
-- **Hand Strength**: Classification (pair, flush, etc.)
-- **Equity**: Monte Carlo simulation (hand vs hand or vs range)
-- **Outs Counting**: Number of cards that improve your hand
-- **Pot Odds**: Percentage equity needed to call profitably
-- **Implied Odds**: Future value considerations
-- **SPR**: Stack-to-Pot Ratio for commitment decisions
-- **EV Calculation**: Expected value of different actions
-- **Decision Recommendation**: Call/Fold/Raise based on math
+- **Hand Strength**: Classification (pair, flush, etc.) ✅ IMPLEMENTED
+- **Equity**: Monte Carlo simulation (hand vs hand) ✅ IMPLEMENTED
+  - Note: Range-based equity pending (Mode 2 dependency)
+- **Outs Counting**: Categorized by draw type ✅ IMPLEMENTED
+  - Flush draws (9 outs)
+  - Straight draws (OESD: 8 outs, gutshot: 4 outs)
+  - Overcards (3 outs per card)
+  - Pair improvements (to trips, two pair)
+  - Backdoor draws
+- **Pot Odds**: Percentage and ratio format ✅ IMPLEMENTED
+- **Implied Odds**: Conservative estimation ✅ IMPLEMENTED
+- **SPR**: Stack-to-Pot Ratio with categorization (low/medium/high) ✅ IMPLEMENTED
+- **EV Calculation**: Call/Fold EV ✅ IMPLEMENTED
+- **Decision Recommendation**: With reasoning and confidence ✅ IMPLEMENTED
 
 **Rich Output Example (Simple)**:
 ```
