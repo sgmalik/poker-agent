@@ -109,7 +109,9 @@ class PokerCoachApp(App):
 
     def action_mode_2(self) -> None:
         """Open Mode 2: Range Tools."""
-        self.notify("Mode 2: Range Tools (Coming soon!)")
+        from .screens import Mode2InputScreen
+
+        self.push_screen(Mode2InputScreen())
 
     def action_mode_3(self) -> None:
         """Open Mode 3: Quiz System."""
