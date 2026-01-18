@@ -3,7 +3,7 @@
 from typing import Optional
 from textual.app import ComposeResult
 from textual.screen import Screen
-from textual.containers import Container, Horizontal, Vertical
+from textual.containers import Container, Horizontal
 from textual.widgets import Header, Footer, Button, Input, Static, Label, Select
 from textual.binding import Binding
 

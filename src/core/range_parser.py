@@ -1,6 +1,5 @@
 """Range notation parser for poker hand ranges."""
 
-import re
 from typing import Dict, List, Set, Tuple
 
 
@@ -136,7 +135,12 @@ class RangeParser:
         hands = []
 
         # Pair range (e.g., QQ-88)
-        if len(start) == 2 and start[0] == start[1] and len(end) == 2 and end[0] == end[1]:
+        if (
+            len(start) == 2
+            and start[0] == start[1]
+            and len(end) == 2
+            and end[0] == end[1]
+        ):
             start_idx = RANK_VALUES.get(start[0], -1)
             end_idx = RANK_VALUES.get(end[0], -1)
 
