@@ -201,7 +201,9 @@ class Mode2MatrixScreen(Screen):
             if self.custom_range:
                 yield Static("[bold cyan]Custom Range[/bold cyan]", classes="title")
             else:
-                title = f"[bold cyan]{self.position} {self._format_action()}[/bold cyan]"
+                title = (
+                    f"[bold cyan]{self.position} {self._format_action()}[/bold cyan]"
+                )
                 yield Static(title, classes="title")
 
             yield Static(
@@ -229,7 +231,9 @@ class Mode2MatrixScreen(Screen):
 
             # Summary section
             with Container(classes="summary"):
-                yield Static(f"[bold]Notation:[/bold] {self.notation}", classes="summary_line")
+                yield Static(
+                    f"[bold]Notation:[/bold] {self.notation}", classes="summary_line"
+                )
                 yield Static(
                     f"[bold]Hands in range:[/bold] {len(self.hands)} unique hands",
                     classes="summary_line",

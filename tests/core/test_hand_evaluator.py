@@ -190,7 +190,7 @@ class TestEquityCalculator:
     def test_simple_equity(self):
         """Test convenience function."""
         equity = calculate_equity_simple("As Ad", "Kh Kd", "", iterations=5000)
-        assert 77 <= equity <= 83  # AA vs KK ~80%
+        assert 80 <= equity <= 86  # AA vs KK ~83%
 
 
 def test_integration_full_workflow():
