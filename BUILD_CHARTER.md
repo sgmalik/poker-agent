@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 1.1
+> **Version**: 1.2
 > **Last Updated**: 2026-01-17
-> **Status**: Active Development - Mode 1 Complete (Core + TUI)
+> **Status**: Active Development - Mode 1 Core Complete, Mode 2 Complete
 
 ## Project Vision
 
@@ -177,22 +177,34 @@ def analyze_spot(
 
 ---
 
-### Mode 2: Range Tools
+### Mode 2: Range Tools ✅ COMPLETE
 
 **Purpose**: Study and reference GTO range charts
 
 **TUI Interface**:
-- Position selector (UTG, MP, CO, BTN, SB, BB)
-- Action selector (Open, 3-bet, 4-bet, Call, etc.)
-- Visual 13×13 hand matrix with color-coded ranges
-- Range comparison side-by-side view
-- Range parser with combo breakdown
+- Position selector (9 positions: UTG, UTG+1, MP, LJ, HJ, CO, BTN, SB, BB) ✅
+- Action selector (Open, 3-bet, Call vs positions) ✅
+- Visual 13×13 hand matrix with color-coded ranges ✅
+- Custom range input field ✅
+- Range parser with combo breakdown ✅
 
 **Features**:
-- Preflop GTO charts (UTG, MP, CO, BTN, SB, BB)
-- 13×13 ASCII hand matrix with colors
-- Range parser (notation → combos)
-- Range comparison visualization
+- 9-handed GTO preflop ranges for 1/2 and 1/3 cash games ✅
+- Open ranges for all 9 positions ✅
+- 3-bet ranges for all positions vs earlier positions ✅
+- BB call ranges vs each position (no overlap with 3-bet) ✅
+- 13×13 hand matrix with colors (Red=Pairs, Green=Suited, Blue=Offsuit) ✅
+- Bright highlighting for in-range, faded for not-in-range ✅
+- Range parser (QQ+, AKs, 98s+, QQ-88, A5s-A2s) ✅
+- Combo counting (pairs=6, suited=4, offsuit=12) ✅
+
+**Core Classes**: `RangeParser`, `GTOCharts`
+**TUI Screens**: `Mode2InputScreen`, `Mode2MatrixScreen`
+**Data**: `data/gto_ranges.json`
+**Tests**: `test_range_parser.py`, `test_gto_charts.py`
+
+**Pending Enhancement**:
+- Mixed frequency hands with hover tooltips showing percentages
 
 **Rich Output Example**:
 ```
