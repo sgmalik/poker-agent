@@ -40,7 +40,6 @@ class OutsCalculator:
 
         all_cards = hero_cards + board_cards
         known_ranks = hero_ranks + board_ranks
-        known_suits = hero_suits + board_suits
 
         # Calculate remaining cards in deck
         unknown_cards = 52 - len(all_cards)
@@ -318,14 +317,21 @@ class OutsCalculator:
                 if draw1["type"] == "bottom_end":
                     for draw2 in possible_draws:
                         if draw2["type"] == "top_end":
-                            if abs(draw1["window"][0] - draw2["window"][0]) == 1:
-                                return {
-                                    "count": 8,
-                                    "type": "open_ended",
-                                    "missing_ranks": sorted(
-                                        [draw1["missing_rank"], draw2["missing_rank"]]
-                                    ),
-                                }
+                            # window is a list of ints, access first element
+                            window1 = draw1["window"]
+                            window2 = draw2["window"]
+                            if isinstance(window1, list) and isinstance(window2, list):
+                                if abs(window1[0] - window2[0]) == 1:
+                                    return {
+                                        "count": 8,
+                                        "type": "open_ended",
+                                        "missing_ranks": sorted(
+                                            [
+                                                draw1["missing_rank"],
+                                                draw2["missing_rank"],
+                                            ]
+                                        ),
+                                    }
 
         # If we have multiple draws with different missing ranks, it's double gutshot
         if len(unique_missing_ranks) >= 2:

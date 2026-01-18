@@ -185,7 +185,9 @@ class TestCombinedScenarios(TestOutsCalculator):
         # 9 flush outs + 8 straight outs = 17 total
         # But Th and 5h count for both, so: 9 + (8 - 2) = 15
         # However, our algorithm tracks specific cards, so let's verify the actual count
-        assert result["count"] >= 15  # At least 15 outs (may be higher due to implementation)
+        assert (
+            result["count"] >= 15
+        )  # At least 15 outs (may be higher due to implementation)
 
     def test_ak_with_backdoor_and_gutshot(self, calculator):
         """Should handle AK with backdoor flush and gutshot."""

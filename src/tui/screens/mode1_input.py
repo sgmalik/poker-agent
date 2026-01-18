@@ -1,5 +1,6 @@
 """Mode 1: Hand Evaluator & Spot Analyzer - Input Screen."""
 
+from typing import Optional
 from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.containers import Container, Horizontal
@@ -81,9 +82,9 @@ class Mode1InputScreen(Screen):
         super().__init__()
         self.hero_hand = ""
         self.board = ""
-        self.pot_size = None
-        self.bet_to_call = None
-        self.effective_stack = None
+        self.pot_size: Optional[float] = None
+        self.bet_to_call: Optional[float] = None
+        self.effective_stack: Optional[float] = None
 
     def compose(self) -> ComposeResult:
         """Create child widgets."""
