@@ -1,9 +1,9 @@
 """Mode 1: Comprehensive Analysis Screen."""
 
-from typing import Optional
+from typing import Optional, Dict, Any
 from textual.app import ComposeResult
 from textual.screen import Screen
-from textual.containers import Container, Vertical, VerticalScroll
+from textual.containers import Container, VerticalScroll
 from textual.widgets import Header, Footer, Button, Static
 from textual.binding import Binding
 
@@ -113,8 +113,8 @@ class Mode1ComprehensiveScreen(Screen):
         self.pot_size = pot_size
         self.bet_to_call = bet_to_call
         self.effective_stack = effective_stack
-        self.result = None
-        self.error = None
+        self.result: Optional[Dict[str, Any]] = None
+        self.error: Optional[str] = None
         self._analyze()
 
     def _analyze(self) -> None:
@@ -139,7 +139,9 @@ class Mode1ComprehensiveScreen(Screen):
             yield Static("[bold cyan]Hand Analysis[/bold cyan]", classes="title")
 
             if self.error:
-                yield Static(f"[bold red]Error:[/bold red] {self.error}", classes="error")
+                yield Static(
+                    f"[bold red]Error:[/bold red] {self.error}", classes="error"
+                )
             elif self.result:
                 # Cards
                 yield Static(f"Hero: {self._fmt(self.hero_hand)}", classes="cards")
@@ -159,45 +161,72 @@ class Mode1ComprehensiveScreen(Screen):
                 # Hand Strength
                 with Container(classes="section"):
                     yield Static("HAND STRENGTH", classes="section-title")
-                    yield Static(self.result["hand_strength"]["description"], classes="line")
+                    yield Static(
+                        self.result["hand_strength"]["description"], classes="line"
+                    )
 
                 # Equity & Outs
                 with Container(classes="section"):
                     yield Static("EQUITY & OUTS", classes="section-title")
                     yield Static(f"Equity: {self.result['equity']}%", classes="line")
-                    yield Static(f"Total Outs: {self.result['out_count']}", classes="line")
+                    yield Static(
+                        f"Total Outs: {self.result['out_count']}", classes="line"
+                    )
 
                     outs = self.result.get("outs", {})
                     flush = outs.get("flush_draw", {})
                     if flush.get("count", 0) > 0:
-                        flush_type = "Backdoor Flush" if flush.get("type") == "backdoor_flush" else "Flush Draw"
-                        yield Static(f"  • {flush_type}: {flush['count']} outs", classes="line")
+                        flush_type = (
+                            "Backdoor Flush"
+                            if flush.get("type") == "backdoor_flush"
+                            else "Flush Draw"
+                        )
+                        yield Static(
+                            f"  • {flush_type}: {flush['count']} outs", classes="line"
+                        )
 
                     straight = outs.get("straight_draw", {})
                     if straight.get("count", 0) > 0:
-                        yield Static(f"  • Straight ({straight.get('type', '')}): {straight['count']} outs", classes="line")
+                        yield Static(
+                            f"  • Straight ({straight.get('type', '')}): {straight['count']} outs",
+                            classes="line",
+                        )
 
                     overcards = outs.get("overcards", {})
                     if overcards.get("count", 0) > 0:
-                        yield Static(f"  • Overcards: {overcards['count']} outs", classes="line")
+                        yield Static(
+                            f"  • Overcards: {overcards['count']} outs", classes="line"
+                        )
 
                 # Pot Odds (if available)
                 if self.result.get("pot_odds"):
                     with Container(classes="section"):
                         yield Static("POT ODDS", classes="section-title")
                         po = self.result["pot_odds"]
-                        yield Static(f"Required Equity: {po['percentage']}% ({po['ratio']})", classes="line")
-                        yield Static(f"Your Equity: {self.result['equity']}%", classes="line")
-                        if self.result['equity'] >= po['percentage']:
-                            yield Static("✓ Profitable to call (direct odds)", classes="line")
+                        yield Static(
+                            f"Required Equity: {po['percentage']}% ({po['ratio']})",
+                            classes="line",
+                        )
+                        yield Static(
+                            f"Your Equity: {self.result['equity']}%", classes="line"
+                        )
+                        if self.result["equity"] >= po["percentage"]:
+                            yield Static(
+                                "✓ Profitable to call (direct odds)", classes="line"
+                            )
                         else:
-                            yield Static("✗ Not profitable (direct odds)", classes="line")
+                            yield Static(
+                                "✗ Not profitable (direct odds)", classes="line"
+                            )
 
                 # SPR (if available)
                 if self.result.get("spr") is not None:
                     with Container(classes="section"):
                         yield Static("STACK CONSIDERATIONS", classes="section-title")
-                        yield Static(f"SPR: {self.result['spr']} ({self.result['spr_category']})", classes="line")
+                        yield Static(
+                            f"SPR: {self.result['spr']} ({self.result['spr_category']})",
+                            classes="line",
+                        )
 
                 # EV (if available)
                 if self.result.get("ev"):
@@ -205,9 +234,15 @@ class Mode1ComprehensiveScreen(Screen):
                         yield Static("EXPECTED VALUE", classes="section-title")
                         ev = self.result["ev"]
                         if ev["call"] > 0:
-                            yield Static(f"EV of Call: [green]+${ev['call']:.2f}[/green]", classes="line")
+                            yield Static(
+                                f"EV of Call: [green]+${ev['call']:.2f}[/green]",
+                                classes="line",
+                            )
                         else:
-                            yield Static(f"EV of Call: [red]${ev['call']:.2f}[/red]", classes="line")
+                            yield Static(
+                                f"EV of Call: [red]${ev['call']:.2f}[/red]",
+                                classes="line",
+                            )
                         yield Static(f"EV of Fold: ${ev['fold']:.2f}", classes="line")
 
                 # Recommendation
@@ -216,7 +251,9 @@ class Mode1ComprehensiveScreen(Screen):
                     action = rec.get("action", "UNKNOWN")
                     if action == "ANALYZE":
                         yield Static("HAND ANALYSIS", classes="rec-action")
-                        yield Static("Provide pot/bet for action recommendation", classes="line")
+                        yield Static(
+                            "Provide pot/bet for action recommendation", classes="line"
+                        )
                     else:
                         yield Static(f"RECOMMENDATION: {action}", classes="rec-action")
                         for reason in rec.get("reasoning", []):
@@ -248,7 +285,7 @@ class Mode1ComprehensiveScreen(Screen):
     def _fmt(self, cards: str) -> str:
         """Format cards with suit symbols."""
         suits = {"s": "♠", "h": "♥", "d": "♦", "c": "♣"}
-        result = []
+        result: list[str] = []
         for card in cards.split():
             if len(card) == 2:
                 result.append(f"{card[0].upper()}{suits.get(card[1].lower(), card[1])}")

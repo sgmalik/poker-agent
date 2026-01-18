@@ -218,7 +218,9 @@ class SpotAnalyzer:
             try:
                 cards.append(Card.new(card))
             except (KeyError, IndexError):
-                raise ValueError(f"Invalid card format: '{card}'. Expected format like 'As', 'Kh', etc.")
+                raise ValueError(
+                    f"Invalid card format: '{card}'. Expected format like 'As', 'Kh', etc."
+                )
         return cards
 
     def _generate_recommendation(self, analysis: Dict) -> Dict[str, Any]:
