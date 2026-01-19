@@ -1,7 +1,7 @@
 """Tests for range notation parser."""
 
 import pytest
-from src.core.range_parser import RangeParser, parse_range, RANKS, RANK_VALUES
+from src.core.range_parser import RangeParser, RANKS, RANK_VALUES
 
 
 class TestRangeParser:
@@ -188,14 +188,6 @@ class TestRangeParser:
         assert result["hands"][0] == "AA"
         assert result["hands"][1] == "22"
         assert result["hands"][2] == "AKs"
-
-    # Convenience function test
-    def test_parse_range_function(self):
-        """Test convenience function."""
-        result = parse_range("QQ+")
-        assert "QQ" in result["hands"]
-        assert "KK" in result["hands"]
-        assert "AA" in result["hands"]
 
 
 class TestRankConstants:

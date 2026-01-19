@@ -262,9 +262,3 @@ class RangeParser:
         # For now, just return comma-separated hands
         # A full implementation would compress into ranges
         return ", ".join(hands)
-
-
-def parse_range(notation: str) -> Dict:
-    """Convenience function to parse a range notation."""
-    parser = RangeParser()
-    return parser.parse(notation)

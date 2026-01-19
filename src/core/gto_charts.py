@@ -15,27 +15,18 @@ GTO_RANGES_FILE = DATA_DIR / "gto_ranges.json"
 class GTOCharts:
     """Load and query GTO preflop ranges."""
 
-    def __init__(self, data_file: Optional[Path] = None):
+    def __init__(self):
         """
         Initialize GTOCharts.
 
         Args:
             data_file: Path to GTO ranges JSON file (uses default if None)
         """
-        self._data_file = data_file or GTO_RANGES_FILE
-        self._data: Optional[Dict] = None
-        self._parser = RangeParser()
-
-    def _load_data(self) -> Dict:
-        """Load GTO ranges data from file."""
-        if self._data is None:
-            if not self._data_file.exists():
-                raise FileNotFoundError(f"GTO ranges file not found: {self._data_file}")
-
-            with open(self._data_file, "r") as f:
-                self._data = json.load(f)
-
-        return self._data
+        self.data_file = GTO_RANGES_FILE
+        # self.data: Optional[Dict] = None
+        with open(self.data_file, "r") as file:
+            self.data = json.load(file)
+        self.parser = RangeParser()
 
     def get_positions(self) -> List[str]:
         """
@@ -44,8 +35,7 @@ class GTOCharts:
         Returns:
             List of position names (e.g., ["UTG", "UTG1", "MP", ...])
         """
-        data = self._load_data()
-        return list(data.get("ranges", {}).keys())
+        return list(self.data.get("ranges", {}).keys())
 
     def get_actions(self, position: str) -> List[str]:
         """
@@ -57,9 +47,8 @@ class GTOCharts:
         Returns:
             List of action names (e.g., ["open"], ["call_vs_BTN", "3bet_vs_BTN"])
         """
-        data = self._load_data()
-        pos_data = data.get("ranges", {}).get(position, {})
-        return list(pos_data.keys())
+        posdata = self.data.get("ranges", {}).get(position, {})
+        return list(posdata.keys())
 
     def get_range(self, position: str, action: str) -> Optional[Dict[str, Any]]:
         """
@@ -73,9 +62,8 @@ class GTOCharts:
             Dict with keys: hands, notation, total_combos, percentage
             None if position/action not found
         """
-        data = self._load_data()
-        pos_data = data.get("ranges", {}).get(position, {})
-        return pos_data.get(action)
+        posdata = self.data.get("ranges", {}).get(position, {})
+        return posdata.get(action)
 
     def is_hand_in_range(self, hand: str, position: str, action: str) -> bool:
         """
@@ -89,12 +77,12 @@ class GTOCharts:
         Returns:
             True if hand is in range, False otherwise
         """
-        range_data = self.get_range(position, action)
-        if not range_data:
+        rangedata = self.get_range(position, action)
+        if not rangedata:
             return False
 
         hand = hand.upper()
-        hands = [h.upper() for h in range_data.get("hands", [])]
+        hands = [h.upper() for h in rangedata.get("hands", [])]
 
         # Normalize the hand for comparison
         if len(hand) == 3:
@@ -213,7 +201,7 @@ class GTOCharts:
         Returns:
             Dict with parsed range data
         """
-        return self._parser.parse(notation)
+        return self.parser.parse(notation)
 
 
 def get_gto_range(position: str, action: str) -> Optional[Dict[str, Any]]:
@@ -225,7 +213,7 @@ def get_gto_range(position: str, action: str) -> Optional[Dict[str, Any]]:
 def get_range_matrix(position: str, action: str) -> Optional[List[List[bool]]]:
     """Convenience function to get a range as a 13x13 matrix."""
     charts = GTOCharts()
-    range_data = charts.get_range(position, action)
-    if not range_data:
+    rangedata = charts.get_range(position, action)
+    if not rangedata:
         return None
-    return charts.hands_to_matrix(range_data.get("hands", []))
+    return charts.hands_to_matrix(rangedata.get("hands", []))
