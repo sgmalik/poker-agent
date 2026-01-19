@@ -4,8 +4,6 @@ import pytest
 from src.core.hand_evaluator import (
     HandEvaluator,
     EquityCalculator,
-    evaluate_hand_simple,
-    calculate_equity_simple,
 )
 
 
@@ -92,11 +90,6 @@ class TestHandEvaluator:
         """Should raise error for invalid card format."""
         with pytest.raises(ValueError, match="Invalid card"):
             evaluator.evaluate("XX YY", "Qh Jh 2c")
-
-    def test_simple_evaluation(self):
-        """Test convenience function."""
-        result = evaluate_hand_simple("Ah Kh", "Qh Jh Th")
-        assert result == "Royal Flush"
 
 
 class TestEquityCalculator:
@@ -186,22 +179,6 @@ class TestEquityCalculator:
         )
         # On river, equity should be 100 or 0 (no variance)
         assert result["hero_equity"] == 100.0 or result["hero_equity"] == 0.0
-
-    def test_simple_equity(self):
-        """Test convenience function."""
-        equity = calculate_equity_simple("As Ad", "Kh Kd", "", iterations=5000)
-        assert 80 <= equity <= 86  # AA vs KK ~83%
-
-
-def test_integration_full_workflow():
-    """Test complete workflow: evaluate hand and calculate equity."""
-    # Evaluate hand
-    hand_class = evaluate_hand_simple("Ah Kh", "Qh Jh 2c")
-    assert hand_class == "High Card"  # No pair, just high card
-
-    # Calculate equity
-    equity = calculate_equity_simple("Ah Kh", "Qd Qc", "As 7s 2c", iterations=5000)
-    assert equity > 70  # AK hit top pair vs QQ
 
 
 def test_edge_case_same_hand():

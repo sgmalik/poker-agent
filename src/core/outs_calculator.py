@@ -39,7 +39,6 @@ class OutsCalculator:
         board_suits = [Card.get_suit_int(c) for c in board_cards]
 
         all_cards = hero_cards + board_cards
-        known_ranks = hero_ranks + board_ranks
 
         # Calculate remaining cards in deck
         unknown_cards = 52 - len(all_cards)
@@ -60,7 +59,7 @@ class OutsCalculator:
 
         # 1. FLUSH DRAW ANALYSIS
         flush_outs = self.count_flush_outs(
-            hero_suits, board_suits, known_ranks, all_cards
+            hero_suits, board_suits
         )
         outs_breakdown["flush_draw"] = flush_outs
 
@@ -78,7 +77,7 @@ class OutsCalculator:
                     flush_out_cards.add((rank, flush_suit))
 
         # 2. STRAIGHT DRAW ANALYSIS
-        straight_outs = self.count_straight_outs(hero_ranks, board_ranks, known_ranks)
+        straight_outs = self.count_straight_outs(hero_ranks, board_ranks)
         outs_breakdown["straight_draw"] = straight_outs
 
         # If we have straight draw, track the ranks that complete it
@@ -88,7 +87,7 @@ class OutsCalculator:
                 straight_out_ranks.add(treys_rank)
 
         # 3. OVERCARD ANALYSIS (unpaired cards higher than board)
-        overcard_outs = self.count_overcard_outs(hero_ranks, board_ranks, known_ranks)
+        overcard_outs = self.count_overcard_outs(hero_ranks, board_ranks)
         outs_breakdown["overcards"] = overcard_outs
 
         if overcard_outs["count"] > 0 and "cards" in overcard_outs:
@@ -96,7 +95,7 @@ class OutsCalculator:
 
         # 4. PAIR IMPROVEMENT (pair to trips/two pair, trips to boat)
         pair_outs = self.count_pair_improvement_outs(
-            hero_ranks, board_ranks, known_ranks
+            hero_ranks, board_ranks
         )
         outs_breakdown["pair_outs"] = pair_outs
 
@@ -140,9 +139,7 @@ class OutsCalculator:
             "unique_out_cards": total_unique_outs,  # For debugging
         }
 
-    def count_flush_outs(
-        self, hero_suits, board_suits, known_ranks, all_cards
-    ) -> Dict[str, Any]:
+    def count_flush_outs(self, hero_suits, board_suits) -> Dict[str, Any]:
         """
         Count outs to make a flush.
 
@@ -190,9 +187,7 @@ class OutsCalculator:
 
         return {"count": 0, "cards_needed": 0}
 
-    def count_straight_outs(
-        self, hero_ranks, board_ranks, known_ranks
-    ) -> Dict[str, Any]:
+    def count_straight_outs(self, hero_ranks, board_ranks) -> Dict[str, Any]:
         """
         Count outs to make a straight.
 
@@ -348,9 +343,7 @@ class OutsCalculator:
             "missing_ranks": [possible_draws[0]["missing_rank"]],
         }
 
-    def count_overcard_outs(
-        self, hero_ranks, board_ranks, known_ranks
-    ) -> Dict[str, Any]:
+    def count_overcard_outs(self, hero_ranks, board_ranks) -> Dict[str, Any]:
         """
         Count outs to pair an overcard.
 
@@ -387,9 +380,7 @@ class OutsCalculator:
             "note": f"{len(unique_overcards)} overcard(s) with 3 outs each",
         }
 
-    def count_pair_improvement_outs(
-        self, hero_ranks, board_ranks, known_ranks
-    ) -> Dict[str, Any]:
+    def count_pair_improvement_outs(self, hero_ranks, board_ranks) -> Dict[str, Any]:
         """
         Count outs to improve a pair to trips or two pair.
 

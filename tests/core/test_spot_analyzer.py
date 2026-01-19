@@ -1,7 +1,7 @@
 """Tests for comprehensive spot analysis."""
 
 import pytest
-from src.core.spot_analyzer import SpotAnalyzer, analyze_spot_simple
+from src.core.spot_analyzer import SpotAnalyzer
 
 
 class TestSpotAnalyzer:
@@ -245,13 +245,6 @@ class TestSpotAnalyzer:
         """Should raise error for invalid card format."""
         with pytest.raises(ValueError, match="Invalid card"):
             analyzer.analyze("XX YY", "Ah 7s 2c", pot_size=100, bet_to_call=50)
-
-    def test_simple_analysis_function(self):
-        """Test convenience function."""
-        result = analyze_spot_simple("Ah Ad", "As Ks Qc", 100, 50)
-
-        # Should return action string
-        assert result in ["CALL", "FOLD", "RAISE", "ANALYZE"]
 
     def test_preflop_scenario(self, analyzer):
         """Test that board validation requires 3-5 cards."""

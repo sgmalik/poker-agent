@@ -321,33 +321,3 @@ class SpotAnalyzer:
                 )
 
         return recommendation
-
-
-# Convenience function
-def analyze_spot_simple(
-    hero_hand: str,
-    board: str,
-    pot_size: float,
-    bet_to_call: float,
-    effective_stack: Optional[float] = None,
-) -> str:
-    """
-    Simple spot analysis returning just the recommendation.
-
-    Args:
-        hero_hand: Hero's cards
-        board: Board cards
-        pot_size: Current pot
-        bet_to_call: Amount to call
-        effective_stack: Stack remaining (optional)
-
-    Returns:
-        Recommendation string (e.g., "CALL", "FOLD", "RAISE")
-
-    Example:
-        >>> analyze_spot_simple("Ah Kh", "Qh Jh 2c", 100, 50)
-        'CALL'
-    """
-    analyzer = SpotAnalyzer()
-    result = analyzer.analyze(hero_hand, board, pot_size, bet_to_call, effective_stack)
-    return result["recommendation"]["action"]
