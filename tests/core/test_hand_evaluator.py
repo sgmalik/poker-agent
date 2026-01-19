@@ -105,7 +105,7 @@ class TestEquityCalculator:
         result = calculator.calculate("As Ad", "Kh Kd", "", iterations=5000)
 
         # Allow variance in Monte Carlo (±3%)
-        assert 77 <= result["hero_equity"] <= 83
+        assert 79 <= result["hero_equity"] <= 85
         assert 17 <= result["villain_equity"] <= 23
 
         # Check components

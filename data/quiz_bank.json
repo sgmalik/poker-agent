@@ -1,0 +1,568 @@
+{
+  "version": "1.0",
+  "description": "Poker quiz question bank for learning GTO strategy",
+  "questions": [
+    {
+      "id": "pf_001",
+      "type": "preflop_action",
+      "difficulty": "beginner",
+      "topic": "preflop",
+      "question": "You're UTG with AA. What's your action?",
+      "scenario": {
+        "hero_hand": "As Ad",
+        "position": "UTG",
+        "action_to_hero": "first_to_act"
+      },
+      "options": ["Fold", "Limp", "Raise"],
+      "answer": "Raise",
+      "explanation": "AA is the best starting hand in poker. From any position, you should always raise to build the pot and narrow the field."
+    },
+    {
+      "id": "pf_002",
+      "type": "preflop_action",
+      "difficulty": "beginner",
+      "topic": "preflop",
+      "question": "You're on the BTN with AKs. UTG raises. What's your action?",
+      "scenario": {
+        "hero_hand": "As Ks",
+        "position": "BTN",
+        "action_to_hero": "raise"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "3-bet",
+      "explanation": "AKs is a premium hand. Against an UTG raise, 3-betting on the button is standard to build value and put pressure on the raiser."
+    },
+    {
+      "id": "pf_003",
+      "type": "preflop_action",
+      "difficulty": "beginner",
+      "topic": "preflop",
+      "question": "You're UTG with 72o. What's your action?",
+      "scenario": {
+        "hero_hand": "7s 2c",
+        "position": "UTG",
+        "action_to_hero": "first_to_act"
+      },
+      "options": ["Fold", "Limp", "Raise"],
+      "answer": "Fold",
+      "explanation": "72o is considered the worst hand in poker. From UTG with many players to act behind, this is a clear fold."
+    },
+    {
+      "id": "pf_004",
+      "type": "preflop_action",
+      "difficulty": "beginner",
+      "topic": "preflop",
+      "question": "You're in the CO with AJs. Everyone folds to you. What's your action?",
+      "scenario": {
+        "hero_hand": "As Js",
+        "position": "CO",
+        "action_to_hero": "fold"
+      },
+      "options": ["Fold", "Limp", "Raise"],
+      "answer": "Raise",
+      "explanation": "AJs is a strong hand that's well within CO's opening range. With position and a suited ace, raising is standard."
+    },
+    {
+      "id": "pf_005",
+      "type": "preflop_action",
+      "difficulty": "beginner",
+      "topic": "preflop",
+      "question": "You're in the SB with KQo. BTN raises. What's your action?",
+      "scenario": {
+        "hero_hand": "Ks Qd",
+        "position": "SB",
+        "action_to_hero": "raise"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "3-bet",
+      "explanation": "KQo is a strong holding. Against a BTN open, 3-betting from the SB is standard to charge draws and avoid playing out of position with a capped range."
+    },
+    {
+      "id": "rng_001",
+      "type": "range_check",
+      "difficulty": "beginner",
+      "topic": "ranges",
+      "question": "Is QQ in UTG's opening range?",
+      "scenario": {
+        "hand": "QQ",
+        "position": "UTG",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "Yes",
+      "explanation": "QQ is a premium pair and is always in every position's opening range. UTG opens 99+ typically."
+    },
+    {
+      "id": "rng_002",
+      "type": "range_check",
+      "difficulty": "beginner",
+      "topic": "ranges",
+      "question": "Is 65s in UTG's opening range?",
+      "scenario": {
+        "hand": "65s",
+        "position": "UTG",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "No",
+      "explanation": "Suited connectors like 65s are too speculative for UTG. They become playable in later positions like HJ and beyond."
+    },
+    {
+      "id": "rng_003",
+      "type": "range_check",
+      "difficulty": "beginner",
+      "topic": "ranges",
+      "question": "Is AKo in BTN's opening range?",
+      "scenario": {
+        "hand": "AKo",
+        "position": "BTN",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "Yes",
+      "explanation": "AKo is a premium hand that's in every position's opening range. The BTN has the widest opening range and definitely includes AKo."
+    },
+    {
+      "id": "rng_004",
+      "type": "range_check",
+      "difficulty": "beginner",
+      "topic": "ranges",
+      "question": "Is 22 in UTG's opening range?",
+      "scenario": {
+        "hand": "22",
+        "position": "UTG",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "No",
+      "explanation": "Small pairs like 22 are not in UTG's tight opening range. UTG typically opens 99+ at most tables."
+    },
+    {
+      "id": "hs_001",
+      "type": "hand_strength",
+      "difficulty": "beginner",
+      "topic": "hand_strength",
+      "question": "What hand do you have with Ah Kh on a board of Qh Jh Th 2c 5s?",
+      "scenario": {
+        "hero_hand": "Ah Kh",
+        "board": "Qh Jh Th 2c 5s"
+      },
+      "options": ["Flush", "Straight", "Royal Flush", "Straight Flush"],
+      "answer": "Royal Flush",
+      "explanation": "You have A-K-Q-J-T all in hearts, which is a Royal Flush - the best possible hand in poker."
+    },
+    {
+      "id": "hs_002",
+      "type": "hand_strength",
+      "difficulty": "beginner",
+      "topic": "hand_strength",
+      "question": "What hand do you have with As Ac on a board of Ad Kh 7c 7s 2d?",
+      "scenario": {
+        "hero_hand": "As Ac",
+        "board": "Ad Kh 7c 7s 2d"
+      },
+      "options": ["Two Pair", "Three of a Kind", "Full House", "Four of a Kind"],
+      "answer": "Full House",
+      "explanation": "You have three Aces (AAA) and two Sevens (77), making a full house - Aces full of Sevens."
+    },
+    {
+      "id": "hs_003",
+      "type": "hand_strength",
+      "difficulty": "beginner",
+      "topic": "hand_strength",
+      "question": "What hand do you have with 9s 8s on a board of Ts 7s 6h 2c Kd?",
+      "scenario": {
+        "hero_hand": "9s 8s",
+        "board": "Ts 7s 6h 2c Kd"
+      },
+      "options": ["Flush Draw", "Straight", "Two Pair", "High Card"],
+      "answer": "Straight",
+      "explanation": "You have T-9-8-7-6 making a straight (ten-high straight). Your flush draw missed but you made the straight."
+    },
+    {
+      "id": "hs_004",
+      "type": "hand_strength",
+      "difficulty": "beginner",
+      "topic": "hand_strength",
+      "question": "What hand do you have with Kd Qd on a board of 8d 5d 2h 3d Jc?",
+      "scenario": {
+        "hero_hand": "Kd Qd",
+        "board": "8d 5d 2h 3d Jc"
+      },
+      "options": ["Pair", "Two Pair", "Flush", "Straight"],
+      "answer": "Flush",
+      "explanation": "You have five diamonds (K-Q-8-5-3 of diamonds), making a King-high flush."
+    },
+    {
+      "id": "po_001",
+      "type": "pot_odds",
+      "difficulty": "beginner",
+      "topic": "pot_odds",
+      "question": "The pot is $100 and villain bets $50. What pot odds are you getting?",
+      "scenario": {
+        "pot_size": 100,
+        "bet_size": 50
+      },
+      "options": ["2:1", "3:1", "4:1", "1:1"],
+      "answer": "3:1",
+      "explanation": "You need to call $50 to win $150 (pot + bet). That's 150:50 or 3:1 pot odds."
+    },
+    {
+      "id": "po_002",
+      "type": "pot_odds",
+      "difficulty": "beginner",
+      "topic": "pot_odds",
+      "question": "The pot is $80 and villain bets $80. What pot odds are you getting?",
+      "scenario": {
+        "pot_size": 80,
+        "bet_size": 80
+      },
+      "options": ["1:1", "2:1", "3:1", "4:1"],
+      "answer": "2:1",
+      "explanation": "You need to call $80 to win $160 (pot + bet). That's 160:80 or 2:1 pot odds."
+    },
+    {
+      "id": "pf_006",
+      "type": "preflop_action",
+      "difficulty": "intermediate",
+      "topic": "preflop",
+      "question": "You're in the BB with 87s. CO raises, BTN calls. What's your action?",
+      "scenario": {
+        "hero_hand": "8s 7s",
+        "position": "BB",
+        "action_to_hero": "raise_and_call"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "Call",
+      "explanation": "87s plays well in multiway pots with good implied odds. You're getting a good price to see a flop and can make strong hands like straights and flushes."
+    },
+    {
+      "id": "pf_007",
+      "type": "preflop_action",
+      "difficulty": "intermediate",
+      "topic": "preflop",
+      "question": "You're on the BTN with A5s. UTG raises. What's your action?",
+      "scenario": {
+        "hero_hand": "As 5s",
+        "position": "BTN",
+        "action_to_hero": "raise"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "3-bet",
+      "explanation": "A5s is a good 3-bet bluffing hand - it has blockers to big aces, can make the nut flush, and plays well postflop. This is a standard part of BTN's 3-bet range vs UTG."
+    },
+    {
+      "id": "pf_008",
+      "type": "preflop_action",
+      "difficulty": "intermediate",
+      "topic": "preflop",
+      "question": "You're in the SB with JTs. BTN raises. What's your action?",
+      "scenario": {
+        "hero_hand": "Js Ts",
+        "position": "SB",
+        "action_to_hero": "raise"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "3-bet",
+      "explanation": "JTs plays better as a 3-bet than a call from the SB. Calling leads to playing a capped range out of position. 3-betting lets you take initiative and sometimes win preflop."
+    },
+    {
+      "id": "rng_005",
+      "type": "range_check",
+      "difficulty": "intermediate",
+      "topic": "ranges",
+      "question": "Is A5s in BTN's 3-bet range vs CO?",
+      "scenario": {
+        "hand": "A5s",
+        "position": "BTN",
+        "action": "3bet_vs_CO"
+      },
+      "options": ["Yes", "No"],
+      "answer": "Yes",
+      "explanation": "A5s is included in BTN's 3-bet range vs CO as a bluff hand. It has ace blockers and nut flush potential."
+    },
+    {
+      "id": "rng_006",
+      "type": "range_check",
+      "difficulty": "intermediate",
+      "topic": "ranges",
+      "question": "Is KJo in UTG's opening range?",
+      "scenario": {
+        "hand": "KJo",
+        "position": "UTG",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "No",
+      "explanation": "KJo is too weak for UTG's opening range. UTG typically opens only AKo and sometimes AQo among offsuit broadway hands."
+    },
+    {
+      "id": "rng_007",
+      "type": "range_check",
+      "difficulty": "intermediate",
+      "topic": "ranges",
+      "question": "Is 98s in HJ's opening range?",
+      "scenario": {
+        "hand": "98s",
+        "position": "HJ",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "Yes",
+      "explanation": "98s is a suited connector that's included in HJ's opening range. HJ has a wider range than early positions."
+    },
+    {
+      "id": "rng_008",
+      "type": "range_check",
+      "difficulty": "intermediate",
+      "topic": "ranges",
+      "question": "Is TT in BB's 3-bet range vs UTG?",
+      "scenario": {
+        "hand": "TT",
+        "position": "BB",
+        "action": "3bet_vs_UTG"
+      },
+      "options": ["Yes", "No"],
+      "answer": "No",
+      "explanation": "TT is typically a call vs UTG from BB, not a 3-bet. BB's 3-bet range vs UTG is very tight: JJ+, AKs, AKo."
+    },
+    {
+      "id": "hs_005",
+      "type": "hand_strength",
+      "difficulty": "intermediate",
+      "topic": "hand_strength",
+      "question": "What hand do you have with Jc Tc on a board of 9c 8c 7h 2s Kd?",
+      "scenario": {
+        "hero_hand": "Jc Tc",
+        "board": "9c 8c 7h 2s Kd"
+      },
+      "options": ["Flush Draw", "Straight", "Pair", "High Card"],
+      "answer": "Straight",
+      "explanation": "You have J-T-9-8-7, making a Jack-high straight. Your flush draw missed but you made the straight."
+    },
+    {
+      "id": "hs_006",
+      "type": "hand_strength",
+      "difficulty": "intermediate",
+      "topic": "hand_strength",
+      "question": "What hand do you have with 5h 5s on a board of Ah 5d 5c 8s 2d?",
+      "scenario": {
+        "hero_hand": "5h 5s",
+        "board": "Ah 5d 5c 8s 2d"
+      },
+      "options": ["Full House", "Three of a Kind", "Four of a Kind", "Two Pair"],
+      "answer": "Four of a Kind",
+      "explanation": "You have all four fives (5-5-5-5), making four of a kind - quads!"
+    },
+    {
+      "id": "po_003",
+      "type": "pot_odds",
+      "difficulty": "intermediate",
+      "topic": "pot_odds",
+      "question": "The pot is $200. Villain bets $100. You have 9 outs to a flush. Should you call?",
+      "scenario": {
+        "pot_size": 200,
+        "bet_size": 100,
+        "outs": 9,
+        "street": "turn"
+      },
+      "options": ["Yes, call", "No, fold"],
+      "answer": "No, fold",
+      "explanation": "You're getting 3:1 odds (need 25% equity). With 9 outs on the turn, you have ~18% equity (9 * 2). The call is -EV without implied odds."
+    },
+    {
+      "id": "po_004",
+      "type": "pot_odds",
+      "difficulty": "intermediate",
+      "topic": "pot_odds",
+      "question": "The pot is $100. Villain bets $25. You have a gutshot (4 outs). Should you call on the turn?",
+      "scenario": {
+        "pot_size": 100,
+        "bet_size": 25,
+        "outs": 4,
+        "street": "turn"
+      },
+      "options": ["Yes, call", "No, fold"],
+      "answer": "Yes, call",
+      "explanation": "You're getting 5:1 odds (need 17% equity). With 4 outs on the turn, you have ~8% equity. While direct odds aren't there, with good implied odds this can be profitable."
+    },
+    {
+      "id": "po_005",
+      "type": "pot_odds",
+      "difficulty": "intermediate",
+      "topic": "pot_odds",
+      "question": "The pot is $150. Villain goes all-in for $150. You have 15 outs (flush draw + overcards). Should you call?",
+      "scenario": {
+        "pot_size": 150,
+        "bet_size": 150,
+        "outs": 15,
+        "street": "turn"
+      },
+      "options": ["Yes, call", "No, fold"],
+      "answer": "No, fold",
+      "explanation": "You're getting 2:1 odds (need 33% equity). With 15 outs on the turn, you have ~30% equity (15 * 2). The call is slightly -EV."
+    },
+    {
+      "id": "pf_009",
+      "type": "preflop_action",
+      "difficulty": "advanced",
+      "topic": "preflop",
+      "question": "You're in the SB with A4s. BTN min-raises. What's your action?",
+      "scenario": {
+        "hero_hand": "As 4s",
+        "position": "SB",
+        "action_to_hero": "min_raise"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "3-bet",
+      "explanation": "A4s is a 3-bet bluffing hand from SB vs BTN. It has ace blockers, nut flush potential, and plays poorly as a call due to being out of position."
+    },
+    {
+      "id": "pf_010",
+      "type": "preflop_action",
+      "difficulty": "advanced",
+      "topic": "preflop",
+      "question": "You're in BB with K9s. SB min-raises (heads up in blinds). What's your action?",
+      "scenario": {
+        "hero_hand": "Ks 9s",
+        "position": "BB",
+        "action_to_hero": "sb_raise"
+      },
+      "options": ["Fold", "Call", "3-bet"],
+      "answer": "3-bet",
+      "explanation": "K9s is in BB's 3-bet range vs SB. In blind battles, ranges are much wider and K9s is strong enough to 3-bet for value and as a bluff."
+    },
+    {
+      "id": "rng_009",
+      "type": "range_check",
+      "difficulty": "advanced",
+      "topic": "ranges",
+      "question": "Is 76s in BTN's 3-bet range vs CO?",
+      "scenario": {
+        "hand": "76s",
+        "position": "BTN",
+        "action": "3bet_vs_CO"
+      },
+      "options": ["Yes", "No"],
+      "answer": "Yes",
+      "explanation": "76s is included in BTN's 3-bet range vs CO as a bluff. Suited connectors make good 3-bet bluffs due to their playability postflop."
+    },
+    {
+      "id": "rng_010",
+      "type": "range_check",
+      "difficulty": "advanced",
+      "topic": "ranges",
+      "question": "Is QJo in MP's opening range?",
+      "scenario": {
+        "hand": "QJo",
+        "position": "MP",
+        "action": "open"
+      },
+      "options": ["Yes", "No"],
+      "answer": "No",
+      "explanation": "QJo is not in MP's opening range. MP typically opens only AQo+ among offsuit broadway hands. QJo becomes playable from HJ onwards."
+    },
+    {
+      "id": "hs_007",
+      "type": "hand_strength",
+      "difficulty": "advanced",
+      "topic": "hand_strength",
+      "question": "What hand do you have with 6c 5c on a board of 9c 8c 7c 2h Kd?",
+      "scenario": {
+        "hero_hand": "6c 5c",
+        "board": "9c 8c 7c 2h Kd"
+      },
+      "options": ["Flush", "Straight", "Straight Flush", "Full House"],
+      "answer": "Straight Flush",
+      "explanation": "You have 9-8-7-6-5 all in clubs, making a straight flush. This is the second best hand type in poker."
+    },
+    {
+      "id": "hs_008",
+      "type": "hand_strength",
+      "difficulty": "advanced",
+      "topic": "hand_strength",
+      "question": "You have As 2s on a board of Ks Qs Js 3h 4d. What hand do you have?",
+      "scenario": {
+        "hero_hand": "As 2s",
+        "board": "Ks Qs Js 3h 4d"
+      },
+      "options": ["Straight", "Flush", "Royal Flush", "Ace High"],
+      "answer": "Flush",
+      "explanation": "You have the nut flush (A-K-Q-J-2 of spades). You don't have a royal flush because you need AKQJT of the same suit."
+    },
+    {
+      "id": "po_006",
+      "type": "pot_odds",
+      "difficulty": "advanced",
+      "topic": "pot_odds",
+      "question": "You have a combo draw (flush + open-ended straight = 15 outs) on the flop. Pot is $100, villain bets $75. Should you call?",
+      "scenario": {
+        "pot_size": 100,
+        "bet_size": 75,
+        "outs": 15,
+        "street": "flop"
+      },
+      "options": ["Yes, call", "No, fold"],
+      "answer": "Yes, call",
+      "explanation": "You're getting ~2.3:1 odds (need ~30% equity). With 15 outs on the flop, using 4-2 rule: 15 * 4 = 60% equity seeing both cards. Even seeing just turn, you have ~32%. This is a profitable call."
+    },
+    {
+      "id": "po_007",
+      "type": "pot_odds",
+      "difficulty": "advanced",
+      "topic": "pot_odds",
+      "question": "What percentage of the pot should you bet to give villain 2:1 pot odds?",
+      "scenario": {
+        "pot_size": 100,
+        "desired_odds": "2:1"
+      },
+      "options": ["33%", "50%", "66%", "75%"],
+      "answer": "50%",
+      "explanation": "If pot is $100 and you bet $50, villain must call $50 to win $150, giving them 3:1 odds. Wait - for 2:1 odds: Call X to win Pot+X, so 2X = Pot+X, X = Pot. A pot-sized bet gives 2:1 odds."
+    },
+    {
+      "id": "pos_001",
+      "type": "position_open",
+      "difficulty": "beginner",
+      "topic": "position",
+      "question": "Which position has the tightest opening range?",
+      "scenario": {},
+      "options": ["UTG", "CO", "BTN", "SB"],
+      "answer": "UTG",
+      "explanation": "UTG has the tightest opening range (~5%) because there are 8 players left to act who could have strong hands."
+    },
+    {
+      "id": "pos_002",
+      "type": "position_open",
+      "difficulty": "beginner",
+      "topic": "position",
+      "question": "Which position has the widest opening range?",
+      "scenario": {},
+      "options": ["UTG", "MP", "CO", "BTN"],
+      "answer": "BTN",
+      "explanation": "BTN has the widest opening range (~30%) because only the blinds remain to act and you'll have position postflop."
+    },
+    {
+      "id": "pos_003",
+      "type": "position_open",
+      "difficulty": "intermediate",
+      "topic": "position",
+      "question": "From which position do suited connectors like 76s become profitable to open?",
+      "scenario": {},
+      "options": ["UTG", "MP", "HJ", "BTN only"],
+      "answer": "HJ",
+      "explanation": "Suited connectors like 76s start appearing in opening ranges around HJ position. Earlier positions need tighter ranges."
+    },
+    {
+      "id": "pos_004",
+      "type": "position_open",
+      "difficulty": "intermediate",
+      "topic": "position",
+      "question": "Why is position important in poker?",
+      "scenario": {},
+      "options": ["You see more cards", "You act last postflop", "Blinds are lower", "Cards are better"],
+      "answer": "You act last postflop",
+      "explanation": "Position is valuable because you act last in betting rounds, giving you more information about opponents' actions before making decisions."
+    }
+  ]
+}
