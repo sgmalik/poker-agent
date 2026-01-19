@@ -58,9 +58,7 @@ class OutsCalculator:
         overcard_out_ranks: Set[int] = set()
 
         # 1. FLUSH DRAW ANALYSIS
-        flush_outs = self.count_flush_outs(
-            hero_suits, board_suits
-        )
+        flush_outs = self.count_flush_outs(hero_suits, board_suits)
         outs_breakdown["flush_draw"] = flush_outs
 
         # If we have a REAL flush draw (not backdoor), track the specific cards
@@ -94,9 +92,7 @@ class OutsCalculator:
             overcard_out_ranks = set(overcard_outs["cards"])
 
         # 4. PAIR IMPROVEMENT (pair to trips/two pair, trips to boat)
-        pair_outs = self.count_pair_improvement_outs(
-            hero_ranks, board_ranks
-        )
+        pair_outs = self.count_pair_improvement_outs(hero_ranks, board_ranks)
         outs_breakdown["pair_outs"] = pair_outs
 
         # CALCULATE TOTAL OUTS (removing overlaps)
