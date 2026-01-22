@@ -71,10 +71,8 @@ class Mode3SetupScreen(Screen):
 
     Button {
         margin: 0 1;
-    }
-
-    #start_btn {
         width: 20;
+        text-align: center;
     }
 
     .help_text {
