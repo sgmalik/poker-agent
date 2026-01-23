@@ -3,7 +3,7 @@
 from typing import Any, Dict, Optional
 from textual.app import ComposeResult
 from textual.screen import Screen
-from textual.containers import Container, Horizontal
+from textual.containers import Container, Horizontal, VerticalScroll
 from textual.widgets import Header, Footer, Button, Static, ProgressBar
 from textual.binding import Binding
 
@@ -20,11 +20,14 @@ class Mode3QuizScreen(Screen):
 
     #quiz_container {
         width: 80;
-        height: auto;
-        max-height: 90%;
+        height: 85%;
         border: solid $primary;
         background: $surface;
         padding: 2;
+    }
+
+    #quiz_scroll {
+        height: 1fr;
     }
 
     #header_row {
@@ -45,9 +48,15 @@ class Mode3QuizScreen(Screen):
         color: $success;
     }
 
-    #progress_bar {
+    #progress_container {
         width: 100%;
+        height: auto;
+        align: center middle;
         margin-bottom: 1;
+    }
+
+    #progress_bar {
+        width: 50%;
     }
 
     #question_area {
@@ -71,7 +80,7 @@ class Mode3QuizScreen(Screen):
 
     .option_btn {
         width: 100%;
-        margin-bottom: 1;
+        margin: 0 0 1 0;
     }
 
     .option_btn.correct {
@@ -118,13 +127,15 @@ class Mode3QuizScreen(Screen):
     }
 
     #nav_row {
-        margin-top: 2;
-        height: auto;
+        margin-top: 1;
+        height: 3;
         align: center middle;
     }
 
-    Button {
+    #nav_row Button {
         margin: 0 1;
+        width: 20;
+        text-align: center;
     }
 
     #next_btn {
@@ -179,25 +190,28 @@ class Mode3QuizScreen(Screen):
                 yield Static("Score: 0/0", id="score_text")
 
             # Progress bar
-            yield ProgressBar(id="progress_bar", total=100, show_eta=False)
+            with Container(id="progress_container"):
+                yield ProgressBar(id="progress_bar", total=100, show_eta=False)
 
-            # Question area
-            with Container(id="question_area"):
-                yield Static("Loading question...", id="question_text")
+            # Scrollable content area
+            with VerticalScroll(id="quiz_scroll"):
+                # Question area
+                with Container(id="question_area"):
+                    yield Static("Loading question...", id="question_text")
 
-            # Options area
-            with Container(id="options_area"):
-                yield Button("A) ...", id="opt_A", classes="option_btn")
-                yield Button("B) ...", id="opt_B", classes="option_btn")
-                yield Button("C) ...", id="opt_C", classes="option_btn")
-                yield Button("D) ...", id="opt_D", classes="option_btn")
+                # Options area
+                with Container(id="options_area"):
+                    yield Button("A) ...", id="opt_A", classes="option_btn")
+                    yield Button("B) ...", id="opt_B", classes="option_btn")
+                    yield Button("C) ...", id="opt_C", classes="option_btn")
+                    yield Button("D) ...", id="opt_D", classes="option_btn")
 
-            # Feedback area (hidden initially)
-            with Container(id="feedback_area"):
-                yield Static("", id="feedback_result")
-                yield Static("", id="explanation_text")
+                # Feedback area (hidden initially)
+                with Container(id="feedback_area"):
+                    yield Static("", id="feedback_result")
+                    yield Static("", id="explanation_text")
 
-            # Navigation
+            # Navigation (outside scroll, always visible)
             with Horizontal(id="nav_row"):
                 yield Button("Next Question", id="next_btn", variant="primary")
                 yield Button("Quit Quiz", id="quit_btn", variant="error")
@@ -233,9 +247,9 @@ class Mode3QuizScreen(Screen):
         score_text = self.query_one("#score_text", Static)
         score_text.update(f"Score: {progress['correct']}/{progress['answered']}")
 
-        # Update progress bar
+        # Update progress bar (based on questions answered)
         progress_bar = self.query_one("#progress_bar", ProgressBar)
-        pct = (progress["current"] - 1) / progress["total"] * 100
+        pct = progress["answered"] / progress["total"] * 100
         progress_bar.progress = pct
 
         # Display question
@@ -313,8 +327,13 @@ class Mode3QuizScreen(Screen):
         explanation = self.query_one("#explanation_text", Static)
         explanation.update(self.feedback_result.get("explanation", ""))
 
-        # Show next button
+        # Show next button (change label on last question)
         next_btn = self.query_one("#next_btn", Button)
+        progress = self.engine.get_progress()
+        if progress["answered"] >= progress["total"]:
+            next_btn.label = "View Results"
+        else:
+            next_btn.label = "Next Question"
         next_btn.remove_class("show")
         next_btn.add_class("show")
 
