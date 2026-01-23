@@ -18,11 +18,15 @@ class Mode3ResultsScreen(Screen):
 
     #results_container {
         width: 80;
-        height: auto;
-        max-height: 90%;
+        height: 85%;
         border: solid $primary;
         background: $surface;
         padding: 2;
+    }
+
+    #header_section {
+        height: auto;
+        width: 100%;
     }
 
     #title {
@@ -33,14 +37,10 @@ class Mode3ResultsScreen(Screen):
         text-style: bold;
     }
 
-    #score_display {
+    #score_big {
         text-align: center;
         width: 100%;
-        padding: 2;
-        margin-bottom: 1;
-    }
-
-    #score_big {
+        padding: 1;
         text-style: bold;
     }
 
@@ -56,94 +56,45 @@ class Mode3ResultsScreen(Screen):
         color: $error;
     }
 
-    .section {
+    #time_display {
+        text-align: center;
         width: 100%;
-        margin-bottom: 1;
-        padding: 1;
-        border: solid $primary;
+        color: $text-muted;
     }
 
-    .section_title {
-        color: $accent;
-        text-style: bold;
-        margin-bottom: 1;
-    }
-
-    .breakdown_row {
-        height: auto;
-    }
-
-    .breakdown_label {
-        width: 1fr;
-        color: $text;
-    }
-
-    .breakdown_value {
-        width: auto;
-        min-width: 10;
-        text-align: right;
-    }
-
-    .breakdown_value.good {
-        color: $success;
-    }
-
-    .breakdown_value.bad {
+    #incorrect_title {
         color: $error;
+        text-style: bold;
+        padding: 1 0;
     }
 
     #incorrect_scroll {
-        height: auto;
-        max-height: 20;
+        height: 1fr;
+        border: solid $primary;
+        padding: 1;
     }
 
     .incorrect_item {
         padding: 1;
         margin-bottom: 1;
-        border: solid $error;
-        background: $surface-darken-1;
-    }
-
-    .incorrect_question {
-        color: $text;
-        margin-bottom: 1;
-    }
-
-    .incorrect_answers {
-        color: $text-muted;
-    }
-
-    .incorrect_correct {
-        color: $success;
-    }
-
-    .incorrect_explanation {
-        color: $text-muted;
-        text-style: italic;
-        margin-top: 1;
     }
 
     #nav_row {
-        margin-top: 2;
-        height: auto;
+        height: 3;
+        width: 100%;
         align: center middle;
     }
 
-    Button {
+    #nav_row Button {
         margin: 0 1;
-    }
-
-    #time_display {
+        width: 20;
         text-align: center;
-        width: 100%;
-        color: $text-muted;
-        margin-top: 1;
     }
     """
 
     BINDINGS = [
         Binding("escape", "main_menu", "Main Menu", show=True),
-        Binding("r", "try_again", "Try Again", show=True),
+        Binding("n", "new_quiz", "New Quiz", show=True),
     ]
 
     def __init__(self, results: Dict[str, Any]) -> None:
@@ -160,50 +111,28 @@ class Mode3ResultsScreen(Screen):
         """Create child widgets."""
         yield Header()
 
+        incorrect = self.results.get("incorrect_questions", [])
+
         with Container(id="results_container"):
-            yield Static("[bold cyan]Quiz Complete![/bold cyan]", id="title")
-
-            # Score display
-            with Container(id="score_display"):
+            # Header section (fixed height)
+            with Container(id="header_section"):
+                yield Static("[bold cyan]Quiz Complete![/bold cyan]", id="title")
                 yield self._create_score_display()
+                yield Static(self._format_time(), id="time_display")
 
-            # Time display
-            yield Static(self._format_time(), id="time_display")
+            # Incorrect questions scroll area (takes remaining space)
+            if incorrect:
+                yield Static(
+                    f"Review Incorrect Answers ({len(incorrect)})",
+                    id="incorrect_title",
+                )
+                with VerticalScroll(id="incorrect_scroll"):
+                    for i, q in enumerate(incorrect):
+                        yield self._create_incorrect_item(i + 1, q)
 
-            with VerticalScroll():
-                # Topic breakdown
-                if self.results.get("by_topic"):
-                    with Container(classes="section"):
-                        yield Static("Performance by Topic", classes="section_title")
-                        yield self._create_topic_breakdown()
-
-                # Difficulty breakdown
-                if self.results.get("by_difficulty"):
-                    with Container(classes="section"):
-                        yield Static(
-                            "Performance by Difficulty", classes="section_title"
-                        )
-                        yield self._create_difficulty_breakdown()
-
-                # Incorrect questions
-                incorrect = self.results.get("incorrect_questions", [])
-                if incorrect:
-                    with Container(classes="section"):
-                        yield Static(
-                            f"Review Incorrect Answers ({len(incorrect)})",
-                            classes="section_title",
-                        )
-                        with VerticalScroll(id="incorrect_scroll"):
-                            for i, q in enumerate(incorrect[:5]):  # Show first 5
-                                yield self._create_incorrect_item(i + 1, q)
-                            if len(incorrect) > 5:
-                                yield Static(
-                                    f"[dim]... and {len(incorrect) - 5} more[/dim]"
-                                )
-
-            # Navigation
+            # Navigation buttons (fixed height at bottom)
             with Horizontal(id="nav_row"):
-                yield Button("Try Again", id="try_again_btn", variant="primary")
+                yield Button("New Quiz", id="new_quiz_btn", variant="primary")
                 yield Button("Main Menu", id="menu_btn", variant="default")
 
         yield Footer()
@@ -267,7 +196,7 @@ class Mode3ResultsScreen(Screen):
         by_diff = self.results.get("by_difficulty", {})
 
         # Order difficulties
-        order = ["beginner", "intermediate", "advanced"]
+        order = ["beginner", "intermediate", "advanced", "elite"]
         sorted_diffs = sorted(
             by_diff.items(), key=lambda x: order.index(x[0]) if x[0] in order else 99
         )
@@ -291,38 +220,18 @@ class Mode3ResultsScreen(Screen):
 
         return container
 
-    def _create_incorrect_item(self, num: int, item: Dict[str, Any]) -> Container:
+    def _create_incorrect_item(self, num: int, item: Dict[str, Any]) -> Static:
         """Create an incorrect question display item."""
-        container = Container(classes="incorrect_item")
-
         question = item.get("question", "")
         your_answer = item.get("your_answer", "")
         correct_answer = item.get("correct_answer", "")
-        explanation = item.get("explanation", "")
-        topic = item.get("topic", "").replace("_", " ").title()
 
-        container.compose_add_child(
-            Static(
-                f"[bold]{num}. {question}[/bold] [{topic}]",
-                classes="incorrect_question",
-            )
+        text = (
+            f"[bold]{num}. {question}[/bold]\n"
+            f"   Your answer: [red]{your_answer}[/red]\n"
+            f"   Correct: [green]{correct_answer}[/green]\n"
         )
-        container.compose_add_child(
-            Static(
-                f"Your answer: [red]{your_answer}[/red]", classes="incorrect_answers"
-            )
-        )
-        container.compose_add_child(
-            Static(
-                f"Correct: [green]{correct_answer}[/green]", classes="incorrect_correct"
-            )
-        )
-        if explanation:
-            container.compose_add_child(
-                Static(f"[dim]{explanation}[/dim]", classes="incorrect_explanation")
-            )
-
-        return container
+        return Static(text, classes="incorrect_item")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button presses."""
@@ -330,17 +239,16 @@ class Mode3ResultsScreen(Screen):
 
         if button_id == "menu_btn":
             self.action_main_menu()
-        elif button_id == "try_again_btn":
-            self.action_try_again()
+        elif button_id == "new_quiz_btn":
+            self.action_new_quiz()
 
     def action_main_menu(self) -> None:
         """Return to main menu."""
-        # Pop both results and quiz screens to get back to setup
-        # Then pop setup to get to main menu
-        self.app.pop_screen()  # This screen (results)
+        # Pop results and setup screens (quiz used switch_screen)
+        self.app.pop_screen()  # Results screen
         self.app.pop_screen()  # Setup screen
 
-    def action_try_again(self) -> None:
-        """Start a new quiz with same settings."""
-        # Just pop this screen to go back to setup
-        self.app.pop_screen()
+    def action_new_quiz(self) -> None:
+        """Go to quiz setup to start a new quiz."""
+        # Pop results screen to get back to setup (quiz used switch_screen)
+        self.app.pop_screen()  # Results screen

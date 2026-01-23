@@ -9,6 +9,9 @@ TOPICS: List[str] = [
     "pot_odds",
     "hand_strength",
     "position",
+    "postflop",
+    "game_theory",
+    "tournament",
 ]
 
 # Valid difficulty levels
@@ -16,6 +19,7 @@ DIFFICULTIES: List[str] = [
     "beginner",
     "intermediate",
     "advanced",
+    "elite",
 ]
 
 # Valid question types
@@ -25,6 +29,26 @@ QUESTION_TYPES: List[str] = [
     "hand_strength",
     "pot_odds",
     "position_open",
+    "postflop_action",
+    "board_texture_analysis",
+    "blocker_logic",
+    "sizing_strategy",
+    "icm_logic",
+    "range_interaction",
+    "4bet_theory",
+    "equity_realization",
+    "mixed_strategies",
+    "node_locking",
+    "geometric_sizing",
+    "uncapped_ranges",
+    "protection_betting",
+    "indifference_principle",
+    "multiway_dynamics",
+    "range_merging",
+    "solver_logic",
+    "postflop_theory",
+    "advanced_icm",
+    "range_construction",
 ]
 
 # Required fields for a valid question
@@ -180,6 +204,8 @@ def _format_cards(text: str) -> str:
     Returns:
         Text with Unicode suit symbols
     """
+    import re
+
     # Replace suit letters with symbols
     replacements = [
         ("s", "\u2660"),  # Spades
@@ -190,12 +216,10 @@ def _format_cards(text: str) -> str:
 
     result = text
     for letter, symbol in replacements:
-        # Only replace suit indicators (after rank)
-        import re
-
-        # Match rank followed by suit letter
+        # Match rank followed by suit letter, requiring space/boundary before rank
+        # This prevents "with" -> "wit♥" and "76s" -> "76♠"
         result = re.sub(
-            rf"([AKQJT2-9])({letter})\b",
+            rf"(?<![a-zA-Z0-9])([AKQJT2-9])({letter})\b",
             rf"\1{symbol}",
             result,
             flags=re.IGNORECASE,
