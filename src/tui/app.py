@@ -115,7 +115,9 @@ class PokerCoachApp(App):
 
     def action_mode_3(self) -> None:
         """Open Mode 3: Quiz System."""
-        self.notify("Mode 3: Quiz System (Coming soon!)")
+        from .screens import Mode3SetupScreen
+
+        self.push_screen(Mode3SetupScreen())
 
     def action_mode_4(self) -> None:
         """Open Mode 4: Session Tracker."""
