@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 1.2
-> **Last Updated**: 2026-01-17
-> **Status**: Active Development - Mode 1 Complete, Mode 2 Complete
+> **Version**: 1.3
+> **Last Updated**: 2026-01-19
+> **Status**: Active Development - Mode 1, Mode 2, Mode 3 Complete
 
 ## Project Vision
 
@@ -236,24 +236,31 @@ def parse_range(range_notation: str) -> dict:
 
 ---
 
-### Mode 3: Quiz System
+### Mode 3: Quiz System ✅ COMPLETE
 
 **Purpose**: Interactive learning through scenario-based quizzes
 
 **TUI Interface**:
-- Topic/difficulty selector menu
-- Full-screen quiz interface with scenario display
-- Interactive answer selection
-- Immediate feedback with explanations
-- Progress tracking with visual indicators
-- Stats dashboard with performance breakdown
+- Topic/difficulty selector menu ✅
+- Full-screen quiz interface with scenario display ✅
+- Interactive answer selection (A/B/C/D buttons + keyboard shortcuts) ✅
+- Immediate feedback with explanations ✅
+- Progress tracking with visual indicators ✅
+- Results screen with performance breakdown by topic/difficulty ✅
 
 **Features**:
-- Interactive quiz sessions with immediate feedback
-- Multiple question types (preflop, range ID, multi-way, postflop)
-- Difficulty levels (beginner, intermediate, advanced)
-- Performance tracking and spaced repetition
-- Visual progress bars and statistics
+- Interactive quiz sessions with immediate feedback ✅
+- Multiple question types (preflop_action, range_check, hand_strength, pot_odds, position_open) ✅
+- Difficulty levels (beginner, intermediate, advanced) ✅
+- 35 starter questions across 5 topics ✅
+- Performance tracking with SQLite persistence ✅
+- Study leak identification (find weak areas) ✅
+
+**Core Classes**: `QuizEngine`, question validation/formatting utilities
+**TUI Screens**: `Mode3SetupScreen`, `Mode3QuizScreen`, `Mode3ResultsScreen`
+**Database Models**: `QuizAttempt`, `QuizSession`
+**Data**: `data/quiz_bank.json`
+**Tests**: `test_engine.py`, `test_questions.py`, `test_service.py`
 
 **Rich Output Example**:
 ```
@@ -267,13 +274,13 @@ def parse_range(range_notation: str) -> dict:
 │  Your Hand: Q♠ J♠                                       │
 │                                                          │
 │  What should you do?                                     │
-│  [1] Fold                                               │
-│  [2] Call                                               │
-│  [3] 3-bet                                              │
+│  [A] Fold                                               │
+│  [B] Call                                               │
+│  [C] 3-bet                                              │
 │                                                          │
 └─────────────────────────────────────────────────────────┘
 
-Your answer: 2
+Your answer: B
 
 ✅ Correct! QJs is in BB's calling range vs BTN.
 
@@ -290,9 +297,25 @@ quiz_attempts (
     user_answer, correct_answer, is_correct,
     time_taken, difficulty, topic, created_at
 )
+
+quiz_sessions (
+    id, user_id, topic, difficulty,
+    total_questions, correct_answers,
+    time_total, created_at
+)
 ```
 
-**Tool Signatures** (for Agent):
+**Service Functions** (for persistence):
+```python
+def save_quiz_attempt(attempt: dict, user_id: int = 1) -> int
+def save_quiz_session(results: dict, topic: str, difficulty: str) -> int
+def get_quiz_stats(user_id: int, topic: str = None, days: int = 30) -> dict
+def identify_study_leaks(user_id: int, min_attempts: int = 5) -> list
+def get_recent_sessions(user_id: int, limit: int = 10) -> list
+def get_question_performance(user_id: int, question_id: str = None) -> dict
+```
+
+**Tool Signatures** (for Agent - pending):
 ```python
 @tool
 def get_quiz_stats(user_id: int, topic: str = None) -> dict:
@@ -908,12 +931,16 @@ def evaluate_hand(hero_hand: str, board: str) -> dict:
 ## Next Steps
 
 1. ✅ Dependencies installed (uv)
-2. ⏳ Create project structure
-3. ⏳ Implement Hand Evaluator (core + CLI + tool)
-4. ⏳ Build remaining modes
-5. ⏳ Integrate LangChain agent
-6. ⏳ Polish with Rich
+2. ✅ Project structure created
+3. ✅ Mode 1: Hand Evaluator & Spot Analyzer (core + TUI)
+4. ✅ Mode 2: Range Tools (core + TUI)
+5. ✅ Mode 3: Quiz System (core + TUI + database)
+6. ⏳ Mode 4: Session Tracker
+7. ⏳ Mode 5: Hand History Manager
+8. ⏳ Mode 6: AI Agent Coach
+9. ⏳ Convert modes to LangChain tools
+10. ⏳ Integrate LangChain agent
 
 ---
 
-**This charter is the source of truth for the project. All implementation decisions should align with this CLI-focused architecture.**
+**This charter is the source of truth for the project. All implementation decisions should align with this TUI-focused architecture.**
