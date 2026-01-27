@@ -1,7 +1,7 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 1.3
-> **Last Updated**: 2026-01-19
+> **Version**: 1.4
+> **Last Updated**: 2026-01-26
 > **Status**: Active Development - Mode 1, Mode 2, Mode 3 Complete
 
 ## Project Vision
@@ -250,11 +250,12 @@ def parse_range(range_notation: str) -> dict:
 
 **Features**:
 - Interactive quiz sessions with immediate feedback ✅
-- Multiple question types (preflop_action, range_check, hand_strength, pot_odds, position_open) ✅
-- Difficulty levels (beginner, intermediate, advanced) ✅
-- 35 starter questions across 5 topics ✅
+- Multiple question types (preflop_action, range_check, hand_strength, pot_odds, position_open, postflop_action, and more) ✅
+- Difficulty levels (beginner, intermediate, advanced, elite) ✅
+- 80 questions across 8 topics (preflop, ranges, pot_odds, hand_strength, position, postflop, game_theory, tournament) ✅
 - Performance tracking with SQLite persistence ✅
 - Study leak identification (find weak areas) ✅
+- Results screen with incorrect answer review ✅
 
 **Core Classes**: `QuizEngine`, question validation/formatting utilities
 **TUI Screens**: `Mode3SetupScreen`, `Mode3QuizScreen`, `Mode3ResultsScreen`
