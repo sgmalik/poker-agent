@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 1.4
-> **Last Updated**: 2026-01-26
-> **Status**: Active Development - Mode 1, Mode 2, Mode 3 Complete
+> **Version**: 1.6
+> **Last Updated**: 2026-01-28
+> **Status**: Active Development - Mode 1, Mode 2, Mode 3, Mode 4 Complete
 
 ## Project Vision
 
@@ -329,23 +329,32 @@ def identify_study_leaks(user_id: int) -> list:
 
 ---
 
-### Mode 4: Session Tracker
+### Mode 4: Session Tracker ✅ COMPLETE
 
 **Purpose**: Track poker sessions, bankroll, and results
 
 **TUI Interface**:
-- Session entry form with validation
-- Session history table with filtering/sorting
-- Stats dashboard with graphs and charts
-- Bankroll progression visualization
-- Quick-entry mode for fast logging
+- Session entry form with validation ✅
+- Session history table with filtering/sorting ✅
+- Stats dashboard with graphs and charts ✅
+- Bankroll progression visualization ✅
+- Menu screen with quick stats ✅
 
 **Features**:
-- Session logging (interactive prompts for entry)
-- Bankroll tracking with graphs (ASCII charts)
-- Win rate calculations (bb/100, $/hour)
-- Variance analysis
-- Beautiful tables for session history
+- Session logging (interactive form with validation) ✅
+- Bankroll tracking with plotext graphs (braille characters for smooth curves) ✅
+- Win rate calculations (bb/100, $/hour) ✅
+- Variance analysis and max drawdown calculation ✅
+- Streak tracking (current and longest win/loss streaks) ✅
+- Bankroll health analysis with recommendations ✅
+- Session filtering by date range and stake level ✅
+- Beautiful tables for session history ✅
+- All-time view with `days=0` parameter ✅
+
+**Core Classes**: `PokerSession` (model), session service functions
+**TUI Screens**: `Mode4MenuScreen`, `Mode4EntryScreen`, `Mode4HistoryScreen`, `Mode4StatsScreen`
+**Core Logic**: `session_tracker.py` (variance, drawdown, health analysis, streaks, plotext graphs with `uncolorize()` for Textual compatibility)
+**Tests**: `test_session_service.py`, `test_session_tracker.py` (isolated with `TEST_USER_ID=99999` to preserve user data)
 
 **Rich Output Example**:
 ```
@@ -936,7 +945,7 @@ def evaluate_hand(hero_hand: str, board: str) -> dict:
 3. ✅ Mode 1: Hand Evaluator & Spot Analyzer (core + TUI)
 4. ✅ Mode 2: Range Tools (core + TUI)
 5. ✅ Mode 3: Quiz System (core + TUI + database)
-6. ⏳ Mode 4: Session Tracker
+6. ✅ Mode 4: Session Tracker (core + TUI + database)
 7. ⏳ Mode 5: Hand History Manager
 8. ⏳ Mode 6: AI Agent Coach
 9. ⏳ Convert modes to LangChain tools
