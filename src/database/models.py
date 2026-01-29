@@ -120,3 +120,50 @@ class QuizSession(Base):
 
     def __repr__(self) -> str:
         return f"<QuizSession(id={self.id}, score={self.correct_answers}/{self.total_questions})>"
+
+
+class HandHistory(Base):
+    """Model for storing individual hand histories."""
+
+    __tablename__ = "hand_histories"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, default=1, nullable=False)
+    hero_hand = Column(String(10), nullable=False)  # "As Kh"
+    board = Column(String(25), nullable=True)  # "Qh Jh 2c 5d 9s"
+    position = Column(String(5), nullable=False)  # BTN, CO, etc.
+    action_summary = Column(Text, nullable=True)  # "Raised pre, c-bet..."
+    result = Column(String(10), nullable=False)  # won, lost, split
+    stake_level = Column(String(10), nullable=True)  # "1/2", "NL50"
+    pot_size = Column(Float, nullable=True)
+    tags = Column(Text, nullable=True)  # Comma-separated
+    notes = Column(Text, nullable=True)
+    hand_text = Column(Text, nullable=True)  # Full hand narrative
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
+
+    @property
+    def tag_list(self) -> list[str]:
+        """Return tags as a list."""
+        if not self.tags:
+            return []
+        return [t.strip() for t in cast(str, self.tags).split(",") if t.strip()]
+
+    @property
+    def street(self) -> str:
+        """Determine which street the hand reached based on board cards."""
+        if not self.board:
+            return "preflop"
+        board_str = cast(str, self.board).strip()
+        cards = [c.strip() for c in board_str.split() if c.strip()]
+        if len(cards) == 3:
+            return "flop"
+        elif len(cards) == 4:
+            return "turn"
+        elif len(cards) == 5:
+            return "river"
+        return "preflop"
+
+    def __repr__(self) -> str:
+        return f"<HandHistory(id={self.id}, hero_hand='{self.hero_hand}', result='{self.result}')>"
