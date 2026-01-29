@@ -121,7 +121,9 @@ class PokerCoachApp(App):
 
     def action_mode_4(self) -> None:
         """Open Mode 4: Session Tracker."""
-        self.notify("Mode 4: Session Tracker (Coming soon!)")
+        from .screens import Mode4MenuScreen
+
+        self.push_screen(Mode4MenuScreen())
 
     def action_mode_5(self) -> None:
         """Open Mode 5: Hand History Manager."""
