@@ -4,6 +4,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Container
 from textual.widgets import Header, Footer, Button, Static
 from textual.binding import Binding
+from .screens import Mode1InputScreen, Mode2InputScreen, Mode3SetupScreen, Mode4MenuScreen
 
 
 class WelcomeScreen(Static):
@@ -103,25 +104,23 @@ class PokerCoachApp(App):
 
     def action_mode_1(self) -> None:
         """Open Mode 1: Hand Evaluator & Spot Analyzer."""
-        from .screens import Mode1InputScreen
 
         self.push_screen(Mode1InputScreen())
 
     def action_mode_2(self) -> None:
         """Open Mode 2: Range Tools."""
-        from .screens import Mode2InputScreen
 
         self.push_screen(Mode2InputScreen())
 
     def action_mode_3(self) -> None:
         """Open Mode 3: Quiz System."""
-        from .screens import Mode3SetupScreen
 
         self.push_screen(Mode3SetupScreen())
 
     def action_mode_4(self) -> None:
         """Open Mode 4: Session Tracker."""
-        self.notify("Mode 4: Session Tracker (Coming soon!)")
+
+        self.push_screen(Mode4MenuScreen())
 
     def action_mode_5(self) -> None:
         """Open Mode 5: Hand History Manager."""
