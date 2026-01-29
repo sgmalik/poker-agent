@@ -4,7 +4,12 @@ from textual.app import App, ComposeResult
 from textual.containers import Container
 from textual.widgets import Header, Footer, Button, Static
 from textual.binding import Binding
-from .screens import Mode1InputScreen, Mode2InputScreen, Mode3SetupScreen, Mode4MenuScreen
+from .screens import (
+    Mode1InputScreen,
+    Mode2InputScreen,
+    Mode3SetupScreen,
+    Mode4MenuScreen,
+)
 
 
 class WelcomeScreen(Static):
