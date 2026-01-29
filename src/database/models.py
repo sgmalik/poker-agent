@@ -3,9 +3,71 @@
 from datetime import datetime, timezone
 from typing import cast
 
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, Text
+from sqlalchemy import Boolean, Column, DateTime, Float, Integer, String, Text
 
 from .db import Base
+
+
+class PokerSession(Base):
+    """Model for storing poker session records."""
+
+    __tablename__ = "poker_sessions"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, default=1, nullable=False)
+    date = Column(DateTime, nullable=False)
+    stake_level = Column(String(20), nullable=False)  # e.g., "1/2", "2/5", "NL50"
+    buy_in = Column(Float, nullable=False)
+    cash_out = Column(Float, nullable=False)
+    profit_loss = Column(Float, nullable=False)
+    duration_minutes = Column(Integer, nullable=True)
+    hands_played = Column(Integer, nullable=True)
+    location = Column(String(100), nullable=True)  # e.g., "Bellagio", "PokerStars"
+    game_type = Column(String(20), default="cash", nullable=False)  # cash, tournament
+    notes = Column(Text, nullable=True)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
+    )
+
+    @property
+    def hourly_rate(self) -> float | None:
+        """Calculate hourly profit rate."""
+        duration = cast(int, self.duration_minutes) if self.duration_minutes else 0
+        profit = cast(float, self.profit_loss) if self.profit_loss else 0.0
+        if duration <= 0:
+            return None
+        return profit / (duration / 60)
+
+    @property
+    def bb_per_hour(self) -> float | None:
+        """Calculate big blinds per hour (requires stake parsing)."""
+        duration = cast(int, self.duration_minutes) if self.duration_minutes else 0
+        profit = cast(float, self.profit_loss) if self.profit_loss else 0.0
+        stake = cast(str, self.stake_level) if self.stake_level else ""
+
+        if duration <= 0 or not stake:
+            return None
+
+        # Parse stake level to get big blind
+        try:
+            if "/" in stake:
+                # Format: "1/2" or "2/5"
+                bb = float(stake.split("/")[1])
+            elif stake.upper().startswith("NL"):
+                # Format: "NL50" means $0.50 BB
+                bb = float(stake[2:]) / 100
+            else:
+                return None
+
+            hours = duration / 60
+            return (profit / bb) / hours
+        except (ValueError, IndexError):
+            return None
+
+    def __repr__(self) -> str:
+        return (
+            f"<PokerSession(id={self.id}, date={self.date}, profit={self.profit_loss})>"
+        )
 
 
 class QuizAttempt(Base):
