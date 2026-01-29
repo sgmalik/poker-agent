@@ -31,6 +31,3 @@ local/
 
 # ruff
 .ruff_cache/
-
-# Sessions
-Sessions/*
