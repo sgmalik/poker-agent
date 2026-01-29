@@ -7,6 +7,10 @@ from .mode2_matrix import Mode2MatrixScreen
 from .mode3_setup import Mode3SetupScreen
 from .mode3_quiz import Mode3QuizScreen
 from .mode3_results import Mode3ResultsScreen
+from .mode4_menu import Mode4MenuScreen
+from .mode4_entry import Mode4EntryScreen
+from .mode4_history import Mode4HistoryScreen
+from .mode4_stats import Mode4StatsScreen
 
 __all__ = [
     "Mode1InputScreen",
@@ -16,4 +20,8 @@ __all__ = [
     "Mode3SetupScreen",
     "Mode3QuizScreen",
     "Mode3ResultsScreen",
+    "Mode4MenuScreen",
+    "Mode4EntryScreen",
+    "Mode4HistoryScreen",
+    "Mode4StatsScreen",
 ]
