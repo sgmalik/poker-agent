@@ -27,6 +27,7 @@ local/
 *.db
 *.sqlite
 *.sqlite3
+data/poker_coach.db
 
 # UV
 .python-version
@@ -39,3 +40,4 @@ local/
 
 # Sessions
 Sessions/*
+.coverage
