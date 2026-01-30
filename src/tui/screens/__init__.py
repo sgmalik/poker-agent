@@ -11,6 +11,11 @@ from .mode4_menu import Mode4MenuScreen
 from .mode4_entry import Mode4EntryScreen
 from .mode4_history import Mode4HistoryScreen
 from .mode4_stats import Mode4StatsScreen
+from .mode5_menu import Mode5MenuScreen
+from .mode5_entry import Mode5EntryScreen
+from .mode5_history import Mode5HistoryScreen
+from .mode5_detail import Mode5DetailScreen
+from .mode6_chat import Mode6ChatScreen
 
 __all__ = [
     "Mode1InputScreen",
@@ -24,4 +29,9 @@ __all__ = [
     "Mode4EntryScreen",
     "Mode4HistoryScreen",
     "Mode4StatsScreen",
+    "Mode5MenuScreen",
+    "Mode5EntryScreen",
+    "Mode5HistoryScreen",
+    "Mode5DetailScreen",
+    "Mode6ChatScreen",
 ]

@@ -3,8 +3,12 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional, cast
 
+import csv
+import io
+import json
+
 from .db import SessionLocal
-from .models import PokerSession, QuizAttempt, QuizSession
+from .models import HandHistory, PokerSession, QuizAttempt, QuizSession
 
 
 def save_quiz_attempt(attempt: Dict[str, Any], user_id: int = 1) -> int:
@@ -661,3 +665,447 @@ def update_poker_session(
         return True
     finally:
         db.close()
+
+
+# ============================================================================
+# Hand History Functions
+# ============================================================================
+
+
+def save_hand_history(hand_data: Dict[str, Any], user_id: int = 1) -> int:
+    """
+    Save a hand history to the database.
+
+    Args:
+        hand_data: Dict with hero_hand, board, position, action_summary,
+                  result, stake_level, pot_size, tags, notes, hand_text
+        user_id: User ID (default 1 for single-user mode)
+
+    Returns:
+        ID of created hand history record
+    """
+    db = SessionLocal()
+    try:
+        # Handle tags - convert list to comma-separated string
+        tags = hand_data.get("tags")
+        if isinstance(tags, list):
+            tags = ", ".join(tags)
+
+        db_hand = HandHistory(
+            user_id=user_id,
+            hero_hand=hand_data.get("hero_hand", ""),
+            board=hand_data.get("board"),
+            position=hand_data.get("position", ""),
+            action_summary=hand_data.get("action_summary"),
+            result=hand_data.get("result", ""),
+            stake_level=hand_data.get("stake_level"),
+            pot_size=hand_data.get("pot_size"),
+            tags=tags,
+            notes=hand_data.get("notes"),
+            hand_text=hand_data.get("hand_text"),
+        )
+        db.add(db_hand)
+        db.commit()
+        db.refresh(db_hand)
+        return cast(int, db_hand.id)
+    finally:
+        db.close()
+
+
+def get_hand_histories(
+    user_id: int = 1,
+    days: int = 0,
+    tags: Optional[List[str]] = None,
+    result: Optional[str] = None,
+    position: Optional[str] = None,
+    stake_level: Optional[str] = None,
+    limit: int = 100,
+) -> List[Dict[str, Any]]:
+    """
+    Get hand histories for a user with optional filters.
+
+    Args:
+        user_id: User ID
+        days: Number of days to look back (0 for all time)
+        tags: Filter by tags (any match)
+        result: Filter by result (won, lost, split)
+        position: Filter by position
+        stake_level: Filter by stake level
+        limit: Maximum records to return
+
+    Returns:
+        List of hand history records as dicts
+    """
+    db = SessionLocal()
+    try:
+        query = db.query(HandHistory).filter(HandHistory.user_id == user_id)
+
+        if days > 0:
+            cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+            query = query.filter(HandHistory.created_at >= cutoff)
+
+        if result:
+            query = query.filter(HandHistory.result == result)
+
+        if position:
+            query = query.filter(HandHistory.position == position)
+
+        if stake_level:
+            query = query.filter(HandHistory.stake_level == stake_level)
+
+        hands = query.order_by(HandHistory.created_at.desc()).limit(limit).all()
+
+        # Filter by tags in Python (SQLite doesn't have good array support)
+        if tags:
+            filtered_hands = []
+            for h in hands:
+                hand_tags = h.tag_list
+                if any(t in hand_tags for t in tags):
+                    filtered_hands.append(h)
+            hands = filtered_hands
+
+        return [
+            {
+                "id": h.id,
+                "hero_hand": h.hero_hand,
+                "board": h.board,
+                "position": h.position,
+                "action_summary": h.action_summary,
+                "result": h.result,
+                "stake_level": h.stake_level,
+                "pot_size": h.pot_size,
+                "tags": h.tag_list,
+                "notes": h.notes,
+                "hand_text": h.hand_text,
+                "street": h.street,
+                "created_at": h.created_at.isoformat() if h.created_at else None,
+            }
+            for h in hands
+        ]
+    finally:
+        db.close()
+
+
+def get_hand_history_by_id(
+    hand_id: int,
+    user_id: int = 1,
+) -> Optional[Dict[str, Any]]:
+    """
+    Get a single hand history by ID.
+
+    Args:
+        hand_id: Hand history ID
+        user_id: User ID (for verification)
+
+    Returns:
+        Hand history as dict, or None if not found
+    """
+    db = SessionLocal()
+    try:
+        hand = (
+            db.query(HandHistory)
+            .filter(
+                HandHistory.id == hand_id,
+                HandHistory.user_id == user_id,
+            )
+            .first()
+        )
+
+        if not hand:
+            return None
+
+        return {
+            "id": hand.id,
+            "hero_hand": hand.hero_hand,
+            "board": hand.board,
+            "position": hand.position,
+            "action_summary": hand.action_summary,
+            "result": hand.result,
+            "stake_level": hand.stake_level,
+            "pot_size": hand.pot_size,
+            "tags": hand.tag_list,
+            "notes": hand.notes,
+            "hand_text": hand.hand_text,
+            "street": hand.street,
+            "created_at": hand.created_at.isoformat() if hand.created_at else None,
+        }
+    finally:
+        db.close()
+
+
+def update_hand_history(
+    hand_id: int,
+    updates: Dict[str, Any],
+    user_id: int = 1,
+) -> bool:
+    """
+    Update a hand history.
+
+    Args:
+        hand_id: ID of the hand to update
+        updates: Dict with fields to update
+        user_id: User ID (for verification)
+
+    Returns:
+        True if updated, False if not found
+    """
+    db = SessionLocal()
+    try:
+        hand = (
+            db.query(HandHistory)
+            .filter(
+                HandHistory.id == hand_id,
+                HandHistory.user_id == user_id,
+            )
+            .first()
+        )
+
+        if not hand:
+            return False
+
+        allowed_fields = {
+            "hero_hand",
+            "board",
+            "position",
+            "action_summary",
+            "result",
+            "stake_level",
+            "pot_size",
+            "tags",
+            "notes",
+            "hand_text",
+        }
+
+        for field, value in updates.items():
+            if field in allowed_fields:
+                # Convert tag list to comma-separated string
+                if field == "tags" and isinstance(value, list):
+                    value = ", ".join(value)
+                setattr(hand, field, value)
+
+        db.commit()
+        return True
+    finally:
+        db.close()
+
+
+def delete_hand_history(hand_id: int, user_id: int = 1) -> bool:
+    """
+    Delete a hand history.
+
+    Args:
+        hand_id: ID of the hand to delete
+        user_id: User ID (for verification)
+
+    Returns:
+        True if deleted, False if not found
+    """
+    db = SessionLocal()
+    try:
+        hand = (
+            db.query(HandHistory)
+            .filter(
+                HandHistory.id == hand_id,
+                HandHistory.user_id == user_id,
+            )
+            .first()
+        )
+
+        if not hand:
+            return False
+
+        db.delete(hand)
+        db.commit()
+        return True
+    finally:
+        db.close()
+
+
+def get_hand_history_stats(
+    user_id: int = 1,
+    days: int = 30,
+) -> Dict[str, Any]:
+    """
+    Get aggregated hand history statistics.
+
+    Args:
+        user_id: User ID
+        days: Number of days to look back (0 for all time)
+
+    Returns:
+        Dict with total_hands, wins, losses, splits, win_rate,
+        by_position, by_tag, common_tags
+    """
+    db = SessionLocal()
+    try:
+        query = db.query(HandHistory).filter(HandHistory.user_id == user_id)
+
+        if days > 0:
+            cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+            query = query.filter(HandHistory.created_at >= cutoff)
+
+        hands = query.all()
+
+        if not hands:
+            return {
+                "total_hands": 0,
+                "wins": 0,
+                "losses": 0,
+                "splits": 0,
+                "win_rate": 0.0,
+                "by_position": {},
+                "by_tag": {},
+                "common_tags": [],
+            }
+
+        total = len(hands)
+        wins = sum(1 for h in hands if h.result == "won")
+        losses = sum(1 for h in hands if h.result == "lost")
+        splits = sum(1 for h in hands if h.result == "split")
+
+        # By position
+        by_position: Dict[str, Dict[str, int]] = {}
+        for h in hands:
+            pos = cast(str, h.position) if h.position else "Unknown"
+            if pos not in by_position:
+                by_position[pos] = {"total": 0, "won": 0, "lost": 0}
+            by_position[pos]["total"] += 1
+            if h.result == "won":
+                by_position[pos]["won"] += 1
+            elif h.result == "lost":
+                by_position[pos]["lost"] += 1
+
+        # By tag
+        by_tag: Dict[str, Dict[str, int]] = {}
+        tag_counts: Dict[str, int] = {}
+        for h in hands:
+            for tag in h.tag_list:
+                if tag not in by_tag:
+                    by_tag[tag] = {"total": 0, "won": 0, "lost": 0}
+                by_tag[tag]["total"] += 1
+                if h.result == "won":
+                    by_tag[tag]["won"] += 1
+                elif h.result == "lost":
+                    by_tag[tag]["lost"] += 1
+                tag_counts[tag] = tag_counts.get(tag, 0) + 1
+
+        # Common tags (sorted by frequency)
+        common_tags = sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+        common_tags = [tag for tag, _ in common_tags]
+
+        return {
+            "total_hands": total,
+            "wins": wins,
+            "losses": losses,
+            "splits": splits,
+            "win_rate": (wins / total * 100) if total > 0 else 0.0,
+            "by_position": by_position,
+            "by_tag": by_tag,
+            "common_tags": common_tags,
+        }
+    finally:
+        db.close()
+
+
+def get_all_tags(user_id: int = 1) -> List[str]:
+    """
+    Get all unique tags used by a user.
+
+    Args:
+        user_id: User ID
+
+    Returns:
+        List of unique tags
+    """
+    db = SessionLocal()
+    try:
+        hands = db.query(HandHistory).filter(HandHistory.user_id == user_id).all()
+
+        all_tags: set[str] = set()
+        for h in hands:
+            all_tags.update(h.tag_list)
+
+        return sorted(all_tags)
+    finally:
+        db.close()
+
+
+def export_hand_histories(
+    user_id: int = 1,
+    days: int = 0,
+    format: str = "json",
+) -> str:
+    """
+    Export hand histories to JSON or CSV format.
+
+    Args:
+        user_id: User ID
+        days: Number of days to look back (0 for all time)
+        format: Export format ("json" or "csv")
+
+    Returns:
+        Exported data as string
+    """
+    hands = get_hand_histories(user_id=user_id, days=days, limit=10000)
+
+    if format == "csv":
+        output = io.StringIO()
+        if hands:
+            # Use all keys from first hand as headers
+            fieldnames = list(hands[0].keys())
+            writer = csv.DictWriter(output, fieldnames=fieldnames)
+            writer.writeheader()
+            for h in hands:
+                # Convert tags list to comma-separated for CSV
+                row = h.copy()
+                row["tags"] = ", ".join(row.get("tags", []))
+                writer.writerow(row)
+        return output.getvalue()
+    else:
+        return json.dumps(hands, indent=2)
+
+
+def import_hand_histories(
+    data: str,
+    format: str = "json",
+    user_id: int = 1,
+) -> int:
+    """
+    Import hand histories from JSON or CSV format.
+
+    Args:
+        data: Import data as string
+        format: Import format ("json" or "csv")
+        user_id: User ID
+
+    Returns:
+        Number of hands imported
+    """
+    imported = 0
+
+    if format == "csv":
+        reader = csv.DictReader(io.StringIO(data))
+        for row in reader:
+            # Parse tags from comma-separated string
+            tags_str = row.get("tags", "")
+            if tags_str:
+                row["tags"] = [t.strip() for t in tags_str.split(",")]
+            else:
+                row["tags"] = []
+
+            # Convert pot_size to float if present
+            if row.get("pot_size"):
+                try:
+                    row["pot_size"] = float(row["pot_size"])
+                except ValueError:
+                    row["pot_size"] = None
+
+            save_hand_history(row, user_id=user_id)
+            imported += 1
+    else:
+        hands = json.loads(data)
+        for hand in hands:
+            save_hand_history(hand, user_id=user_id)
+            imported += 1
+
+    return imported
