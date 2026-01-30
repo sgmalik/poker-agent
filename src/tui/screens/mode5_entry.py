@@ -76,6 +76,12 @@ class Mode5EntryScreen(Screen):
         height: 4;
     }
 
+    .hand_text_area {
+        width: 100%;
+        height: 8;
+        margin-bottom: 1;
+    }
+
     #card_preview {
         text-align: center;
         width: 100%;
@@ -226,8 +232,16 @@ class Mode5EntryScreen(Screen):
                     id="notes_input",
                 )
 
+            # Optional: Hand Text (raw hand history)
+            yield Static("6. Hand Text (optional)", classes="section_title")
+            yield Static(
+                "[dim]Paste full hand history from poker site[/dim]",
+                classes="help_text",
+            )
+            yield TextArea(id="hand_text_input", classes="hand_text_area")
+
             # Optional: Stake and Pot
-            yield Static("6. Additional Info (optional)", classes="section_title")
+            yield Static("7. Additional Info (optional)", classes="section_title")
             with Horizontal(classes="input_group"):
                 yield Static("Stake Level:", classes="label")
                 yield Select(
@@ -363,6 +377,7 @@ class Mode5EntryScreen(Screen):
         self.query_one("#action_input", TextArea).clear()
         self.query_one("#tags_input", Input).value = ""
         self.query_one("#notes_input", TextArea).clear()
+        self.query_one("#hand_text_input", TextArea).clear()
         self.query_one("#pot_input", Input).value = ""
         self.query_one("#card_preview", Static).update("")
         self.query_one("#validation_msg", Static).update("")
@@ -386,6 +401,7 @@ class Mode5EntryScreen(Screen):
         result_select = self.query_one("#result_select", Select)
         tags_str = self.query_one("#tags_input", Input).value.strip()
         notes = self.query_one("#notes_input", TextArea).text.strip()
+        hand_text = self.query_one("#hand_text_input", TextArea).text.strip()
         stake_select = self.query_one("#stake_select", Select)
         pot_str = self.query_one("#pot_input", Input).value.strip()
 
@@ -439,6 +455,7 @@ class Mode5EntryScreen(Screen):
             "result": str(result_select.value),
             "tags": tags,
             "notes": notes or None,
+            "hand_text": hand_text or None,
             "stake_level": (
                 str(stake_select.value)
                 if stake_select.value and stake_select.value != Select.BLANK

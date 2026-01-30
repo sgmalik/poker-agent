@@ -178,6 +178,7 @@ class Mode5HistoryScreen(Screen):
         table.add_column("Stake", key="stake", width=10)
         table.add_column("Tags", key="tags", width=15)
         table.add_column("Notes", key="notes", width=18)
+        table.add_column("Hand Text", key="hand_text", width=20)
 
         # Load initial data
         self._load_hands()
@@ -236,11 +237,17 @@ class Mode5HistoryScreen(Screen):
             else:
                 result_display = "Split"
 
-            # Get stake and notes
+            # Get stake, notes, and hand text
             stake = hand.get("stake_level", "") or "-"
             notes = hand.get("notes", "") or ""
             notes_display = (
                 notes[:16] + ".." if len(notes) > 18 else notes if notes else "-"
+            )
+            hand_text = hand.get("hand_text", "") or ""
+            hand_text_display = (
+                hand_text[:18] + ".."
+                if len(hand_text) > 20
+                else hand_text if hand_text else "-"
             )
 
             table.add_row(
@@ -253,6 +260,7 @@ class Mode5HistoryScreen(Screen):
                 stake,
                 tags_str,
                 notes_display,
+                hand_text_display,
                 key=str(hand.get("id", "")),
             )
 

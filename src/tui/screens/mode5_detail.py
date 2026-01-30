@@ -151,6 +151,15 @@ class Mode5DetailScreen(Screen):
         margin-bottom: 1;
     }
 
+    #hand_text_section {
+        width: 100%;
+        height: auto;
+        padding: 0 1;
+        background: $surface-lighten-1;
+        border: solid $primary-lighten-2;
+        margin-bottom: 1;
+    }
+
     .button_row {
         height: 3;
         align: center middle;
@@ -305,6 +314,12 @@ class Mode5DetailScreen(Screen):
                     with Container(id="notes_section"):
                         yield Static("Notes:", classes="section_title")
                         yield Static(notes, classes="section_content")
+
+                    # Hand Text section (full hand history)
+                    hand_text = self.hand.get("hand_text", "") or "-"
+                    with Container(id="hand_text_section"):
+                        yield Static("Hand Text:", classes="section_title")
+                        yield Static(hand_text, classes="section_content")
 
                 # Buttons (outside scroll area)
                 with Horizontal(classes="button_row"):
