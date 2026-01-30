@@ -10,6 +10,7 @@ from .screens import (
     Mode3SetupScreen,
     Mode4MenuScreen,
     Mode5MenuScreen,
+    Mode6ChatScreen,
 )
 
 
@@ -134,7 +135,7 @@ class PokerCoachApp(App):
 
     def action_mode_6(self) -> None:
         """Open Mode 6: AI Agent Coach."""
-        self.notify("Mode 6: AI Agent Coach (Coming soon!)")
+        self.push_screen(Mode6ChatScreen())
 
 
 def run_app():
