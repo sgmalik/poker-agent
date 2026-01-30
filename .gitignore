@@ -23,6 +23,12 @@ env/
 # User data
 local/
 
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+data/poker_coach.db
+
 # UV
 .python-version
 
