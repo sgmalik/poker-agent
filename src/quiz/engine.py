@@ -11,10 +11,7 @@ from .questions import (
     filter_questions,
     validate_question,
 )
-
-# Default quiz bank file path
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-QUIZ_BANK_FILE = DATA_DIR / "quiz_bank.json"
+from ..config import QUIZ_BANK_FILE
 
 
 class QuizEngine:

@@ -3,7 +3,7 @@
 from typing import Any, Dict, Optional
 from textual.app import ComposeResult
 from textual.screen import Screen
-from textual.containers import Container, Horizontal, Vertical
+from textual.containers import Container, Horizontal, VerticalScroll
 from textual.widgets import Header, Footer, Button, Static
 from textual.binding import Binding
 
@@ -20,25 +20,30 @@ class Mode5DetailScreen(Screen):
     }
 
     #detail_container {
-        width: 80;
-        height: auto;
+        width: 85;
+        height: 95%;
         border: solid $primary;
         background: $surface;
-        padding: 2;
+        padding: 1 2;
     }
 
     #title {
         text-align: center;
         width: 100%;
-        padding: 1;
+        padding: 0 1;
         color: $accent;
         text-style: bold;
+    }
+
+    #scroll_area {
+        height: 1fr;
+        width: 100%;
     }
 
     #hero_hand_display {
         text-align: center;
         width: 100%;
-        padding: 2;
+        padding: 0;
         text-style: bold;
         background: $surface-lighten-1;
         border: solid $primary-lighten-2;
@@ -47,8 +52,8 @@ class Mode5DetailScreen(Screen):
 
     #board_section {
         width: 100%;
-        height: auto;
-        padding: 1;
+        height: 3;
+        padding: 0 1;
         background: $surface-lighten-1;
         border: solid $primary-lighten-2;
         margin-bottom: 1;
@@ -56,37 +61,41 @@ class Mode5DetailScreen(Screen):
 
     .board_street {
         width: 1fr;
+        height: 3;
         text-align: center;
-        padding: 0 1;
+        content-align: center middle;
     }
 
     .street_label {
         color: $text-muted;
         text-align: center;
-        width: 100%;
+        width: auto;
+        margin-right: 1;
     }
 
     .street_cards {
         text-align: center;
-        width: 100%;
+        width: auto;
         text-style: bold;
     }
 
     #info_section {
         width: 100%;
         height: auto;
-        padding: 1;
+        padding: 0 1;
+        background: $surface-lighten-1;
+        border: solid $primary-lighten-2;
         margin-bottom: 1;
     }
 
     .info_row {
         width: 100%;
-        height: auto;
+        height: 1;
         margin-bottom: 0;
     }
 
     .info_label {
-        width: 15;
+        width: 18;
         color: $text-muted;
     }
 
@@ -94,42 +103,38 @@ class Mode5DetailScreen(Screen):
         width: 1fr;
     }
 
-    .info_value.won {
+    .won {
         color: $success;
     }
 
-    .info_value.lost {
+    .lost {
         color: $error;
     }
 
     #tags_section {
         width: 100%;
         height: auto;
-        padding: 1;
+        padding: 0 1;
+        background: $surface-lighten-1;
+        border: solid $primary-lighten-2;
         margin-bottom: 1;
+    }
+
+    .section_title {
+        color: $text-muted;
+        text-style: bold;
     }
 
     .tags_display {
         width: 100%;
     }
 
-    .tag {
-        background: $primary-lighten-2;
-        padding: 0 1;
-        margin-right: 1;
-    }
-
     #action_section {
         width: 100%;
         height: auto;
-        padding: 1;
+        padding: 0 1;
         background: $surface-lighten-1;
         border: solid $primary-lighten-2;
-        margin-bottom: 1;
-    }
-
-    .section_label {
-        color: $text-muted;
         margin-bottom: 1;
     }
 
@@ -140,22 +145,20 @@ class Mode5DetailScreen(Screen):
     #notes_section {
         width: 100%;
         height: auto;
-        padding: 1;
+        padding: 0 1;
         background: $surface-lighten-1;
         border: solid $primary-lighten-2;
         margin-bottom: 1;
     }
 
     .button_row {
-        margin-top: 1;
-        height: auto;
+        height: 3;
         align: center middle;
     }
 
     Button {
         margin: 0 1;
         width: 18;
-        text-align: center;
     }
 
     #not_found {
@@ -181,126 +184,129 @@ class Mode5DetailScreen(Screen):
         """Create child widgets."""
         yield Header()
 
+        # Load hand data
+        self.hand = get_hand_history_by_id(self.hand_id)
+
         with Container(id="detail_container"):
             yield Static("[bold cyan]Hand Details[/bold cyan]", id="title")
-
-            # Load hand data
-            self.hand = get_hand_history_by_id(self.hand_id)
 
             if not self.hand:
                 yield Static("Hand not found", id="not_found")
                 with Horizontal(classes="button_row"):
                     yield Button("Back", id="back_btn", variant="default")
             else:
-                # Hero hand display (large, centered)
-                hero_hand = format_cards(self.hand.get("hero_hand", ""))
-                yield Static(
-                    f"[bold white]{hero_hand}[/bold white]", id="hero_hand_display"
-                )
+                with VerticalScroll(id="scroll_area"):
+                    # Hero hand display (large, centered)
+                    hero_hand = format_cards(self.hand.get("hero_hand", ""))
+                    yield Static(
+                        f"[bold white]{hero_hand}[/bold white]", id="hero_hand_display"
+                    )
 
-                # Board by street
-                board = self.hand.get("board", "")
-                if board:
-                    board_by_street = format_board_by_street(board)
-                    with Horizontal(id="board_section"):
-                        with Vertical(classes="board_street"):
-                            yield Static("Flop", classes="street_label")
+                    # Board by street (compact layout)
+                    board = self.hand.get("board", "")
+                    if board:
+                        board_by_street = format_board_by_street(board)
+                        with Horizontal(id="board_section"):
+                            with Horizontal(classes="board_street"):
+                                yield Static("Flop:", classes="street_label")
+                                yield Static(
+                                    board_by_street.get("flop", "-") or "-",
+                                    classes="street_cards",
+                                )
+                            with Horizontal(classes="board_street"):
+                                yield Static("Turn:", classes="street_label")
+                                yield Static(
+                                    board_by_street.get("turn", "-") or "-",
+                                    classes="street_cards",
+                                )
+                            with Horizontal(classes="board_street"):
+                                yield Static("River:", classes="street_label")
+                                yield Static(
+                                    board_by_street.get("river", "-") or "-",
+                                    classes="street_cards",
+                                )
+
+                    # Info section - always show all fields
+                    with Container(id="info_section"):
+                        # Position
+                        position = self.hand.get("position", "") or "-"
+                        with Horizontal(classes="info_row"):
+                            yield Static("Position:", classes="info_label")
+                            yield Static(position, classes="info_value")
+
+                        # Result
+                        result = self.hand.get("result", "")
+                        if result == "won":
+                            result_display = "[green]Won[/green]"
+                            result_class = "info_value won"
+                        elif result == "lost":
+                            result_display = "[red]Lost[/red]"
+                            result_class = "info_value lost"
+                        elif result:
+                            result_display = result.capitalize()
+                            result_class = "info_value"
+                        else:
+                            result_display = "-"
+                            result_class = "info_value"
+
+                        with Horizontal(classes="info_row"):
+                            yield Static("Result:", classes="info_label")
+                            yield Static(result_display, classes=result_class)
+
+                        # Street
+                        street = self.hand.get("street", "") or "-"
+                        with Horizontal(classes="info_row"):
+                            yield Static("Street:", classes="info_label")
                             yield Static(
-                                board_by_street.get("flop", "-") or "-",
-                                classes="street_cards",
-                            )
-                        with Vertical(classes="board_street"):
-                            yield Static("Turn", classes="street_label")
-                            yield Static(
-                                board_by_street.get("turn", "-") or "-",
-                                classes="street_cards",
-                            )
-                        with Vertical(classes="board_street"):
-                            yield Static("River", classes="street_label")
-                            yield Static(
-                                board_by_street.get("river", "-") or "-",
-                                classes="street_cards",
+                                street.capitalize() if street != "-" else "-",
+                                classes="info_value",
                             )
 
-                # Basic info section
-                with Container(id="info_section"):
-                    # Position
-                    with Horizontal(classes="info_row"):
-                        yield Static("Position:", classes="info_label")
-                        yield Static(
-                            self.hand.get("position", "-"),
-                            classes="info_value",
-                        )
-
-                    # Result
-                    result = self.hand.get("result", "")
-                    result_display = result.capitalize() if result else "-"
-                    result_class = "info_value"
-                    if result == "won":
-                        result_class = "info_value won"
-                        result_display = f"[green]{result_display}[/green]"
-                    elif result == "lost":
-                        result_class = "info_value lost"
-                        result_display = f"[red]{result_display}[/red]"
-
-                    with Horizontal(classes="info_row"):
-                        yield Static("Result:", classes="info_label")
-                        yield Static(result_display, classes=result_class)
-
-                    # Street
-                    with Horizontal(classes="info_row"):
-                        yield Static("Street:", classes="info_label")
-                        yield Static(
-                            self.hand.get("street", "-").capitalize(),
-                            classes="info_value",
-                        )
-
-                    # Stake level (if present)
-                    stake = self.hand.get("stake_level")
-                    if stake:
+                        # Stake level
+                        stake = self.hand.get("stake_level", "") or "-"
                         with Horizontal(classes="info_row"):
                             yield Static("Stakes:", classes="info_label")
                             yield Static(stake, classes="info_value")
 
-                    # Pot size (if present)
-                    pot = self.hand.get("pot_size")
-                    if pot:
+                        # Pot size
+                        pot = self.hand.get("pot_size")
+                        pot_str = f"${pot:,.2f}" if pot else "-"
                         with Horizontal(classes="info_row"):
                             yield Static("Pot Size:", classes="info_label")
-                            yield Static(f"${pot:,.2f}", classes="info_value")
+                            yield Static(pot_str, classes="info_value")
 
-                    # Date
-                    created = self.hand.get("created_at", "")
-                    date_str = created[:10] if created else "-"
-                    with Horizontal(classes="info_row"):
-                        yield Static("Date:", classes="info_label")
-                        yield Static(date_str, classes="info_value")
+                        # Date
+                        created = self.hand.get("created_at", "")
+                        date_str = created[:10] if created else "-"
+                        with Horizontal(classes="info_row"):
+                            yield Static("Date:", classes="info_label")
+                            yield Static(date_str, classes="info_value")
 
-                # Tags section
-                tags = self.hand.get("tags", [])
-                if tags:
+                    # Tags section
+                    tags = self.hand.get("tags", [])
                     with Container(id="tags_section"):
-                        yield Static("Tags:", classes="section_label")
-                        tags_display = " ".join(
-                            f"[on blue] {tag} [/on blue]" for tag in tags
-                        )
-                        yield Static(tags_display, classes="tags_display")
+                        yield Static("Tags:", classes="section_title")
+                        if tags:
+                            tags_display = " ".join(
+                                f"[on blue] {tag} [/on blue]" for tag in tags
+                            )
+                            yield Static(tags_display, classes="tags_display")
+                        else:
+                            yield Static("-", classes="tags_display")
 
-                # Action section
-                action = self.hand.get("action_summary")
-                if action:
+                    # Action section
+                    action = self.hand.get("action_summary", "") or "-"
                     with Container(id="action_section"):
-                        yield Static("Action:", classes="section_label")
+                        yield Static("Action Summary:", classes="section_title")
                         yield Static(action, classes="section_content")
 
-                # Notes section
-                notes = self.hand.get("notes")
-                if notes:
+                    # Notes section
+                    notes = self.hand.get("notes", "") or "-"
                     with Container(id="notes_section"):
-                        yield Static("Notes:", classes="section_label")
+                        yield Static("Notes:", classes="section_title")
                         yield Static(notes, classes="section_content")
 
-                # Buttons
+                # Buttons (outside scroll area)
                 with Horizontal(classes="button_row"):
                     yield Button("Delete", id="delete_btn", variant="error")
                     yield Button("Back", id="back_btn", variant="default")

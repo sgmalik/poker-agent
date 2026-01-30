@@ -1,19 +1,15 @@
 """Poker Coach AI Agent using LangChain and Anthropic Claude."""
 
-import os
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
-from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain.agents import create_agent
 
+from ..config import ANTHROPIC_API_KEY
 from ..tools import ALL_TOOLS
 from .prompts import POKER_COACH_SYSTEM_PROMPT, GREETING_MESSAGE
-
-# Load environment variables
-load_dotenv()
 
 
 @dataclass
@@ -76,7 +72,7 @@ class PokerCoachAgent:
         if self._initialized:
             return self._init_error is None
 
-        api_key = os.getenv("ANTHROPIC_API_KEY")
+        api_key = ANTHROPIC_API_KEY
         if not api_key:
             self._init_error = (
                 "ANTHROPIC_API_KEY not found. Please set it in your .env file."

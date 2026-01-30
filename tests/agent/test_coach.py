@@ -90,7 +90,7 @@ class TestPokerCoachAgent:
         assert stats["total_tokens"] == 0
         assert stats["estimated_cost"] == 0.0
 
-    @patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}, clear=True)
+    @patch("src.agent.coach.ANTHROPIC_API_KEY", None)
     def test_agent_without_api_key(self):
         """Test that agent reports error without API key."""
         agent = PokerCoachAgent()

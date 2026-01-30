@@ -1,15 +1,10 @@
 """GTO preflop range charts and queries."""
 
 import json
-from pathlib import Path
 from typing import Dict, List, Optional, Any
 
 from .range_parser import RANKS, RANK_VALUES, RangeParser
-
-
-# Path to GTO ranges data file
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-GTO_RANGES_FILE = DATA_DIR / "gto_ranges.json"
+from ..config import GTO_RANGES_FILE
 
 
 class GTOCharts:

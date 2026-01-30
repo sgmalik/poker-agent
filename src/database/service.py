@@ -406,6 +406,42 @@ def get_poker_sessions(
         db.close()
 
 
+def get_poker_session_by_id(session_id: int) -> Optional[Dict[str, Any]]:
+    """
+    Get a single poker session by ID.
+
+    Args:
+        session_id: Session ID
+
+    Returns:
+        Session record as dict, or None if not found
+    """
+    db = SessionLocal()
+    try:
+        s = db.query(PokerSession).filter(PokerSession.id == session_id).first()
+        if not s:
+            return None
+
+        return {
+            "id": s.id,
+            "date": s.date.isoformat() if s.date else None,
+            "stake_level": s.stake_level,
+            "buy_in": s.buy_in,
+            "cash_out": s.cash_out,
+            "profit_loss": s.profit_loss,
+            "duration_minutes": s.duration_minutes,
+            "hands_played": s.hands_played,
+            "location": s.location,
+            "game_type": s.game_type,
+            "notes": s.notes,
+            "hourly_rate": s.hourly_rate,
+            "bb_per_hour": s.bb_per_hour,
+            "created_at": s.created_at.isoformat() if s.created_at else None,
+        }
+    finally:
+        db.close()
+
+
 def get_session_stats(
     user_id: int = 1,
     days: int = 30,
