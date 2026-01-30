@@ -103,6 +103,7 @@ class QuizSession(Base):
     topic = Column(String(50), nullable=True)  # None = all topics
     difficulty = Column(String(20), nullable=True)  # None = all difficulties
     total_questions = Column(Integer, nullable=False)
+    questions_attempted = Column(Integer, nullable=True)  # For partial quizzes
     correct_answers = Column(Integer, nullable=False)
     time_total = Column(Integer, nullable=True)  # seconds
     created_at = Column(
@@ -111,12 +112,14 @@ class QuizSession(Base):
 
     @property
     def percentage(self) -> float:
-        """Calculate score percentage."""
-        total = cast(int, self.total_questions) if self.total_questions else 0
+        """Calculate score percentage based on attempted questions."""
+        attempted = (
+            cast(int, self.questions_attempted) if self.questions_attempted else 0
+        )
         correct = cast(int, self.correct_answers) if self.correct_answers else 0
-        if total == 0:
+        if attempted == 0:
             return 0.0
-        return (correct / total) * 100
+        return (correct / attempted) * 100
 
     def __repr__(self) -> str:
         return f"<QuizSession(id={self.id}, score={self.correct_answers}/{self.total_questions})>"

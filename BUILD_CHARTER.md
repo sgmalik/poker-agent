@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 2.1
+> **Version**: 2.2
 > **Last Updated**: 2026-01-30
-> **Status**: Phase 1 Complete - All 6 Modes Implemented + Quiz Expansion
+> **Status**: Phase 1 Complete - All 7 Modes Implemented + Quiz Expansion
 
 ## Project Vision
 
@@ -32,6 +32,7 @@ $ poker-coach
 │  [4] Session Tracker                      │
 │  [5] Hand History Manager                 │
 │  [6] AI Agent Coach                       │
+│  [7] Admin Dashboard                      │
 │                                           │
 └───────────────────────────────────────────┘
 
@@ -626,6 +627,55 @@ while True:
 
 ---
 
+### Mode 7: Admin Dashboard ✅ COMPLETE
+
+**Purpose**: View and manage raw database tables for data administration
+
+**TUI Interface**:
+- Single dynamic screen with table selector dropdown ✅
+- DataTable showing selected database table records ✅
+- Table-specific filter dropdowns (topic, difficulty, result, etc.) ✅
+- Summary statistics panel ✅
+- Delete functionality with confirmation ✅
+
+**Features**:
+- View all 4 database tables: Quiz Attempts, Quiz Sessions, Poker Sessions, Hand Histories ✅
+- Dynamic filter dropdowns based on selected table ✅
+- Table record counts in summary panel ✅
+- Delete records by ID ✅
+- Column-specific formatting (dates, booleans, truncated text) ✅
+- Navigate back to main menu ✅
+
+**Core Classes**: Dynamic table configuration with `TABLE_CONFIG`
+**TUI Screen**: `Mode7AdminScreen`
+**Database Service**: `get_admin_stats`, `get_quiz_attempts`, `get_quiz_sessions_list`, `delete_quiz_attempt`, `delete_quiz_session`
+
+**Rich Output Example**:
+```
+┌─────────────────────────────────────────────────────────┐
+│  Admin Dashboard                                        │
+├─────────────────────────────────────────────────────────┤
+│  Table: [Quiz Attempts ▼]                               │
+│                                                          │
+│  Filters:                                               │
+│  Topic: [All ▼]  Difficulty: [All ▼]  Result: [All ▼]   │
+│                                                          │
+│  ┌──────────────────────────────────────────────────────┐│
+│  │ID │Date      │Question│Topic   │Difficulty│Correct│ ││
+│  ├──────────────────────────────────────────────────────┤│
+│  │1  │2026-01-30│PF001   │preflop │intermediate│Yes   │ ││
+│  │2  │2026-01-30│PS002   │postflop│advanced   │No    │ ││
+│  └──────────────────────────────────────────────────────┘│
+│                                                          │
+│  Summary: 45 quiz attempts, 12 quiz sessions,           │
+│           23 poker sessions, 67 hand histories          │
+│                                                          │
+│  [Delete Selected] [Refresh] [Back]                     │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## Technical Stack
 
 ### Core
@@ -924,10 +974,11 @@ def evaluate_hand(hero_hand: str, board: str) -> dict:
 ## Success Criteria
 
 ### Phase 1 (TUI Application) ✅ COMPLETE
-- ✅ All 6 modes work beautifully in TUI
+- ✅ All 7 modes work beautifully in TUI
 - ✅ Textual/Rich formatting on all output
 - ✅ Interactive prompts are smooth
 - ✅ Database tracks all user data (sessions, quizzes, hands)
+- ✅ Admin dashboard for raw data management
 - ✅ 415+ tests passing with comprehensive coverage
 
 ### Phase 2 (Agent Integration) ✅ COMPLETE
@@ -989,8 +1040,9 @@ def evaluate_hand(hero_hand: str, board: str) -> dict:
 6. ✅ Mode 4: Session Tracker (core + TUI + database)
 7. ✅ Mode 5: Hand History Manager (core + TUI + database)
 8. ✅ Mode 6: AI Agent Coach (agent + TUI)
-9. ✅ Convert modes to LangChain tools (15 tools)
-10. ✅ Integrate LangChain agent with Claude
+9. ✅ Mode 7: Admin Dashboard (TUI + database admin functions)
+10. ✅ Convert modes to LangChain tools (17 tools)
+11. ✅ Integrate LangChain agent with Claude
 
 ### ⏳ Future Enhancements
 - Range-based equity calculator (equity vs opponent ranges)

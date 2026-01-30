@@ -1883,7 +1883,7 @@
 			"type": "postflop_action",
 			"difficulty": "intermediate",
 			"topic": "postflop",
-			"question": "You open BTN with Ah5h, BB calls. Flop: Kd 8c 3s. BB checks. What's your play?",
+			"question": "You open BTN with Ah 5h, BB calls. Flop: Kd 8c 3s. BB checks. What's your play?",
 			"scenario": {
 				"hero_hand": "Ah 5h",
 				"position": "BTN",
@@ -1905,7 +1905,7 @@
 			"type": "postflop_action",
 			"difficulty": "intermediate",
 			"topic": "postflop",
-			"question": "You open CO with QhJh, BB calls. Flop: 9h 8h 2c. BB checks. What's your play?",
+			"question": "You open CO with Qh Jh, BB calls. Flop: 9h 8h 2c. BB checks. What's your play?",
 			"scenario": {
 				"hero_hand": "Qh Jh",
 				"position": "CO",
@@ -1927,7 +1927,7 @@
 			"type": "postflop_action",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You open UTG with AdKd, BTN calls, BB calls. Flop: Jc 7c 4d. BB checks. What's your play?",
+			"question": "You open UTG with Ad Kd, BTN calls, BB calls. Flop: Jc 7c 4d. BB checks. What's your play?",
 			"scenario": {
 				"hero_hand": "Ad Kd",
 				"position": "UTG",
@@ -1948,7 +1948,7 @@
 			"type": "postflop_action",
 			"difficulty": "intermediate",
 			"topic": "postflop",
-			"question": "You 3-bet BTN vs CO with AcQc, CO calls. Flop: Kh 7s 2d. CO checks. What's your play?",
+			"question": "You 3-bet BTN vs CO with Ac Qc, CO calls. Flop: Kh 7s 2d. CO checks. What's your play?",
 			"scenario": {
 				"hero_hand": "Ac Qc",
 				"position": "BTN",
@@ -1969,7 +1969,7 @@
 			"type": "postflop_action",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You defend BB with Jc9c vs BTN open. Flop: Jh 5s 2d. You check, BTN bets 33%, you call. Turn: 8c. You check, BTN bets 75%. What's your play?",
+			"question": "You defend BB with Jc 9c vs BTN open. Flop: Jh 5s 2d. You check, BTN bets 33%, you call. Turn: 8c. You check, BTN bets 75%. What's your play?",
 			"scenario": {
 				"hero_hand": "Jc 9c",
 				"position": "BB",
@@ -1991,7 +1991,7 @@
 			"type": "postflop_action",
 			"difficulty": "elite",
 			"topic": "postflop",
-			"question": "You defend BB with 6h5h vs CO open. Flop: 9d 7c 2h. Check, CO bets 33%, you call. Turn: Kh. Check, CO bets 66%, you call. River: 3s (board: 9d 7c 2h Kh 3s). CO bets 100% pot. What's your play?",
+			"question": "You defend BB with 6h 5h vs CO open. Flop: 9d 7c 2h. Check, CO bets 33%, you call. Turn: Kh. Check, CO bets 66%, you call. River: 3s (board: 9d 7c 2h Kh 3s). CO bets 100% pot. What's your play?",
 			"scenario": {
 				"hero_hand": "6h 5h",
 				"position": "BB",
@@ -2013,7 +2013,7 @@
 			"type": "postflop_action",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You open BTN with AsKs, BB 3-bets, you call. Flop: Qh 8c 4d. BB bets 33%, you call. Turn: 2s. BB bets 75% pot. What's your play?",
+			"question": "You open BTN with As Ks, BB 3-bets, you call. Flop: Qh 8c 4d. BB bets 33%, you call. Turn: 2s. BB bets 75% pot. What's your play?",
 			"scenario": {
 				"hero_hand": "As Ks",
 				"position": "BTN",
@@ -2035,7 +2035,7 @@
 			"type": "postflop_action",
 			"difficulty": "intermediate",
 			"topic": "postflop",
-			"question": "You defend BB with Kh9h vs CO open. Flop: Kc 6s 3d. You check, CO checks. Turn: Tc. You bet 50% pot, CO calls. River: 2h. What's your sizing?",
+			"question": "You defend BB with Kh 9h vs CO open. Flop: Kc 6s 3d. You check, CO checks. Turn: Tc. You bet 50% pot, CO calls. River: 2h. What's your sizing?",
 			"scenario": {
 				"hero_hand": "Kh 9h",
 				"position": "BB",
@@ -2057,7 +2057,7 @@
 			"type": "postflop_action",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You defend BB with 7h6h vs BTN open. Flop: 8h 5h 2c. You check, BTN bets 33%. What's your play?",
+			"question": "You defend BB with 7h 6h vs BTN open. Flop: 8h 5h 2c. You check, BTN bets 33%. What's your play?",
 			"scenario": {
 				"hero_hand": "7h 6h",
 				"position": "BB",
@@ -2079,7 +2079,7 @@
 			"type": "postflop_action",
 			"difficulty": "elite",
 			"topic": "postflop",
-			"question": "You defend BB with Ac4c vs CO open. Flop: As 7s 4d. You check, CO bets 66%. What's your play?",
+			"question": "You defend BB with Ac 4c vs CO open. Flop: As 7s 4d. You check, CO bets 66%. What's your play?",
 			"scenario": {
 				"hero_hand": "Ac 4c",
 				"position": "BB",
@@ -2101,7 +2101,7 @@
 			"type": "postflop_action",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You open CO with KsQs, BB calls. Flop: Kh 9c 5d. You bet 33%, BB calls. Turn: Jh (bringing flush draw). What's your play?",
+			"question": "You open CO with Ks Qs, BB calls. Flop: Kh 9c 5d. You bet 33%, BB calls. Turn: Jh (bringing flush draw). What's your play?",
 			"scenario": {
 				"hero_hand": "Ks Qs",
 				"position": "CO",
@@ -2123,7 +2123,7 @@
 			"type": "postflop_action",
 			"difficulty": "elite",
 			"topic": "postflop",
-			"question": "You open BTN with 5c5d, BB calls. Flop: Qh 7c 5h. You bet 33%, BB calls. Turn: Th. What's your play?",
+			"question": "You open BTN with 5c 5d, BB calls. Flop: Qh 7c 5h. You bet 33%, BB calls. Turn: Th. What's your play?",
 			"scenario": {
 				"hero_hand": "5c 5d",
 				"position": "BTN",
@@ -2145,7 +2145,7 @@
 			"type": "postflop_action",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You defend BB with Td9d vs BTN open. Flop: Tc 7s 3d. Check, BTN bets 50%, you call. Turn: 2h. Check, BTN checks. River: 6c. What's your play?",
+			"question": "You defend BB with Td 9d vs BTN open. Flop: Tc 7s 3d. Check, BTN bets 50%, you call. Turn: 2h. Check, BTN checks. River: 6c. What's your play?",
 			"scenario": {
 				"hero_hand": "Td 9d",
 				"position": "BB",
@@ -2167,7 +2167,7 @@
 			"type": "postflop_action",
 			"difficulty": "elite",
 			"topic": "postflop",
-			"question": "You 3-bet CO vs BTN with AhKh, BTN calls. Flop: Qc Jc 5h. You bet 33%, BTN calls. Turn: 4d. You bet 66%, BTN calls. River: 8s. Pot is 35bb, you have 55bb behind. What's your play?",
+			"question": "You 3-bet CO vs BTN with Ah Kh, BTN calls. Flop: Qc Jc 5h. You bet 33%, BTN calls. Turn: 4d. You bet 66%, BTN calls. River: 8s. Pot is 35bb, you have 55bb behind. What's your play?",
 			"scenario": {
 				"hero_hand": "Ah Kh",
 				"position": "CO",
@@ -2189,7 +2189,7 @@
 			"type": "sizing_strategy",
 			"difficulty": "advanced",
 			"topic": "postflop",
-			"question": "You have AdAh on Kc 4s 2d against a BB caller. Why is small c-bet sizing (25-33% pot) optimal here?",
+			"question": "You have Ad Ah on Kc 4s 2d against a BB caller. Why is small c-bet sizing (25-33% pot) optimal here?",
 			"scenario": {
 				"hero_hand": "Ad Ah",
 				"position": "BTN",
@@ -2270,7 +2270,7 @@
 			"type": "preflop_action",
 			"difficulty": "elite",
 			"topic": "preflop",
-			"question": "BTN opens 2.5bb, SB folds, you're in BB with 9h8h. What's your play at 100bb effective?",
+			"question": "BTN opens 2.5bb, SB folds, you're in BB with 9h 8h. What's your play at 100bb effective?",
 			"scenario": {
 				"hero_hand": "9h 8h",
 				"position": "BB",
@@ -2290,7 +2290,7 @@
 			"type": "preflop_action",
 			"difficulty": "intermediate",
 			"topic": "preflop",
-			"question": "You open HJ with AdTd, CO 3-bets to 9bb, BTN cold-calls. What's your play?",
+			"question": "You open HJ with Ad Td, CO 3-bets to 9bb, BTN cold-calls. What's your play?",
 			"scenario": {
 				"hero_hand": "Ad Td",
 				"position": "HJ",
@@ -2560,7 +2560,7 @@
 				"Kh 4d 4c"
 			],
 			"answer": "Jh Tc 9c",
-			"explanation": "Connected, wet boards with middle cards favor the BB caller's range. BB defends with suited connectors (QJ, JT, T9, 98, 87) and suited aces with clubs - all of which smash JT9cc. The BTN's range is wider with more random hands and fewer specific combinations. On Kh4d4c or As Kh 7c, BTN has significant overpair and top pair advantages.",
+			"explanation": "Connected, wet boards with middle cards favor the BB caller's range. BB defends with suited connectors (QJ, JT, T9, 98, 87) and suited aces with clubs - all of which smash JT9cc. The BTN's range is wider with more random hands and fewer specific combinations. On Kh 4d 4c or As Kh 7c, BTN has significant overpair and top pair advantages.",
 			"id": "post_040"
 		},
 		{

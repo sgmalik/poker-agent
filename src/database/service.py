@@ -69,6 +69,7 @@ def save_quiz_session(
             topic=topic,
             difficulty=difficulty,
             total_questions=results.get("total", 0),
+            questions_attempted=len(results.get("answers", [])),
             correct_answers=results.get("score", 0),
             time_total=results.get("time_total"),
         )
@@ -1145,3 +1146,201 @@ def import_hand_histories(
             imported += 1
 
     return imported
+
+
+# =============================================================================
+# Admin Functions
+# =============================================================================
+
+
+def get_admin_stats(user_id: int = 1) -> Dict[str, int]:
+    """
+    Get record counts for all database tables.
+
+    Args:
+        user_id: User ID
+
+    Returns:
+        Dict with counts for each table
+    """
+    db = SessionLocal()
+    try:
+        quiz_attempts = (
+            db.query(QuizAttempt).filter(QuizAttempt.user_id == user_id).count()
+        )
+        quiz_sessions = (
+            db.query(QuizSession).filter(QuizSession.user_id == user_id).count()
+        )
+        poker_sessions = (
+            db.query(PokerSession).filter(PokerSession.user_id == user_id).count()
+        )
+        hand_histories = (
+            db.query(HandHistory).filter(HandHistory.user_id == user_id).count()
+        )
+
+        return {
+            "quiz_attempts": quiz_attempts,
+            "quiz_sessions": quiz_sessions,
+            "poker_sessions": poker_sessions,
+            "hand_histories": hand_histories,
+            "total": quiz_attempts + quiz_sessions + poker_sessions + hand_histories,
+        }
+    finally:
+        db.close()
+
+
+def get_quiz_attempts(
+    user_id: int = 1,
+    topic: Optional[str] = None,
+    difficulty: Optional[str] = None,
+    is_correct: Optional[str] = None,
+    limit: int = 100,
+) -> List[Dict[str, Any]]:
+    """
+    Get quiz attempts with optional filters.
+
+    Args:
+        user_id: User ID
+        topic: Filter by topic
+        difficulty: Filter by difficulty
+        is_correct: Filter by result ("correct", "incorrect", or None for all)
+        limit: Maximum number of records
+
+    Returns:
+        List of quiz attempt dicts
+    """
+    db = SessionLocal()
+    try:
+        query = db.query(QuizAttempt).filter(QuizAttempt.user_id == user_id)
+
+        if topic:
+            query = query.filter(QuizAttempt.topic == topic)
+        if difficulty:
+            query = query.filter(QuizAttempt.difficulty == difficulty)
+        if is_correct == "correct":
+            query = query.filter(QuizAttempt.is_correct == True)  # noqa: E712
+        elif is_correct == "incorrect":
+            query = query.filter(QuizAttempt.is_correct == False)  # noqa: E712
+
+        attempts = query.order_by(QuizAttempt.created_at.desc()).limit(limit).all()
+
+        return [
+            {
+                "id": a.id,
+                "question_id": a.question_id,
+                "scenario": a.scenario,
+                "user_answer": a.user_answer,
+                "correct_answer": a.correct_answer,
+                "is_correct": a.is_correct,
+                "time_taken": a.time_taken,
+                "difficulty": a.difficulty,
+                "topic": a.topic,
+                "created_at": a.created_at.isoformat() if a.created_at else None,
+            }
+            for a in attempts
+        ]
+    finally:
+        db.close()
+
+
+def get_quiz_sessions_list(
+    user_id: int = 1,
+    topic: Optional[str] = None,
+    difficulty: Optional[str] = None,
+    limit: int = 100,
+) -> List[Dict[str, Any]]:
+    """
+    Get quiz sessions with optional filters.
+
+    Args:
+        user_id: User ID
+        topic: Filter by topic
+        difficulty: Filter by difficulty
+        limit: Maximum number of records
+
+    Returns:
+        List of quiz session dicts
+    """
+    db = SessionLocal()
+    try:
+        query = db.query(QuizSession).filter(QuizSession.user_id == user_id)
+
+        if topic:
+            query = query.filter(QuizSession.topic == topic)
+        if difficulty:
+            query = query.filter(QuizSession.difficulty == difficulty)
+
+        sessions = query.order_by(QuizSession.created_at.desc()).limit(limit).all()
+
+        return [
+            {
+                "id": s.id,
+                "topic": s.topic or "All",
+                "difficulty": s.difficulty or "All",
+                "total_questions": s.total_questions,
+                "questions_attempted": s.questions_attempted,
+                "correct_answers": s.correct_answers,
+                "percentage": s.percentage,
+                "time_total": s.time_total,
+                "created_at": s.created_at.isoformat() if s.created_at else None,
+            }
+            for s in sessions
+        ]
+    finally:
+        db.close()
+
+
+def delete_quiz_attempt(attempt_id: int, user_id: int = 1) -> bool:
+    """
+    Delete a quiz attempt by ID.
+
+    Args:
+        attempt_id: ID of the attempt to delete
+        user_id: User ID (for security)
+
+    Returns:
+        True if deleted, False otherwise
+    """
+    db = SessionLocal()
+    try:
+        attempt = (
+            db.query(QuizAttempt)
+            .filter(QuizAttempt.id == attempt_id, QuizAttempt.user_id == user_id)
+            .first()
+        )
+
+        if attempt:
+            db.delete(attempt)
+            db.commit()
+            return True
+        return False
+    finally:
+        db.close()
+
+
+def delete_quiz_session(session_id: int, user_id: int = 1) -> bool:
+    """
+    Delete a quiz session by ID.
+
+    Args:
+        session_id: ID of the session to delete
+        user_id: User ID (for security)
+
+    Returns:
+        True if deleted, False otherwise
+    """
+    db = SessionLocal()
+    try:
+        session = (
+            db.query(QuizSession)
+            .filter(QuizSession.id == session_id, QuizSession.user_id == user_id)
+            .first()
+        )
+
+        if session:
+            db.delete(session)
+            db.commit()
+            return True
+        return False
+    finally:
+        db.close()
