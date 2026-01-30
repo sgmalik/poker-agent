@@ -23,6 +23,11 @@ env/
 # User data
 local/
 
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
 # UV
 .python-version
 
