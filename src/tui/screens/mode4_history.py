@@ -8,6 +8,7 @@ from textual.widgets import Header, Footer, Button, Static, Select, DataTable
 from textual.binding import Binding
 
 from ...database.service import get_poker_sessions, delete_poker_session
+from .mode4_detail import Mode4DetailScreen
 
 
 class Mode4HistoryScreen(Screen):
@@ -96,6 +97,7 @@ class Mode4HistoryScreen(Screen):
         Binding("escape", "back", "Back", show=True),
         Binding("r", "refresh", "Refresh", show=True),
         Binding("d", "delete_selected", "Delete", show=True),
+        Binding("enter", "view_selected", "View", show=True),
     ]
 
     def __init__(self) -> None:
@@ -166,6 +168,7 @@ class Mode4HistoryScreen(Screen):
         table.add_column("Duration", key="duration", width=10)
         table.add_column("$/hr", key="hourly", width=10)
         table.add_column("Location", key="location", width=15)
+        table.add_column("Notes", key="notes", width=20)
 
         # Load initial data
         self._load_sessions()
@@ -202,6 +205,8 @@ class Mode4HistoryScreen(Screen):
                     (s, s) for s in sorted(stakes)
                 ]
                 stake_select.set_options(stake_options)
+                # Restore the default value after setting options
+                stake_select.value = "all"
 
             # Populate table
             self._populate_table()
@@ -247,6 +252,10 @@ class Mode4HistoryScreen(Screen):
             else:
                 hourly_str = "-"
 
+            # Get notes and truncate if needed
+            notes = session.get("notes", "") or ""
+            notes_display = notes[:18] + ".." if len(notes) > 20 else notes
+
             table.add_row(
                 date_str,
                 stake,
@@ -256,6 +265,7 @@ class Mode4HistoryScreen(Screen):
                 duration_str,
                 hourly_str,
                 location[:15],
+                notes_display,
                 key=str(session.get("id", "")),
             )
 
@@ -353,3 +363,31 @@ class Mode4HistoryScreen(Screen):
                 self._load_sessions()
             else:
                 self.notify("Failed to delete session", severity="error")
+
+    def _get_selected_session_id(self) -> int | None:
+        """Get the ID of the currently selected session."""
+        table = self.query_one("#table", DataTable)
+
+        if table.cursor_row is None or table.cursor_row < 0:
+            return None
+
+        cursor_row = table.cursor_row
+        if cursor_row >= len(table.rows):
+            return None
+
+        session_key = list(table.rows.keys())[cursor_row]
+        return int(str(session_key.value))
+
+    def action_view_selected(self) -> None:
+        """View the selected session details."""
+        session_id = self._get_selected_session_id()
+        if session_id is None:
+            self.notify("No session selected", severity="warning")
+            return
+
+        self.app.push_screen(Mode4DetailScreen(session_id))
+
+    def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
+        """Handle row selection (double-click or enter)."""
+        session_id = int(str(event.row_key.value))
+        self.app.push_screen(Mode4DetailScreen(session_id))

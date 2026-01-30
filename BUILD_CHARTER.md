@@ -1,8 +1,8 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 1.6
-> **Last Updated**: 2026-01-28
-> **Status**: Active Development - Mode 1, Mode 2, Mode 3, Mode 4 Complete
+> **Version**: 2.1
+> **Last Updated**: 2026-01-30
+> **Status**: Phase 1 Complete - All 6 Modes Implemented + Quiz Expansion
 
 ## Project Vision
 
@@ -252,7 +252,8 @@ def parse_range(range_notation: str) -> dict:
 - Interactive quiz sessions with immediate feedback ✅
 - Multiple question types (preflop_action, range_check, hand_strength, pot_odds, position_open, postflop_action, and more) ✅
 - Difficulty levels (beginner, intermediate, advanced, elite) ✅
-- 80 questions across 8 topics (preflop, ranges, pot_odds, hand_strength, position, postflop, game_theory, tournament) ✅
+- 216 questions across 7 topics (preflop, ranges, pot_odds, hand_strength, position, postflop, game_theory) ✅
+- Focus on situational scenarios that require thinking (intermediate/advanced/elite difficulty weighted)
 - Performance tracking with SQLite persistence ✅
 - Study leak identification (find weak areas) ✅
 - Results screen with incorrect answer review ✅
@@ -411,22 +412,29 @@ def get_bankroll_health(user_id: int) -> dict:
 
 ---
 
-### Mode 5: Hand History Manager
+### Mode 5: Hand History Manager ✅ COMPLETE
 
 **Purpose**: Store and retrieve historical hands
 
 **TUI Interface**:
-- Hand entry wizard with step-by-step prompts
-- Searchable hand library with filters (tags, date, result)
-- Hand detail view with full breakdown
-- Tagging interface
-- Export/import functionality
+- Hand entry form with validation ✅
+- Searchable hand library with filters (tags, date, position, result) ✅
+- Hand detail view with full breakdown ✅
+- Tagging interface (23 predefined tags) ✅
+- Pattern analysis with insights ✅
 
 **Features**:
-- Manual hand entry (interactive prompts)
-- Tagging system (bluff, value, mistake, etc.)
-- Search and filter
-- Display hands with formatting
+- Manual hand entry with validation ✅
+- Tagging system (23 predefined tags: bluff, value, mistake, hero_call, etc.) ✅
+- Search and filter by position, result, tags, date ✅
+- Display hands with formatting ✅
+- Pattern analysis with insights ✅
+- Win rate by position and tag ✅
+- Bluff success rate tracking ✅
+
+**Core Classes**: `HandHistory` (model), `hand_history.py` (validation, formatting, patterns)
+**TUI Screens**: `Mode5MenuScreen`, `Mode5EntryScreen`, `Mode5HistoryScreen`, `Mode5DetailScreen`
+**Tests**: `test_hand_history.py`, `test_hand_history_service.py`
 
 **Rich Output Example**:
 ```
@@ -487,23 +495,36 @@ def analyze_hand_patterns(user_id: int) -> dict:
 
 ---
 
-### Mode 6: AI Agent (Coaching Mode)
+### Mode 6: AI Agent (Coaching Mode) ✅ COMPLETE
 
 **Purpose**: Conversational coach with access to all tools and user data
 
 **TUI Interface**:
-- Full-screen chat interface
-- Message history with syntax highlighting
-- Tool call indicators showing when agent uses tools
-- Cost/token tracking sidebar
-- Command palette for quick actions
+- Full-screen chat interface ✅
+- Message history with role-based formatting (user/assistant/tool/error) ✅
+- Tool call indicators showing when agent uses tools ✅
+- Token/cost tracking in header ✅
+- Clear chat and back navigation ✅
 
 **Features**:
-- Interactive chat interface with Rich formatting
-- Access to all 5 modes as tools
-- Context-aware responses based on user data
-- Multi-turn conversations
-- Cost tracking and token management
+- Interactive chat interface with Textual TUI ✅
+- Access to all 5 modes as LangChain tools (15 tools total) ✅
+- Context-aware responses based on user data ✅
+- Multi-turn conversations with memory ✅
+- Cost tracking and token management ✅
+- Async agent execution with loading indicators ✅
+
+**Core Classes**: `PokerCoachAgent` (src/agent/coach.py)
+**TUI Screens**: `Mode6ChatScreen`
+**Agent Prompts**: `src/agent/prompts.py` (system prompt, greeting message)
+**Tests**: `test_coach.py`, `test_hand_eval_tools.py`, `test_range_tools.py`
+
+**LangChain Tools** (src/tools/):
+- `hand_eval_tools.py`: evaluate_hand, calculate_equity, analyze_spot
+- `range_tools.py`: get_gto_range, list_available_ranges, parse_range, check_hand_in_range
+- `quiz_tools.py`: get_quiz_performance, find_study_leaks, get_recent_quiz_sessions
+- `session_tools.py`: get_session_statistics, get_bankroll_analysis, get_session_history, get_bankroll_progression
+- `history_tools.py`: search_hands, get_hand_statistics, analyze_patterns, list_available_tags
 
 **Rich Output Example**:
 ```
@@ -597,20 +618,25 @@ while True:
 ### Core
 - **Language**: Python 3.12+
 - **Package Manager**: uv
-- **CLI Framework**: Typer
-- **Terminal UI**: Rich (colors, tables, panels, progress bars, charts)
+- **TUI Framework**: Textual (full-screen terminal application)
 - **Database**: SQLite
 - **ORM**: SQLAlchemy
 - **Migrations**: Alembic
 
 ### AI/Agent
-- **Agent Framework**: LangChain
-- **LLM**: Anthropic Claude (Sonnet 4 for coaching, Haiku for simple queries)
+- **Agent Framework**: LangChain (langchain>=1.2.3)
+- **LLM Provider**: langchain-anthropic (Claude Sonnet 4 for coaching)
 - **Tool System**: `@tool` decorator from LangChain
 
 ### Poker
-- **Hand Evaluation**: treys
+- **Hand Evaluation**: treys (bit manipulation for fast evaluation)
 - **Equity Calculation**: Custom Monte Carlo implementation
+
+### Code Quality
+- **Formatting**: black
+- **Linting**: ruff
+- **Type Checking**: pyrefly
+- **Testing**: pytest (415+ tests)
 
 ---
 
@@ -883,19 +909,19 @@ def evaluate_hand(hero_hand: str, board: str) -> dict:
 
 ## Success Criteria
 
-### Phase 1 (Standalone Tools)
-- ✅ All 5 modes work beautifully in CLI
-- ✅ Rich formatting on all output
+### Phase 1 (TUI Application) ✅ COMPLETE
+- ✅ All 6 modes work beautifully in TUI
+- ✅ Textual/Rich formatting on all output
 - ✅ Interactive prompts are smooth
-- ✅ Database tracks all user data
-- ✅ 100% test coverage on poker logic
+- ✅ Database tracks all user data (sessions, quizzes, hands)
+- ✅ 415+ tests passing with comprehensive coverage
 
-### Phase 2 (Agent)
-- ✅ All modes converted to LangChain tools
+### Phase 2 (Agent Integration) ✅ COMPLETE
+- ✅ All modes converted to LangChain tools (15 tools)
 - ✅ Agent uses tools autonomously
 - ✅ Agent provides personalized coaching based on user data
-- ✅ Beautiful chat interface with Rich
-- ✅ Cost tracking works
+- ✅ Beautiful chat interface with Textual TUI
+- ✅ Token/cost tracking works
 
 ---
 
@@ -940,16 +966,23 @@ def evaluate_hand(hero_hand: str, board: str) -> dict:
 
 ## Next Steps
 
+### ✅ Phase 1 Complete
 1. ✅ Dependencies installed (uv)
 2. ✅ Project structure created
 3. ✅ Mode 1: Hand Evaluator & Spot Analyzer (core + TUI)
 4. ✅ Mode 2: Range Tools (core + TUI)
 5. ✅ Mode 3: Quiz System (core + TUI + database)
 6. ✅ Mode 4: Session Tracker (core + TUI + database)
-7. ⏳ Mode 5: Hand History Manager
-8. ⏳ Mode 6: AI Agent Coach
-9. ⏳ Convert modes to LangChain tools
-10. ⏳ Integrate LangChain agent
+7. ✅ Mode 5: Hand History Manager (core + TUI + database)
+8. ✅ Mode 6: AI Agent Coach (agent + TUI)
+9. ✅ Convert modes to LangChain tools (15 tools)
+10. ✅ Integrate LangChain agent with Claude
+
+### ⏳ Future Enhancements
+- Range-based equity calculator (equity vs opponent ranges)
+- Mixed frequency hands with hover tooltips showing percentages
+- Spaced repetition algorithm for quiz system
+- Hand history import/export (PokerStars, GGPoker formats)
 
 ---
 

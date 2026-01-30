@@ -14,16 +14,17 @@ Poker Coach Agent combines advanced poker theory with AI-powered coaching to pro
 - **Session Tracking**: Monitor your results, variance, and bankroll management
 - **AI Coaching**: Get personalized strategic advice from an AI coach trained on GTO principles
 
-## Features (Planned)
+## Features
 
-### Phase 1: CLI Application (Current)
+### Phase 1: TUI Application (Complete)
 - [x] Project structure and documentation
-- [ ] Core poker engine (hand evaluation, equity calculations)
-- [ ] Hand history parser
-- [ ] AI coaching integration
-- [ ] Range management system
-- [ ] Quiz engine
-- [ ] Session and bankroll tracking
+- [x] Core poker engine (hand evaluation, equity calculations, outs, pot odds)
+- [x] Mode 1: Hand Evaluator & Spot Analyzer
+- [x] Mode 2: Range Tools (GTO charts, range parser, 13x13 matrix visualization)
+- [x] Mode 3: Quiz System (80 questions, 8 topics, database persistence)
+- [x] Mode 4: Session Tracker (bankroll graphs, stats dashboard)
+- [x] Mode 5: Hand History Manager (tagging, search, pattern analysis)
+- [x] Mode 6: AI Agent Coach (LangChain integration, tool calling)
 
 ### Phase 2: Backend API
 - [ ] FastAPI REST API
@@ -42,66 +43,72 @@ Poker Coach Agent combines advanced poker theory with AI-powered coaching to pro
 
 ## Technology Stack
 
-### Current (Phase 1)
-- **Language**: Python 3.11+
-- **CLI Framework**: Typer
-- **UI**: Rich (terminal interface)
-- **Database**: SQLite
-- **AI/LLM**: Anthropic Claude API
-- **Testing**: pytest
+- **Language**: Python 3.12+
+- **Package Manager**: uv
+- **TUI Framework**: Textual (full-screen terminal UI)
+- **Database**: SQLite with SQLAlchemy ORM
+- **Poker Engine**: treys (hand evaluation)
+- **AI/LLM**: LangChain + Anthropic Claude API
+- **Testing**: pytest (415+ tests)
 - **Code Quality**: black, ruff, pyrefly
-
-### Future (Phase 2 & 3)
-- **Backend**: FastAPI, PostgreSQL
-- **Frontend**: Next.js, TypeScript, React, TailwindCSS
-- **Deployment**: Vercel (frontend), Railway/Render (backend)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.11 or higher
-- pip (Python package manager)
+- Python 3.12 or higher
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
 - Git
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/poker-agent.git
+git clone https://github.com/sgmalik/poker-agent.git
 cd poker-agent
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Install dependencies with uv
+uv sync
 
-# Install dependencies (when available)
-pip install -r requirements.txt
-
-# Set up environment variables
+# Set up environment variables (required for AI Agent Coach)
 cp .env.example .env
-# Edit .env with your API keys
+# Edit .env with your Anthropic API key
 ```
 
 ### Usage
 
-*Coming soon - CLI interface is under development*
+```bash
+# Run the TUI application
+uv run python -m src.tui.app
+
+# Or after installation
+poker-coach
+```
+
+### Application Modes
+
+1. **Hand Evaluator & Spot Analyzer** - Analyze hand strength, equity, pot odds, EV
+2. **Range Tools** - Explore GTO preflop ranges with visual 13x13 matrix
+3. **Quiz System** - Test your poker knowledge with 80 scenario-based questions
+4. **Session Tracker** - Log sessions and track bankroll with graphs
+5. **Hand History Manager** - Store, tag, and analyze your hands
+6. **AI Agent Coach** - Chat with an AI coach that has access to all tools
 
 ## Development
 
 ### Setup Development Environment
 
 ```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
+# Install dependencies
+uv sync
 
 # Run tests
-pytest
+uv run pytest
 
 # Run code quality checks
-black .
-ruff check .
-pyrefly .
+uv run black .
+uv run ruff check .
+uv run pyrefly check src/
 ```
 
 ### Git Hooks
@@ -118,20 +125,22 @@ All checks must pass before commits are allowed.
 
 ```
 poker-agent/
-├── src/                    # Source code
-│   ├── core/              # Poker engine (hand eval, equity, ranges)
-│   ├── analysis/          # Hand analysis & coaching
-│   ├── study/             # Quiz engine, progress tracking
-│   ├── ranges/            # Range management
-│   ├── bankroll/          # Session & bankroll tracking
-│   ├── agent/             # AI coaching agent
-│   └── cli/               # CLI interface
-├── tests/                 # Test suite
-├── docs/                  # Documentation
-├── .github/               # GitHub templates and workflows
-├── SYSTEM_DESIGN.md       # Detailed system design
+├── src/
+│   ├── core/              # Poker logic (hand_evaluator, spot_analyzer, range_parser, etc.)
+│   ├── quiz/              # Quiz engine
+│   ├── database/          # SQLAlchemy models and service layer
+│   ├── tools/             # LangChain tool wrappers for AI agent
+│   ├── agent/             # LangChain agent setup (coach.py, prompts.py)
+│   └── tui/               # Textual TUI application
+│       ├── app.py         # Main app with mode selection
+│       └── screens/       # Mode-specific screens (mode1-6)
+├── tests/                 # Test suite (415+ tests)
+├── data/                  # GTO ranges, quiz questions
+├── docs/                  # Library reference documentation
+├── .claude/               # Claude Code configuration
+├── BUILD_CHARTER.md       # Feature specifications
 ├── CONTRIBUTING.md        # Contribution guidelines
-└── README.md             # This file
+└── README.md              # This file
 ```
 
 ## Contributing
@@ -166,27 +175,15 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on:
 
 ### Q1 2025
 - ✅ Project setup and documentation
-- ⏳ Core poker engine implementation
-- ⏳ CLI application (hand analysis, ranges, quizzes)
-- ⏳ AI coaching integration
+- ✅ Core poker engine (hand evaluation, equity, outs, pot odds)
+- ✅ TUI application with all 6 modes
+- ✅ AI coaching integration with LangChain
 
-### Q2 2025
-- FastAPI backend development
-- Database design and migration
-- API endpoint implementation
-- Authentication system
-
-### Q3 2025
-- Next.js frontend development
-- Mobile-responsive UI
-- Hand replayer and visualization
-- Dashboard and analytics
-
-### Q4 2025
-- Beta testing and refinement
-- Performance optimization
-- Production deployment
-- Public launch
+### Future Enhancements
+- Range-based equity calculator
+- Mixed frequency hands with hover tooltips
+- Spaced repetition for quiz system
+- Hand history import/export (PokerStars, GGPoker formats)
 
 ## License
 
@@ -207,8 +204,8 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on:
 
 ## Status
 
-**Current Phase**: Phase 1 - CLI Application Development
-**Last Updated**: December 25, 2025
-**Version**: 0.1.0-alpha (pre-release)
+**Current Phase**: Phase 1 Complete - All 6 Modes Implemented
+**Last Updated**: January 29, 2026
+**Version**: 0.1.0-alpha
 
 ---

@@ -1173,26 +1173,6 @@
 			"explanation": "On very 'static' boards (where the nuts won't change easily), overbetting allows you to polarize. You either have the nuts or a total bluff. This forces hands like AQ or KQ into a 'bluff-catcher' role where they must decide if you are polarized correctly. It extracts maximum value from the top of their calling range."
 		},
 		{
-			"id": "tourney_001",
-			"type": "icm_logic",
-			"difficulty": "advanced",
-			"topic": "tournament",
-			"question": "You are 3/9 in a tournament. The chip leader (1/9) shoves into your BB. You have AJo. There are two very short stacks (under 3bb). What is the correct ICM play?",
-			"scenario": {
-				"hero_hand": "Ah Jd",
-				"stack": "25bb",
-				"situation": "Final Table, 2 micro-stacks present"
-			},
-			"options": [
-				"Snap Call",
-				"Call",
-				"Fold",
-				"Fold only if it was AQo"
-			],
-			"answer": "Fold",
-			"explanation": "In ICM (Independent Chip Model) situations, survival is paramount when short stacks are about to bust. Calling and losing would be a disaster, as you'd miss the massive pay jumps from the 2 micro-stacks busting. Even though AJo is ahead of a wide shoving range, the 'risk premium' makes this a clear fold."
-		},
-		{
 			"id": "post_004",
 			"type": "range_interaction",
 			"difficulty": "advanced",
@@ -1480,24 +1460,6 @@
 			"explanation": "On monotone boards, the 'nut advantage' is extremely sensitive to having the Ace of that suit. Since the caller has many suited hands in their range, they often hold the flush or the nut flush draw as often as the aggressor. This 'equity bunching' makes it dangerous for the aggressor to bet wide, leading to a very polarized and low-frequency betting strategy."
 		},
 		{
-			"id": "elite_006",
-			"type": "advanced_icm",
-			"difficulty": "elite",
-			"topic": "tournament",
-			"question": "What is the 'Bubble Factor' and how does it affect your calling range near a tournament money bubble?",
-			"scenario": {
-				"situation": "Tournament Bubble"
-			},
-			"options": [
-				"The ratio of your stack to the big blind",
-				"The ratio of the value of chips lost to the value of chips gained",
-				"The number of players left in the tournament",
-				"The speed at which the blinds increase"
-			],
-			"answer": "The ratio of the value of chips lost to the value of chips gained",
-			"explanation": "In tournaments, chips lost are worth more than chips gained (ICM). The Bubble Factor quantifies this. If your Bubble Factor is 2.0, you need 2x more equity than 'normal' to make a call. Near the bubble, this factor skyrockets, forcing players to fold hands that would be easy calls in a cash game."
-		},
-		{
 			"id": "elite_007",
 			"type": "postflop_theory",
 			"difficulty": "elite",
@@ -1571,6 +1533,2651 @@
 			],
 			"answer": "Because the UTG has a massive nut advantage (AA, KK, QQ, JJ) while the BTN is capped",
 			"explanation": "The 3s is a 'blank' that doesn't help the caller's range. UTG still holds all the overpairs (AA-QQ) and top set (JJ), which the BTN would have 3-bet pre-flop. When you have a significant 'nut advantage' on a static board, overbetting the turn puts the caller's marginal Jx hands in an impossible situation and maximizes value from your monsters."
+		},
+		{
+			"id": "gt_004",
+			"type": "mixed_strategies",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "Why do GTO strategies often mix between betting and checking with medium-strength hands?",
+			"options": [
+				"To confuse opponents",
+				"To remain unexploitable by making opponent indifferent",
+				"Because medium hands have no clear best action",
+				"To save money when behind"
+			],
+			"answer": "To remain unexploitable by making opponent indifferent",
+			"explanation": "GTO mixing exists to make opponents indifferent between their options. If you always bet medium hands, opponents can exploit by folding weak hands and continuing only with better. By mixing, you prevent opponents from having a clearly profitable counter-strategy."
+		},
+		{
+			"id": "gt_005",
+			"type": "solver_logic",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "In a GTO context, what determines the minimum defense frequency (MDF) when facing a bet?",
+			"options": [
+				"Your hand strength",
+				"The bet size relative to the pot",
+				"Your position",
+				"The board texture"
+			],
+			"answer": "The bet size relative to the pot",
+			"explanation": "MDF = Pot / (Pot + Bet). This ensures you defend enough that villain cannot profit by bluffing with any two cards. For a pot-sized bet, MDF is 50%. For a 1/3 pot bet, MDF is 75%. Your actual hands and position affect HOW you construct that defense, not the frequency itself."
+		},
+		{
+			"id": "gt_006",
+			"type": "indifference_principle",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "At equilibrium, a player's bluffs on the river should make the opponent indifferent to calling with bluff-catchers. What ratio of value bets to bluffs achieves this for a pot-sized bet?",
+			"options": [
+				"1:1 (50% bluffs)",
+				"2:1 (33% bluffs)",
+				"3:1 (25% bluffs)",
+				"4:1 (20% bluffs)"
+			],
+			"answer": "2:1 (33% bluffs)",
+			"explanation": "For a pot-sized bet, opponent gets 2:1 odds (risk 1 pot to win 2 pots). To make them indifferent, you need to bluff 1/3 of the time (33%), so your value:bluff ratio is 2:1. The formula is: bluff% = bet/(bet+pot)."
+		},
+		{
+			"id": "gt_007",
+			"type": "range_interaction",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "On Ah Kd 7c flop, why does the preflop raiser have a significant range advantage over the BB caller?",
+			"options": [
+				"They have more flush draws",
+				"They have significantly more strong Ax and Kx combos",
+				"They have position",
+				"The BB should have 3-bet strong hands"
+			],
+			"answer": "They have significantly more strong Ax and Kx combos",
+			"explanation": "The preflop raiser's range is uncapped and contains AA, KK, AK, AQ, AJ at high frequency. BB's calling range has fewer of these premium combos (many would 3-bet). This range advantage translates to higher c-bet frequencies and larger sizing being theoretically correct."
+		},
+		{
+			"id": "gt_008",
+			"type": "equity_realization",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "Which factor most significantly impacts a hand's equity realization in a 3-bet pot?",
+			"options": [
+				"Raw equity percentage",
+				"Position and hand playability",
+				"Stack depth",
+				"Number of players"
+			],
+			"answer": "Position and hand playability",
+			"explanation": "Equity realization measures how much of your raw equity you actually capture. Position lets you see opponent actions first and control pot size. Playability (suited connectors vs offsuit hands) affects how often you make strong hands vs marginal ones. A suited connector IP may realize 100%+ of equity while the same hand OOP realizes much less."
+		},
+		{
+			"id": "post_017",
+			"type": "board_texture_analysis",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "On a Qh 7h 2c flop in a single-raised pot, why is a small c-bet (25-33%) generally preferred over a large one?",
+			"options": [
+				"To induce bluffs",
+				"Because the board favors the raiser's range and we want to bet wide",
+				"To pot control with medium hands",
+				"Because we have many draws"
+			],
+			"answer": "Because the board favors the raiser's range and we want to bet wide",
+			"explanation": "On dry, high-card boards that favor the preflop raiser's range, small sizing allows you to c-bet a very wide range profitably. You don't need large bets to deny equity on such a static board, and smaller bets let you apply pressure with your entire range while risking less with bluffs."
+		},
+		{
+			"id": "post_018",
+			"type": "sizing_strategy",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "When is an overbet (>pot) most theoretically justified on the river?",
+			"options": [
+				"When you have the nuts and want maximum value",
+				"When ranges are polarized and you have nutted hands opponent can't have",
+				"When opponent has shown weakness",
+				"When the pot is small relative to stacks"
+			],
+			"answer": "When ranges are polarized and you have nutted hands opponent can't have",
+			"explanation": "Overbets are justified when your range is polarized (nuts or air) and you hold nutted combos that opponent's range lacks. This 'nut advantage' means opponent must call with bluff-catchers that can never be good against your value. The overbet maximizes value from these spots while making your bluffs more profitable."
+		},
+		{
+			"id": "post_019",
+			"type": "protection_betting",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You have Ad Kd on Kh 8s 4c 2d. Opponent checks. What's the main strategic reason to bet?",
+			"options": [
+				"Protection - deny equity to hands with 3-6 outs",
+				"Value - get called by worse Kings",
+				"Bluff - fold out better hands",
+				"Pot building for river"
+			],
+			"answer": "Protection - deny equity to hands with 3-6 outs",
+			"explanation": "TPTK on a dry board beats most of villain's range but is vulnerable to overcards and gutshots (Ax, Qx, Jx, Tx hands have 3-6 outs). Betting denies this equity. While you also get value from worse Kx, the primary driver on dry boards is denying cheap cards to hands that could outdraw you."
+		},
+		{
+			"id": "post_020",
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "IP on river after betting flop and turn, villain check-raises all-in for 1.5x pot. You have top two pair on a 4-flush board. What's the key consideration?",
+			"options": [
+				"Your absolute hand strength",
+				"Whether villain is capable of bluffing",
+				"How your hand blocks or unblocks villain's value and bluff combos",
+				"The pot odds"
+			],
+			"answer": "How your hand blocks or unblocks villain's value and bluff combos",
+			"explanation": "Against a polarized river shove, blocker analysis is crucial. Do you block flushes (reducing villain's value combos)? Do you unblock missed draws they'd bluff with? Two pair without a flush card unblocks all flushes (bad) but also unblocks missed straight draws (good for calling). The math depends heavily on these blockers."
+		},
+		{
+			"id": "post_021",
+			"type": "range_construction",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "Why do solvers often check back the nut flush draw on the flop when IP in position?",
+			"options": [
+				"To trap",
+				"To pot control",
+				"To protect checking range and realize equity with a hand that plays well across all runouts",
+				"Because betting would be too transparent"
+			],
+			"answer": "To protect checking range and realize equity with a hand that plays well across all runouts",
+			"explanation": "Strong draws like nut flush draws have great equity realization when checked - they win big pots when completing and can bluff or value bet turns effectively. By checking some, you protect your checking range (can have strong hands when you check) and avoid building pots OOP can check-raise you off your equity."
+		},
+		{
+			"id": "pos_007",
+			"type": "position_open",
+			"difficulty": "intermediate",
+			"topic": "position",
+			"question": "Why is the BTN opening range significantly wider than UTG despite both being 'opening' situations?",
+			"options": [
+				"BTN has fewer players to act behind",
+				"BTN has position postflop against the blinds",
+				"Both A and B",
+				"BTN can see more flops cheaply"
+			],
+			"answer": "Both A and B",
+			"explanation": "BTN benefits from both factors: fewer players behind means lower chance of facing a premium hand, AND guaranteed position postflop against the blinds who must act first on every street. This combination means hands that would be losing opens from UTG become profitable from BTN."
+		},
+		{
+			"id": "pos_008",
+			"type": "postflop_theory",
+			"difficulty": "advanced",
+			"topic": "position",
+			"question": "In a 3-bet pot OOP as the 3-bettor, why do solvers often prefer checking entire range on many flops?",
+			"options": [
+				"To trap with strong hands",
+				"Because OOP cannot effectively bet-fold or bet-call against raises",
+				"To see free cards",
+				"Because 3-bet pots are usually all-in preflop"
+			],
+			"answer": "Because OOP cannot effectively bet-fold or bet-call against raises",
+			"explanation": "OOP in 3-bet pots, you face a dilemma when raised: bet-folding wastes value with good hands, bet-calling builds pots OOP with capped ranges. Checking transfers initiative to IP but lets you check-raise strong hands and check-call draws, playing more effectively despite positional disadvantage."
+		},
+		{
+			"id": "pos_009",
+			"type": "range_interaction",
+			"difficulty": "intermediate",
+			"topic": "position",
+			"question": "You open CO, BTN calls, blinds fold. On J72r flop, why can you c-bet at high frequency with small sizing?",
+			"options": [
+				"You have more overpairs and big cards in range",
+				"BTN's calling range is capped (would 3-bet premiums)",
+				"Both A and B combined with positional advantage",
+				"The board is too dry to check"
+			],
+			"answer": "Both A and B combined with positional advantage",
+			"explanation": "Your opening range has more JJ+, AJ, KJ. BTN's flat range is capped - they'd 3-bet QQ+, AK. Combined with your positional parity (both IP vs blinds who folded), you have range advantage on this high card board. Small sizing lets you bet wide and apply consistent pressure."
+		},
+		{
+			"id": "pf_020",
+			"type": "4bet_theory",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "When constructing a 4-bet bluffing range, which hand type is generally preferred?",
+			"options": [
+				"Small pocket pairs (22-55)",
+				"Suited Ax hands (A5s-A2s)",
+				"Suited connectors (87s, 76s)",
+				"Offsuit broadway (KQo, QJo)"
+			],
+			"answer": "Suited Ax hands (A5s-A2s)",
+			"explanation": "Suited Ax blockers reduce combos of AA and AK in villain's continuing range (they'd 5-bet or call). They have decent equity when called due to nut flush potential and wheel possibilities. Small pairs have poor playability if called, suited connectors don't block premiums, and offsuit broadways have the worst qualities of both."
+		},
+		{
+			"id": "pf_021",
+			"type": "blocker_logic",
+			"difficulty": "elite",
+			"topic": "preflop",
+			"question": "You 3-bet from SB vs BTN open. BTN 4-bets. With AKo, why might folding sometimes be correct despite hand strength?",
+			"options": [
+				"AKo has poor equity against 4-bet range",
+				"You block AA/KK/AK that would 4-bet, so villain's range is weighted toward QQ/JJ you flip against",
+				"OOP play is too difficult",
+				"You can find better spots"
+			],
+			"answer": "You block AA/KK/AK that would 4-bet, so villain's range is weighted toward QQ/JJ you flip against",
+			"explanation": "Counterintuitive but AKo blocking AA/KK/AK means villain's 4-bet range is more weighted toward QQ/JJ (where you flip) and bluffs you dominate. In theory this is fine, but rake and OOP disadvantage can make it a fold. AKs with better equity realization changes the math toward calling or 5-betting."
+		},
+		{
+			"id": "pf_022",
+			"type": "preflop_action",
+			"difficulty": "intermediate",
+			"topic": "preflop",
+			"question": "UTG opens, you have JTs on the BTN. What's the strongest argument for calling rather than 3-betting?",
+			"options": [
+				"JTs doesn't have enough equity to 3-bet",
+				"You keep UTG's weaker hands in that would fold to 3-bet",
+				"Calling is more deceptive",
+				"You might get squeezed"
+			],
+			"answer": "You keep UTG's weaker hands in that would fold to 3-bet",
+			"explanation": "JTs plays great postflop with position. 3-betting folds out hands like KJo, QTs, 77 that you dominate or have great implied odds against. Flatting keeps these in, lets you realize your equity with position, and maintains a balanced calling range on BTN. You make money postflop against their mistakes."
+		},
+		{
+			"id": "rng_016",
+			"type": "range_construction",
+			"difficulty": "advanced",
+			"topic": "ranges",
+			"question": "Why should BB's 3-bet bluffing range vs BTN open be weighted toward suited hands with blockers?",
+			"options": [
+				"Suited hands look stronger",
+				"They need the equity for when called, and blockers reduce folds they induce",
+				"BTN will fold more to suited hand 3-bets",
+				"It's easier to remember"
+			],
+			"answer": "They need the equity for when called, and blockers reduce folds they induce",
+			"explanation": "BB 3-bet bluffs need suitedness for equity realization when called (flush potential). Blockers like A5s block AA/AK that would 4-bet, increasing fold equity. The combination of fold equity (blockers), equity when called (suitedness), and playability makes these optimal bluff candidates over random weak hands."
+		},
+		{
+			"id": "rng_017",
+			"type": "range_merging",
+			"difficulty": "elite",
+			"topic": "ranges",
+			"question": "What is 'range merging' and when is it strategically applied?",
+			"options": [
+				"Combining your value and bluff ranges",
+				"Betting medium-strength hands for thin value/protection instead of polarizing",
+				"Mixing frequencies with all hand types",
+				"Balancing your 3-bet and call ranges"
+			],
+			"answer": "Betting medium-strength hands for thin value/protection instead of polarizing",
+			"explanation": "Range merging means betting hands like second pair or weak top pair that are 'too good to bluff, too weak for thick value.' It's strategically useful against opponents who overcall (you get thin value) or on boards where checking risks giving free cards. It's an exploitative adjustment from pure GTO polarization."
+		},
+		{
+			"id": "rng_018",
+			"type": "uncapped_ranges",
+			"difficulty": "advanced",
+			"topic": "ranges",
+			"question": "In a MW pot where you're the preflop raiser, why is having an 'uncapped' range strategically powerful?",
+			"options": [
+				"You can bluff more",
+				"You can credibly represent the nuts on any board, forcing opponents to play defensively",
+				"You have more hands in your range",
+				"You win more often at showdown"
+			],
+			"answer": "You can credibly represent the nuts on any board, forcing opponents to play defensively",
+			"explanation": "An uncapped range contains the strongest hands (AA, KK, sets, etc). Callers' ranges are often capped - they'd have raised with premiums. This lets you apply pressure on any board since opponents know you COULD have the nuts. They must play defensively, folding hands that might actually be best."
+		},
+		{
+			"id": "po_011",
+			"type": "pot_odds",
+			"difficulty": "intermediate",
+			"topic": "pot_odds",
+			"question": "You have a flush draw (9 outs) on the flop. Villain bets pot. Why is calling still often correct despite needing ~35% equity and only having ~36%?",
+			"options": [
+				"You might hit runner-runner",
+				"Implied odds - you'll win more when you hit",
+				"Villain might be bluffing",
+				"Fold equity on later streets"
+			],
+			"answer": "Implied odds - you'll win more when you hit",
+			"explanation": "Raw pot odds give you barely enough equity (~36% vs 35% needed), but implied odds make it clearly profitable. When you hit the flush, you'll often win additional bets. If stacks are deep and opponent likely pays off flushes, your effective odds are much better than the immediate pot odds suggest."
+		},
+		{
+			"id": "po_012",
+			"type": "pot_odds",
+			"difficulty": "advanced",
+			"topic": "pot_odds",
+			"question": "Villain overbets 2x pot on river. What equity do you need to call profitably?",
+			"options": [
+				"33%",
+				"40%",
+				"50%",
+				"60%"
+			],
+			"answer": "40%",
+			"explanation": "Pot odds = Call / (Pot + Call) = 2 / (1 + 2 + 2) = 2/5 = 40%. You're risking 2x pot to win the 1x pot plus villain's 2x bet. Against a polarized range, this means villain needs to be bluffing less than 40% of the time for a call to be profitable with a bluff-catcher."
+		},
+		{
+			"id": "hs_011",
+			"type": "hand_strength",
+			"difficulty": "intermediate",
+			"topic": "hand_strength",
+			"question": "You have AA on Kh Qh Jh 8d 2c river. Why has your hand strength decreased significantly despite having an overpair?",
+			"options": [
+				"The board paired",
+				"Four to a flush and four to a straight are possible, and many made hands beat you",
+				"Your kicker doesn't play",
+				"Opponent might have a set"
+			],
+			"answer": "Four to a flush and four to a straight are possible, and many made hands beat you",
+			"explanation": "On this board, any heart makes a flush, any T or 9 makes a straight. AT, T9, KQ, KJ, QJ all beat you, and even Kx hands are ahead. Your absolute hand (overpair) is strong, but your relative hand strength against likely continuing ranges is very weak. This is why board reading is crucial."
+		},
+		{
+			"id": "hs_012",
+			"type": "hand_strength",
+			"difficulty": "advanced",
+			"topic": "hand_strength",
+			"question": "Why is bottom set often played more aggressively than top set on a coordinated board?",
+			"options": [
+				"Bottom set needs more protection",
+				"Top set is better for trapping",
+				"Bottom set blocks fewer draws and straight combos that continue",
+				"There's no difference in optimal play"
+			],
+			"answer": "Bottom set blocks fewer draws and straight combos that continue",
+			"explanation": "On a board like JT7, if you have 77 (bottom set), you don't block JT, J7, T7 two pairs or T9, 98, 89 straight draws that might continue. With JJ, you block JT and J7 combinations. Bottom set gets more action from worse hands and thus can bet larger for value while also needing to charge draws more."
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open BTN with Ah5h, BB calls. Flop: Kd 8c 3s. BB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah 5h",
+				"position": "BTN",
+				"board": "Kd 8c 3s",
+				"pot_size": "6.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Check back",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 33% pot",
+			"explanation": "This dry, disconnected board favors your range heavily. A small c-bet with your entire range is effective - you have backdoor nut flush draw and overcard outs. Small sizing puts pressure on BB's weak pairs and high cards while risking little with your air.",
+			"id": "post_022"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open CO with QhJh, BB calls. Flop: 9h 8h 2c. BB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Qh Jh",
+				"position": "CO",
+				"board": "9h 8h 2c",
+				"pot_size": "6.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Check back",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "You have a monster draw - flush draw plus gutshot to the nuts (15 outs twice). On this wet, connected board you want to build the pot. Larger sizing is appropriate as you have great equity and want to get stacks in by the river. Checking this draw would be a significant mistake.",
+			"id": "post_023"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open UTG with AdKd, BTN calls, BB calls. Flop: Jc 7c 4d. BB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Ad Kd",
+				"position": "UTG",
+				"board": "Jc 7c 4d",
+				"pot_size": "9.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Check",
+			"explanation": "In a 3-way pot on a wet board that doesn't favor your UTG range, checking is correct. You have two overcards but no backdoors and the board hits the callers' ranges well. C-betting into multiple opponents with pure air on a connected board is burning money.",
+			"id": "post_024"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You 3-bet BTN vs CO with AcQc, CO calls. Flop: Kh 7s 2d. CO checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Ac Qc",
+				"position": "BTN",
+				"board": "Kh 7s 2d",
+				"pot_size": "13bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Check back",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Bet 33% pot",
+			"explanation": "As the 3-bettor you have significant range advantage on this dry board. A small c-bet with your entire range is profitable - villain must defend wide but you can barrel effectively when you improve. AQ has backdoor equity and blocks AK.",
+			"id": "post_025"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You defend BB with Jc9c vs BTN open. Flop: Jh 5s 2d. You check, BTN bets 33%, you call. Turn: 8c. You check, BTN bets 75%. What's your play?",
+			"scenario": {
+				"hero_hand": "Jc 9c",
+				"position": "BB",
+				"board": "Jh 5s 2d 8c",
+				"pot_size": "12bb",
+				"stack_depth": "85bb",
+				"villain_action": "75% pot bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise"
+			],
+			"answer": "Call",
+			"explanation": "You have top pair decent kicker with a backdoor flush draw. BTN's larger turn sizing polarizes their range. J9 is squarely in your bluff-catching range - folding is too weak (you beat all bluffs) and raising turns your hand into a bluff unnecessarily. Call and evaluate river.",
+			"id": "post_026"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You defend BB with 6h5h vs CO open. Flop: 9d 7c 2h. Check, CO bets 33%, you call. Turn: Kh. Check, CO bets 66%, you call. River: 3s (board: 9d 7c 2h Kh 3s). CO bets 100% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "6h 5h",
+				"position": "BB",
+				"board": "9d 7c 2h Kh 3s",
+				"pot_size": "25bb",
+				"stack_depth": "60bb",
+				"villain_action": "100% pot bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise all-in"
+			],
+			"answer": "Call",
+			"explanation": "You made a straight on the river. The question is whether to raise for value. Against a 100% pot bet on a 4-straight board, villain is extremely polarized. If they have a straight, you chop. If they have a higher straight (T8), you lose. Raising only gets called by hands that beat or chop with you. Calling captures max value against their bluffs.",
+			"id": "post_027"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open BTN with AsKs, BB 3-bets, you call. Flop: Qh 8c 4d. BB bets 33%, you call. Turn: 2s. BB bets 75% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "As Ks",
+				"position": "BTN",
+				"board": "Qh 8c 4d 2s",
+				"pot_size": "18bb",
+				"stack_depth": "75bb",
+				"villain_action": "75% pot turn bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise"
+			],
+			"answer": "Fold",
+			"explanation": "You have two overcards and a backdoor flush draw, but against BB's 3-bet range that's double-barreling 75% on a dry board, you're in bad shape. BB's value range (QQ, AA, KK, AQ) crushes you, and AK with no pair and limited equity is not a profitable call. Your draws are weak - folding is correct.",
+			"id": "post_028"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You defend BB with Kh9h vs CO open. Flop: Kc 6s 3d. You check, CO checks. Turn: Tc. You bet 50% pot, CO calls. River: 2h. What's your sizing?",
+			"scenario": {
+				"hero_hand": "Kh 9h",
+				"position": "BB",
+				"board": "Kc 6s 3d Tc 2h",
+				"pot_size": "10bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "You have top pair with a reasonable kicker. CO checked flop (capped range) but called turn (has something). Your hand is ahead of their calling range (Tx, 6x, draws that missed). Bet for value - 66% extracts from worse kings and tens while not over-committing against the occasional slow-played two pair.",
+			"id": "post_029"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You defend BB with 7h6h vs BTN open. Flop: 8h 5h 2c. You check, BTN bets 33%. What's your play?",
+			"scenario": {
+				"hero_hand": "7h 6h",
+				"position": "BB",
+				"board": "8h 5h 2c",
+				"pot_size": "6.5bb",
+				"stack_depth": "100bb",
+				"villain_action": "33% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise to 3x"
+			],
+			"answer": "Check-raise to 3x",
+			"explanation": "You have an open-ended straight flush draw (15 outs twice). This is an ideal check-raise candidate - you have massive equity, fold equity against BTN's wide c-bet range, and can comfortably stack off if raised. Flat calling is fine but misses value and protection from overcards.",
+			"id": "post_030"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You defend BB with Ac4c vs CO open. Flop: As 7s 4d. You check, CO bets 66%. What's your play?",
+			"scenario": {
+				"hero_hand": "Ac 4c",
+				"position": "BB",
+				"board": "As 7s 4d",
+				"pot_size": "6.5bb",
+				"stack_depth": "100bb",
+				"villain_action": "66% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise to 2.5x"
+			],
+			"answer": "Call",
+			"explanation": "Two pair is strong but check-raising here is a mistake. The board is wet with a flush draw - if you check-raise, CO folds all worse hands and continues with better (sets, AK, AQ, flush draws with equity). Your hand plays better as a call to let CO bluff turns and extract value from weaker aces.",
+			"id": "post_031"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open CO with KsQs, BB calls. Flop: Kh 9c 5d. You bet 33%, BB calls. Turn: Jh (bringing flush draw). What's your play?",
+			"scenario": {
+				"hero_hand": "Ks Qs",
+				"position": "CO",
+				"board": "Kh 9c 5d Jh",
+				"pot_size": "9bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "You have top pair second kicker on a board that just got wetter. Betting for value and protection is correct - BB's calling range includes Kx worse kicker, Jx, 9x, and flush draws. A larger sizing charges draws appropriately while still getting called by worse made hands.",
+			"id": "post_032"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You open BTN with 5c5d, BB calls. Flop: Qh 7c 5h. You bet 33%, BB calls. Turn: Th. What's your play?",
+			"scenario": {
+				"hero_hand": "5c 5d",
+				"position": "BTN",
+				"board": "Qh 7c 5h Th",
+				"pot_size": "9bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 75% pot",
+				"Bet 125% pot"
+			],
+			"answer": "Check",
+			"explanation": "You have bottom set but the turn completes the flush. If BB has the flush, you're drawing to one out. By checking, you control pot size and let BB bet their flushes and bluff with missed draws. If checked through, you can value bet river safely. Betting into a completed flush draw risks losing maximum when behind.",
+			"id": "post_033"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You defend BB with Td9d vs BTN open. Flop: Tc 7s 3d. Check, BTN bets 50%, you call. Turn: 2h. Check, BTN checks. River: 6c. What's your play?",
+			"scenario": {
+				"hero_hand": "Td 9d",
+				"position": "BB",
+				"board": "Tc 7s 3d 2h 6c",
+				"pot_size": "10bb",
+				"stack_depth": "85bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "BTN's turn check caps their range - they'd barrel most overpairs and strong Tx. Your top pair is now likely best. Value bet to extract from 7x, pocket pairs 88-99, and Ax that might call light. 66% is good sizing to get value from medium-strength hands.",
+			"id": "post_034"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You 3-bet CO vs BTN with AhKh, BTN calls. Flop: Qc Jc 5h. You bet 33%, BTN calls. Turn: 4d. You bet 66%, BTN calls. River: 8s. Pot is 35bb, you have 55bb behind. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Kh",
+				"position": "CO",
+				"board": "Qc Jc 5h 4d 8s",
+				"pot_size": "35bb",
+				"stack_depth": "55bb"
+			},
+			"options": [
+				"Check/fold",
+				"Check/call",
+				"Bet 50% pot",
+				"Shove all-in"
+			],
+			"answer": "Shove all-in",
+			"explanation": "You have ace high with no showdown value. But you've told a story of strength with two barrels. BTN's calling range is capped - they'd raise sets and two pair on the wet flop/turn. They likely have Qx, Jx, or a missed draw. An overbet shove is a powerful bluff that pressures all one-pair hands. Your blockers to AQ/KQ add fold equity.",
+			"id": "post_035"
+		},
+		{
+			"type": "sizing_strategy",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You have AdAh on Kc 4s 2d against a BB caller. Why is small c-bet sizing (25-33% pot) optimal here?",
+			"scenario": {
+				"hero_hand": "Ad Ah",
+				"position": "BTN",
+				"board": "Kc 4s 2d"
+			},
+			"options": [
+				"To induce bluff raises",
+				"Your range advantage allows high frequency small bets",
+				"To keep worse hands in",
+				"Because you're bluffing"
+			],
+			"answer": "Your range advantage allows high frequency small bets",
+			"explanation": "On dry, disconnected boards where the preflop aggressor has significant range advantage (more AA, KK, AK, etc.), small sizing with high frequency is optimal. You can profitably bet your entire range - both value and air - because villain must defend wide against the small bet but you're value betting a wider portion than normal.",
+			"id": "post_036"
+		},
+		{
+			"type": "sizing_strategy",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "On Qh Jh Tc as the BTN 3-bettor, why might you prefer checking your entire range over c-betting?",
+			"scenario": {
+				"board": "Qh Jh Tc",
+				"position": "BTN"
+			},
+			"options": [
+				"The board is too wet to bet",
+				"BB's range hits this board as well or better than yours",
+				"You don't have any value hands",
+				"To induce bluffs from BB"
+			],
+			"answer": "BB's range hits this board as well or better than yours",
+			"explanation": "This monotone, connected board hits BB's cold-calling range extremely well - they have all the suited connectors, QJ, JT, QT, and flush draws. As the 3-bettor, while you have overpairs, BB has more two-pair, straights, and made flushes. Without a significant range advantage, the correct strategy is to check your entire range and play a smaller pot.",
+			"id": "post_037"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "UTG opens 2.5bb, you're in MP with JJ. What's your standard play?",
+			"scenario": {
+				"hero_hand": "Jh Js",
+				"position": "MP",
+				"action_to_hero": "UTG open 2.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 7bb",
+				"3-bet to 10bb"
+			],
+			"answer": "Call",
+			"explanation": "JJ vs UTG open in MP is a standard flat. 3-betting turns your hand into a bluff against UTG's strong range and you'll face difficult decisions vs 4-bets. By flatting you keep UTG's weaker hands in, maintain a playable SPR, and can set-mine effectively with position on the blinds.",
+			"id": "pf_023"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "CO opens 2.5bb, BTN 3-bets to 8bb, you're in SB with QQ. What's your play?",
+			"scenario": {
+				"hero_hand": "Qc Qd",
+				"position": "SB",
+				"action_to_hero": "CO open, BTN 3-bet to 8bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"4-bet to 20bb",
+				"4-bet to 24bb"
+			],
+			"answer": "4-bet to 20bb",
+			"explanation": "QQ is too strong to flat OOP in a 3-bet pot - you'll face difficult postflop decisions without the initiative. 4-betting extracts value from BTN's 3-bet bluffs and worse value hands (JJ, TT, AQ). Size around 2.5x the 3-bet when OOP to deny equity and set up a comfortable SPR.",
+			"id": "pf_024"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "elite",
+			"topic": "preflop",
+			"question": "BTN opens 2.5bb, SB folds, you're in BB with 9h8h. What's your play at 100bb effective?",
+			"scenario": {
+				"hero_hand": "9h 8h",
+				"position": "BB",
+				"action_to_hero": "BTN open 2.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 10bb"
+			],
+			"answer": "3-bet to 10bb",
+			"explanation": "98s is a mandatory 3-bet from BB vs BTN at 100bb. You have a hand that plays terribly postflop OOP when flatting - you'll be check-folding most flops. By 3-betting, you win the pot immediately often (BTN folds ~50%), and when called you have good equity and playability. This is a key defend from modern BB strategy.",
+			"id": "pf_025"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "intermediate",
+			"topic": "preflop",
+			"question": "You open HJ with AdTd, CO 3-bets to 9bb, BTN cold-calls. What's your play?",
+			"scenario": {
+				"hero_hand": "Ad Td",
+				"position": "HJ",
+				"action_to_hero": "CO 3-bet, BTN cold-call",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"4-bet to 25bb"
+			],
+			"answer": "Fold",
+			"explanation": "Facing a 3-bet with a cold-caller behind is one of the worst spots in poker. BTN's cold-call range is incredibly strong (QQ+, AK typically). Your AT suited, while decent, is dominated by both ranges and you'll be playing a bloated pot multiway OOP. Clear fold despite the suited broadway.",
+			"id": "pf_026"
+		},
+		{
+			"type": "range_check",
+			"difficulty": "advanced",
+			"topic": "ranges",
+			"question": "Which hand should NOT be in your BTN vs BB 3-bet calling range at 100bb?",
+			"scenario": {
+				"position": "BTN",
+				"action_to_hero": "BB 3-bet",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"KQs",
+				"JTs",
+				"A5s",
+				"QJo"
+			],
+			"answer": "QJo",
+			"explanation": "QJo lacks the playability needed to call 3-bets - it makes dominated top pairs, has no backdoor flushes, and poor straight potential. KQs/JTs have suited playability, A5s has nut flush potential and blocks AA/AK. Offsuit broadways without nutted potential should be folded to 3-bets.",
+			"id": "rng_019"
+		},
+		{
+			"type": "range_check",
+			"difficulty": "elite",
+			"topic": "ranges",
+			"question": "When constructing your BTN 4-bet bluffing range vs BB 3-bet, which hands are ideal?",
+			"scenario": {
+				"position": "BTN",
+				"action_to_hero": "BB 3-bet",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Small pocket pairs (22-55)",
+				"Suited wheel aces (A2s-A5s)",
+				"Low suited connectors (54s-76s)",
+				"Offsuit broadways (KJo, QJo)"
+			],
+			"answer": "Suited wheel aces (A2s-A5s)",
+			"explanation": "Suited wheel aces are the ideal 4-bet bluff candidates. They block AA/AK (your opponent's strongest holdings), have nut flush potential when called, and can make unexpected straights. Low pairs have poor blockers and playability, suited connectors lack blockers, offsuit broadways are too easily dominated.",
+			"id": "rng_020"
+		},
+		{
+			"type": "pot_odds",
+			"difficulty": "intermediate",
+			"topic": "pot_odds",
+			"question": "You have a flush draw on the turn. Pot is 20bb, villain bets 15bb. What equity do you need to call profitably?",
+			"scenario": {
+				"pot_size": "20bb",
+				"villain_action": "bets 15bb"
+			},
+			"options": [
+				"30%",
+				"37%",
+				"43%",
+				"50%"
+			],
+			"answer": "43%",
+			"explanation": "You need to call 15bb to win 35bb (20bb pot + 15bb bet). Pot odds = 15/35 = 43%. With ~9 flush outs you have roughly 18% equity, so a naked flush draw cannot call. You'd need additional outs (overcards, straight draws) or significant implied odds to continue.",
+			"id": "po_013"
+		},
+		{
+			"type": "pot_odds",
+			"difficulty": "advanced",
+			"topic": "pot_odds",
+			"question": "Villain shoves 50bb into a 30bb pot on the river. You have a bluff catcher. How often must villain be bluffing for a call to be profitable?",
+			"scenario": {
+				"pot_size": "30bb",
+				"villain_action": "50bb river shove",
+				"stack_depth": "50bb"
+			},
+			"options": [
+				"38%",
+				"50%",
+				"63%",
+				"75%"
+			],
+			"answer": "63%",
+			"explanation": "You must call 50bb to win 80bb (30bb pot + 50bb bet). Required equity = 50/80 = 62.5%. This means villain needs to be bluffing ~63% of the time for a call with a bluff catcher. This is why large river overbets are so powerful - they require extreme bluff frequencies to call profitably.",
+			"id": "po_014"
+		},
+		{
+			"type": "position_play",
+			"difficulty": "advanced",
+			"topic": "position",
+			"question": "Why is flatting a CO open from the BTN with AQo better than 3-betting at 100bb deep?",
+			"scenario": {
+				"hero_hand": "Ad Qh",
+				"position": "BTN",
+				"action_to_hero": "CO open 2.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"AQo is too weak to 3-bet",
+				"You want to keep the pot small with a marginal hand",
+				"Flatting keeps CO's weaker hands in and you realize equity well IP",
+				"You're scared of a 4-bet"
+			],
+			"answer": "Flatting keeps CO's weaker hands in and you realize equity well IP",
+			"explanation": "AQo is actually strong enough to 3-bet, but flatting is often preferred BTN vs CO because: 1) You have position and can realize equity perfectly postflop 2) 3-betting folds out hands you dominate (KQ, QJ, AT) 3) CO's 4-bet range dominates you heavily. With position, keeping SPR manageable lets you play a profitable postflop game.",
+			"id": "pos_010"
+		},
+		{
+			"type": "position_play",
+			"difficulty": "elite",
+			"topic": "position",
+			"question": "In a 3-bet pot OOP as BB vs BTN, why should your c-bet frequency be much lower than IP?",
+			"scenario": {
+				"position": "BB",
+				"action_to_hero": "BTN calls 3-bet"
+			},
+			"options": [
+				"You have fewer strong hands OOP",
+				"BTN has position and can float/raise effectively, punishing frequent c-bets",
+				"You should always check OOP",
+				"The pot is too large to risk chips"
+			],
+			"answer": "BTN has position and can float/raise effectively, punishing frequent c-bets",
+			"explanation": "When you c-bet OOP, BTN can float with position and realize equity on later streets or raise to put you in tough spots. They can also call in position with a wide range knowing they'll outplay you postflop. Therefore, OOP c-betting should be more polar - strong hands and specific bluffs - rather than the high-frequency approach used when IP.",
+			"id": "pos_011"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "If villain's river bet sizing means you need 40% equity to call, and you estimate their bluff-to-value ratio is 1:2, should you call with a pure bluff catcher?",
+			"scenario": {
+				"villain_action": "river bet (need 40% equity to call)"
+			},
+			"options": [
+				"Yes, call",
+				"No, fold",
+				"Raise as a bluff",
+				"It's exactly breakeven"
+			],
+			"answer": "No, fold",
+			"explanation": "If villain has a 1:2 bluff-to-value ratio, they're bluffing 33% of the time and value betting 67%. Your bluff catcher has 0% equity vs value and 100% vs bluffs, so your equity = 33%. Since 33% < 40% required, folding is correct. Villain is not bluffing enough to make calling profitable.",
+			"id": "gt_009"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "What is 'removal effect' and why does holding As matter when bluffing on a spade-completed board?",
+			"scenario": {
+				"hero_hand": "As X",
+				"board": "contains 3 spades"
+			},
+			"options": [
+				"As makes your flush stronger",
+				"As removes nut flush combos from villain's range, making them more likely to fold",
+				"As improves your backdoor equity",
+				"As has no effect on bluffing frequency"
+			],
+			"answer": "As removes nut flush combos from villain's range, making them more likely to fold",
+			"explanation": "When you hold the As on a spade-completed board, you block the nut flush. This means villain cannot have the nuts, making their continuing range weaker on average. They're more likely to have medium flushes or bluff catchers that can fold to aggression. This 'card removal' or 'blocker' effect makes hands with the As better bluff candidates.",
+			"id": "gt_010"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You 3-bet SB vs BTN with Kd Kc. Flop: Ah 9s 4c. If you plan to triple barrel, what's the best flop sizing?",
+			"scenario": {
+				"hero_hand": "Kd Kc",
+				"position": "SB",
+				"board": "Ah 9s 4c",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Check",
+				"25% pot",
+				"50% pot",
+				"75% pot"
+			],
+			"answer": "25% pot",
+			"explanation": "On an A-high board in a 3-bet pot, small sizing is best. Your range is polarized (AA/AK value, and KK/QQ blockers/bluffs). Small sizing allows you to bet your entire range profitably and set up efficient turn/river barrels. By using 25-33% flop, 50% turn, and 75-100% river, you maximize fold equity over three streets while risking minimal chips.",
+			"id": "post_038"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You have Ac Kc in a single raised pot IP. Board runs out 8c 6c 2d - 4h - Jd. You bet flop and turn, checked to on river. What's your play with this missed draw?",
+			"scenario": {
+				"hero_hand": "Ac Kc",
+				"position": "BTN",
+				"board": "8c 6c 2d 4h Jd",
+				"pot_size": "22bb",
+				"stack_depth": "65bb"
+			},
+			"options": [
+				"Check (give up)",
+				"Bet 33% pot",
+				"Bet 75% pot",
+				"Overbet 125% pot"
+			],
+			"answer": "Overbet 125% pot",
+			"explanation": "You have zero showdown value with AK high. However, you've represented strength on two streets and the J on the river changes nothing. A large overbet puts maximum pressure on villain's one-pair hands (8x, 6x, pocket pairs). Your nut blockers (Ac blocks nut flush draws that got there) make this an ideal bluff candidate. Small bets just let villain call with their entire range.",
+			"id": "post_039"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "hand_strength",
+			"question": "You defend BB with Qc Jh vs CO open. Board: Qs 7h 3c 8d 2d. CO checks through turn, river checks to you. What's your play?",
+			"scenario": {
+				"hero_hand": "Qc Jh",
+				"position": "BB",
+				"board": "Qs 7h 3c 8d 2d",
+				"pot_size": "7bb",
+				"stack_depth": "95bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "CO's two checks severely cap their range - no Qx would typically check twice. Your top pair is almost certainly best. Value bet confidently against their small pairs, ace-highs, and floats. 66% pot extracts value from hands willing to call while not over-representing your hand strength.",
+			"id": "hs_013"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "hand_strength",
+			"question": "You 3-bet BTN vs CO with Ah Jh, CO calls. Board: Jc 8s 4d 2c Kh. You c-bet flop, CO calls. Turn goes check-check. River brings Kh. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Jh",
+				"position": "BTN",
+				"board": "Jc 8s 4d 2c Kh",
+				"pot_size": "16bb",
+				"stack_depth": "75bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Check",
+			"explanation": "The K is a terrible river for your hand. CO's flop-calling range includes all Kx (KQ, KT, K9s) that now beat you. Your AJ with second pair is no longer ahead of villain's perceived calling range. Betting turns your hand into a bluff that doesn't have enough fold equity vs Kx. Check and realize showdown value when you're ahead.",
+			"id": "hs_014"
+		},
+		{
+			"type": "board_texture_analysis",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "Which flop texture most favors the BB caller against a BTN open?",
+			"options": [
+				"As Kh 7c",
+				"Jh Tc 9c",
+				"Qd 5c 2h",
+				"Kh 4d 4c"
+			],
+			"answer": "Jh Tc 9c",
+			"explanation": "Connected, wet boards with middle cards favor the BB caller's range. BB defends with suited connectors (QJ, JT, T9, 98, 87) and suited aces with clubs - all of which smash JT9cc. The BTN's range is wider with more random hands and fewer specific combinations. On Kh4d4c or As Kh 7c, BTN has significant overpair and top pair advantages.",
+			"id": "post_040"
+		},
+		{
+			"type": "board_texture_analysis",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "On a monotone flop (e.g., 9h 6h 3h), why should the preflop raiser's c-bet frequency decrease dramatically?",
+			"scenario": {
+				"board": "9h 6h 3h"
+			},
+			"options": [
+				"The board is too scary to bet",
+				"Villain always has a flush",
+				"Both players have similar flush frequencies but villain has more calling range equity",
+				"You should always check monotone boards"
+			],
+			"answer": "Both players have similar flush frequencies but villain has more calling range equity",
+			"explanation": "On monotone boards, both players have similar made flush frequencies. However, the caller's range is condensed with more suited hands (part of calling requirements) while the raiser has many offsuit combos. The caller's equity advantage plus draw-heavy board means c-betting becomes unprofitable with a wide range.",
+			"id": "post_041"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open BTN with 9s 9c, BB calls. Flop: Kc 7h 4s. BB donk bets 75% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "9s 9c",
+				"position": "BTN",
+				"board": "Kc 7h 4s",
+				"pot_size": "6.5bb",
+				"villain_action": "BB donk bets 75%"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 2.5x"
+			],
+			"answer": "Call",
+			"explanation": "Donk bets are often polarized - either very strong (sets, two pair) or weak (draws, probes). Your 99 beats all the weak portion but loses to the value. Folding is too tight - you beat 77, 44, and all bluffs. Raising isolates yourself against the top of their range. Calling lets you evaluate turn and realize equity against their bluffs.",
+			"id": "post_042"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You defend BB with As 8s vs CO open. Flop: Ac Kd 7c. You check, CO bets 33%, you call. Turn: 3h. You check, CO checks. River: 9c. What's your play?",
+			"scenario": {
+				"hero_hand": "As 8s",
+				"position": "BB",
+				"board": "Ac Kd 7c 3h 9c",
+				"pot_size": "10bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "CO's turn check is very telling - most Ax and Kx would continue betting for value and protection. Their range is now capped at middle pairs, weak draws, and floats. Your A8 is likely best against this range. Value bet to extract from their showdown-bound hands like 88-TT, 7x, or Kx that gave up.",
+			"id": "post_043"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You open UTG with Ah Ad, CO calls, BB calls. Flop: 7c 6c 5c. BB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Ad",
+				"position": "UTG",
+				"board": "7c 6c 5c",
+				"pot_size": "9.5bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Check",
+				"Bet 25% pot",
+				"Bet 50% pot",
+				"Bet 75% pot"
+			],
+			"answer": "Check",
+			"explanation": "This is a nightmare board for AA despite being an overpair. The 765 monotone connects with calling ranges heavily - any suited connector, suited one-gapper, and club hands all crush this board. You're multiway and your opponents' ranges hit better than yours. Checking allows pot control and lets you realize equity when safe cards fall.",
+			"id": "post_044"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You 3-bet CO vs UTG open with Ks Qs. UTG calls. Flop: As 9s 4d. UTG checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Ks Qs",
+				"position": "CO",
+				"board": "As 9s 4d",
+				"pot_size": "13bb",
+				"stack_depth": "88bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Bet 33% pot",
+			"explanation": "You have the second nut flush draw with two overcards. Against UTG's checking range (weaker Ax, underpairs, draws), a small c-bet generates immediate fold equity while building the pot for when you hit. You have ~50% equity vs calling range and can barrel turns that improve you or look scary.",
+			"id": "post_045"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You defend SB vs BTN open with 7h 7c. Flop: Ad Kh 7d. You check, BTN bets 33%, you raise to 3x, BTN calls. Turn: Qd (completing flush). What's your play?",
+			"scenario": {
+				"hero_hand": "7h 7c",
+				"position": "SB",
+				"board": "Ad Kh 7d Qd",
+				"pot_size": "18bb",
+				"stack_depth": "80bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Check",
+			"explanation": "The Qd is a disaster card - it completes the flush and gives BTN possible straights (JT). Your bottom set has zero redraw and faces significant reverse implied odds. If you bet and get raised, you're in a terrible spot. By checking, you control the pot and can call a reasonable bet or check-call river, minimizing loss vs flushes while extracting value from Kx, Qx.",
+			"id": "post_046"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open CO with Jd Td, BTN calls. Flop: 8d 7c 3d. You c-bet 33%, BTN raises to 3x. What's your play?",
+			"scenario": {
+				"hero_hand": "Jd Td",
+				"position": "CO",
+				"board": "8d 7c 3d",
+				"pot_size": "16bb",
+				"stack_depth": "90bb",
+				"villain_action": "raises to 3x"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 2.5x their raise"
+			],
+			"answer": "Call",
+			"explanation": "You have a flush draw (9 outs) plus a gutshot (3 more outs) plus two overcards (potential 6 more outs) - a monster draw with ~45% equity. But 3-betting risks getting blown off your equity by a jam. Calling keeps you in with implied odds - when you hit, you'll stack weaker flushes and straights. Your hand plays well as a call.",
+			"id": "post_047"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "BTN opens, you call BB with Ac Tc. Flop: Ks 8h 4c. Check, BTN bets 33%, you call. Turn: 3c. Check, BTN bets 66%, you call. River: 2d. Check, BTN bets 150% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "Ac Tc",
+				"position": "BB",
+				"board": "Ks 8h 4c 3c 2d",
+				"pot_size": "18bb",
+				"stack_depth": "50bb",
+				"villain_action": "150% pot overbet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise all-in"
+			],
+			"answer": "Fold",
+			"explanation": "Despite having a bluff catcher, the 150% pot overbet requires villain to be bluffing ~60% of the time for a call to be profitable. BTN's triple barrel line with an overbet is extremely value-heavy. Your Ac blocks some flush draws they'd bluff with, but this reduces your fold equity without improving your calling equity. Against balanced players, this is a fold.",
+			"id": "post_048"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You 3-bet BTN vs CO with Ah Qh, CO calls. Flop: Js Tc 4h. You c-bet 33%, CO calls. Turn: 3d. You bet 66%, CO calls. River: 2c. You check, CO bets 80% pot. You have 70bb behind, pot is 35bb. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Qh",
+				"position": "BTN",
+				"board": "Js Tc 4h 3d 2c",
+				"pot_size": "35bb",
+				"stack_depth": "70bb",
+				"villain_action": "80% pot bet after check"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise all-in"
+			],
+			"answer": "Call",
+			"explanation": "Your check showed weakness after two barrels. CO's bet could be thin value (Jx, Tx) or turning a hand like KQ/A9s into a bluff. AQ beats all bluffs and many thin value bets. Folding AQ high is too weak given your range has many Ax combos here. Check-raising is unnecessary as you can't be called by worse.",
+			"id": "post_049"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open CO with Kh Qh, BTN calls. Flop: Jc 8c 5s. You check, BTN checks. Turn: Kd. What's your play?",
+			"scenario": {
+				"hero_hand": "Kh Qh",
+				"position": "CO",
+				"board": "Jc 8c 5s Kd",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb"
+			},
+			"options": [
+				"Check",
+				"Bet 50% pot",
+				"Bet 75% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 75% pot",
+			"explanation": "The turn K improved you to top pair and is a great delayed c-bet card. BTN checked back the flop with a capped range - they don't have AA/KK/JJ typically. Your top pair is ahead of their range. Bet for value and protection against their floats, 8x, and pocket pairs that might outdraw you.",
+			"id": "post_050"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open BTN with 8h 7h, BB calls. Flop: Ac Kd 3s. You check, BB checks. Turn: 9c. BB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "8h 7h",
+				"position": "BTN",
+				"board": "Ac Kd 3s 9c",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb"
+			},
+			"options": [
+				"Check",
+				"Bet 50% pot",
+				"Bet 75% pot"
+			],
+			"answer": "Bet 50% pot",
+			"explanation": "Both players checked a dry flop. BB's check on the turn shows extreme weakness - they likely have small pairs or complete air. A delayed c-bet here folds out their 22-TT type hands that beat you and might even get called by worse (Qx floats). You picked up a gutshot and this is a good spot to attack weakness.",
+			"id": "post_051"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "CO opens, you call BTN with Qc Jc. Flop: 9h 6s 2d. CO c-bets 33%, you call. Turn: Th. CO checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Qc Jc",
+				"position": "BTN",
+				"board": "9h 6s 2d Th",
+				"pot_size": "9bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 50% pot",
+				"Bet 75% pot"
+			],
+			"answer": "Bet 50% pot",
+			"explanation": "CO's turn check signals weakness - most overpairs and top pairs would continue. The T gives you a gutshot straight draw and overcards. Betting puts pressure on their capped range (weak pairs, AK/AQ type hands) and can win the pot immediately. If called, you have 4 outs to the nuts plus possible overcard outs.",
+			"id": "post_052"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "CO opens, you call BTN with 6s 5s. Flop: Kh 9c 3d. CO bets 33% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "6s 5s",
+				"position": "BTN",
+				"board": "Kh 9c 3d",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "33% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 3x"
+			],
+			"answer": "Fold",
+			"explanation": "Floating requires equity when called on later streets or strong bluffing potential. 65s has no backdoor draws on this board and no overcards. The K-high dry board hits CO's range well. Without any equity or credible turn/river bluff story, folding this low equity hand is correct.",
+			"id": "post_053"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "CO opens, you call BTN with 7h 6h. Flop: Ks Jc 4h. CO bets 33% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "7h 6h",
+				"position": "BTN",
+				"board": "Ks Jc 4h",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "33% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 3x"
+			],
+			"answer": "Call",
+			"explanation": "Unlike 65s on K93, here you have backdoor flush draw plus backdoor straight potential. The small c-bet is easy to float with position. On any heart turn you have a draw, on any 5 or 8 you have OESD. You can bluff when CO shows weakness or realize your equity when you improve.",
+			"id": "post_054"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "hand_strength",
+			"question": "You 3-bet SB vs BTN with Ad Kd, BTN calls. Flop: Kh 8s 3c. You bet 33%, BTN calls. Turn: 6d. You bet 66%, BTN calls. River: 2h. Pot is 30bb, you have 60bb behind. What's your play?",
+			"scenario": {
+				"hero_hand": "Ad Kd",
+				"position": "SB",
+				"board": "Kh 8s 3c 6d 2h",
+				"pot_size": "30bb",
+				"stack_depth": "60bb"
+			},
+			"options": [
+				"Check",
+				"Bet 40% pot",
+				"Bet 75% pot",
+				"Shove all-in"
+			],
+			"answer": "Bet 75% pot",
+			"explanation": "You have top pair top kicker on a dry runout. BTN called two streets - their range is Kx, 88, slow-played 33, or stubborn floats. Your AK beats all Kx except KK (unlikely as they'd often 4-bet pre). Value bet large to extract from KQ, KJ, KT. The 75% sizing keeps their Kx calling while not over-committing vs sets.",
+			"id": "hs_015"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "hand_strength",
+			"question": "You defend BB with 6c 5c vs BTN open. Flop: 7c 4c 2h. Check, BTN bets 50%, you call. Turn: 8c (you make flush). Check, BTN bets 66%, you call. River: Ac (4 clubs on board). What's your play?",
+			"scenario": {
+				"hero_hand": "6c 5c",
+				"position": "BB",
+				"board": "7c 4c 2h 8c Ac",
+				"pot_size": "18bb",
+				"stack_depth": "70bb"
+			},
+			"options": [
+				"Check",
+				"Bet 50% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Check",
+			"explanation": "The Ac river is disastrous for your small flush. Any club in BTN's hand now makes a flush, and Axcc holdings beat you. If you bet, BTN folds all worse and raises all better. By checking, you induce bluffs from missed draws and can call reasonable bets from worse flushes that fear your check means the Ac. Your 6-high flush becomes a bluff catcher.",
+			"id": "hs_016"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "You're on the river heads-up. The pot is 100bb. You can either check or bet 50bb. What bluff-to-value ratio should your betting range have to be theoretically balanced?",
+			"options": [
+				"1 bluff : 3 value",
+				"1 bluff : 2 value",
+				"1 bluff : 1 value",
+				"2 bluffs : 1 value"
+			],
+			"answer": "1 bluff : 2 value",
+			"explanation": "For a half-pot bet, opponent must call 50 to win 150, needing 33% equity. To make them indifferent, you should bluff 33% of your betting range. This means 1 bluff for every 2 value bets (1:2 ratio = 33% bluffs). This way, calling and folding with bluff catchers have the same EV.",
+			"id": "gt_011"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "Against a balanced opponent on the river, the pot is 10bb and they bet 10bb. What's the maximum frequency you can fold a bluff catcher?",
+			"options": [
+				"33%",
+				"50%",
+				"67%",
+				"You should never fold"
+			],
+			"answer": "50%",
+			"explanation": "For a pot-sized bet, you need 50% equity to call (call 10 to win 20). A balanced opponent bets value:bluff at 2:1, meaning they bluff 33% of the time. Your bluff catcher has 33% equity on average - less than the 50% needed. However, minimum defense frequency (MDF) says you must call at least 50% to prevent their bluffs from being automatically profitable.",
+			"id": "gt_012"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "UTG opens 2.5bb, MP calls. You're on BTN with Th 9h. What's your play?",
+			"scenario": {
+				"hero_hand": "Th 9h",
+				"position": "BTN",
+				"action_to_hero": "UTG open, MP call",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 10bb"
+			],
+			"answer": "Call",
+			"explanation": "T9s has great playability in a multiway pot with position. 3-betting would be a mistake - you'd often face a 4-bet from UTG's strong range or play a bloated pot. By calling, you get great implied odds for straights/flushes and can outplay opponents postflop. This is a speculative hand that thrives in multiway pots.",
+			"id": "pf_027"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "elite",
+			"topic": "preflop",
+			"question": "You open BTN with Ad 5d, SB 3-bets to 10bb, BB cold 4-bets to 28bb. What's your play?",
+			"scenario": {
+				"hero_hand": "Ad 5d",
+				"position": "BTN",
+				"action_to_hero": "SB 3-bet, BB cold 4-bet to 28bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"5-bet to 55bb",
+				"5-bet shove"
+			],
+			"answer": "Fold",
+			"explanation": "A cold 4-bet from BB over a 3-bet is an extremely strong action - their range is AA, KK, QQ, and maybe AK. Your A5s was a good 3-bet defend candidate against the SB alone, but facing the cold 4-bet you're crushed. You block one ace but that's not enough. Clear fold - even suited wheel aces have limits.",
+			"id": "pf_028"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "You open CO with As Js, BTN 3-bets to 9bb, blinds fold. What's your play at 100bb effective?",
+			"scenario": {
+				"hero_hand": "As Js",
+				"position": "CO",
+				"action_to_hero": "BTN 3-bet to 9bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"4-bet to 22bb"
+			],
+			"answer": "Call",
+			"explanation": "AJs is strong enough to continue against a BTN 3-bet but not quite strong enough to 4-bet. 4-betting turns your hand into a bluff (you fold to a 5-bet) and inflates the pot OOP. By calling, you keep BTN's bluffs in, have good playability with the suited ace, and can realize equity postflop. This is the bread-and-butter of CO vs BTN dynamics.",
+			"id": "pf_029"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You 3-bet squeeze SB with Ah Kh vs UTG open and BTN call. Both call. Flop: Qc 7h 4h at 25bb effective (short stacked). Pot is 20bb. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Kh",
+				"position": "SB",
+				"board": "Qc 7h 4h",
+				"pot_size": "20bb",
+				"stack_depth": "25bb"
+			},
+			"options": [
+				"Check",
+				"Bet 5bb",
+				"Shove all-in"
+			],
+			"answer": "Shove all-in",
+			"explanation": "At 1.25 SPR with the nut flush draw and two overcards, shoving is correct. You have ~50% equity vs calling ranges and significant fold equity. Betting small commits you anyway and lets opponents realize equity cheaply. Checking gives up fold equity with a hand that wants to maximize it. Short stacks mean draws should be played aggressively.",
+			"id": "post_055"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You're 200bb deep in a cash game. You open BTN with Ks Kh, BB 3-bets, you 4-bet, BB calls. Flop: Jc 8s 4c. BB checks. Pot is 40bb, 160bb behind. What's your play?",
+			"scenario": {
+				"hero_hand": "Ks Kh",
+				"position": "BTN",
+				"board": "Jc 8s 4c",
+				"pot_size": "40bb",
+				"stack_depth": "160bb"
+			},
+			"options": [
+				"Check",
+				"Bet 15bb (small)",
+				"Bet 30bb (75%)",
+				"Bet 40bb (100%)"
+			],
+			"answer": "Bet 15bb (small)",
+			"explanation": "When very deep (4:1 SPR), you need to think about the full tree. Large bets commit you to getting stacks in vs BB's 4-bet calling range (JJ, 88, 44, AK, AQ). Small betting lets you control the pot and get two streets of thin value. If raised, you can fold without being committed. Deep stack poker requires smaller, more maneuverable sizings.",
+			"id": "post_056"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "intermediate",
+			"topic": "preflop",
+			"question": "UTG opens 2.5bb, MP calls, CO calls. You're on BTN with Ac Ts. What's your play?",
+			"scenario": {
+				"hero_hand": "Ac Ts",
+				"position": "BTN",
+				"action_to_hero": "UTG open, MP call, CO call",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Squeeze to 12bb"
+			],
+			"answer": "Squeeze to 12bb",
+			"explanation": "This is a classic squeeze spot. The callers have capped ranges and will fold most of their hands to aggression. ATs has solid blockers to strong hands and plays well if called. Squeezing picks up 8bb of dead money frequently and positions you to play in position when called.",
+			"id": "pf_030"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "CO opens 2.5bb, BTN calls. You're in SB with Kc Jc. What's your play?",
+			"scenario": {
+				"hero_hand": "Kc Jc",
+				"position": "SB",
+				"action_to_hero": "CO open, BTN call",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Squeeze to 12bb"
+			],
+			"answer": "Squeeze to 12bb",
+			"explanation": "KJs is at the top of your SB squeezing range. Calling is terrible - you'd be OOP multiway with a hand that needs to improve. Squeezing generates fold equity against both wide ranges. When called, you have a playable suited broadway with position on BB and initiative. Folding a hand this strong is too passive.",
+			"id": "pf_031"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You 3-bet BB with Qd Qc vs BTN. BTN calls. Flop: As 8c 3h. What's your play?",
+			"scenario": {
+				"hero_hand": "Qd Qc",
+				"position": "BB",
+				"board": "As 8c 3h",
+				"pot_size": "13bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 4bb (30%)",
+				"Bet 9bb (70%)"
+			],
+			"answer": "Check",
+			"explanation": "QQ is a significant portion of your checking range on ace-high flops OOP. If you c-bet, you fold out worse hands and only get action from Ax and better. By checking, you can check-call or check-raise based on BTN's action, and you under-represent your hand. BTN will often bet their entire range, letting you extract value from their bluffs.",
+			"id": "post_057"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You 3-bet SB with Kd Qs vs CO open. CO calls. Flop: Qh 7c 4d. What's your sizing?",
+			"scenario": {
+				"hero_hand": "Kd Qs",
+				"position": "SB",
+				"board": "Qh 7c 4d",
+				"pot_size": "13bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 4bb (30%)",
+				"Bet 9bb (70%)"
+			],
+			"answer": "Bet 9bb (70%)",
+			"explanation": "You have top pair good kicker on a dry board. Unlike ace-high flops, Q-high boards favor your 3-betting range significantly. A larger sizing denies equity from overcards and extracts value from worse queens and draws. Checking would under-represent your strong holding.",
+			"id": "post_058"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "Villain folds 80% to river bets in single raised pots. You have a pure bluff on the river with a pot-sized bet available. What should you do?",
+			"scenario": {
+				"villain_action": "folds 80% to river bets"
+			},
+			"options": [
+				"Bet because GTO says to balance",
+				"Bet because it's exploitatively profitable",
+				"Check because bluffing is risky",
+				"Bet smaller to reduce risk"
+			],
+			"answer": "Bet because it's exploitatively profitable",
+			"explanation": "Against a player who overfolds rivers, exploitative strategy demands bluffing more. Your pot-sized bluff needs villain to fold 50% to break even. They fold 80%. This is hugely +EV. GTO only matters against balanced opponents - against exploitable players, maximize EV by attacking their leaks. Here, that means bluffing relentlessly.",
+			"id": "gt_013"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open CO with Jd Jh, BTN calls. Flop: 8c 7c 4s. What's your play?",
+			"scenario": {
+				"hero_hand": "Jd Jh",
+				"position": "CO",
+				"board": "8c 7c 4s",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "JJ is a vulnerable overpair on this wet, connected board. Straight draws (T9, 65, 56) and flush draws all have significant equity. You need to charge draws to continue. A larger sizing denies correct odds to draws while extracting value from worse pairs and protecting your equity.",
+			"id": "post_059"
+		},
+		{
+			"type": "range_check",
+			"difficulty": "advanced",
+			"topic": "ranges",
+			"question": "Which hand is correctly part of a typical BB vs SB limping defense range at 100bb?",
+			"scenario": {
+				"position": "BB",
+				"action_to_hero": "SB limps"
+			},
+			"options": [
+				"Raise with any two cards",
+				"Check 72o",
+				"Raise T9o for value",
+				"Fold Q5o"
+			],
+			"answer": "Check 72o",
+			"explanation": "When SB limps into you in the BB, you should have a wide raising range but also check some hands to realize equity for free. 72o is too weak to raise for value but can see a flop for free. Folding from BB when you can check is always a mistake. You get to see 5 cards for no additional cost.",
+			"id": "rng_021"
+		},
+		{
+			"type": "range_check",
+			"difficulty": "elite",
+			"topic": "ranges",
+			"question": "In your BB defend vs BTN open range at 100bb, which hand type should be the highest frequency 3-bet?",
+			"options": [
+				"Premium pairs (JJ+)",
+				"Strong suited aces (AJs+)",
+				"Suited connectors (76s-T9s)",
+				"A2s-A5s"
+			],
+			"answer": "A2s-A5s",
+			"explanation": "While premiums are 3-bet, they're few combos. A2s-A5s are the highest frequency 3-bets because: 1) they block AA/AK, 2) they have nut flush potential, 3) they play poorly as flats OOP, 4) there are 16 combos. This is why wheel aces dominate modern BB 3-betting frequencies.",
+			"id": "rng_022"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "hand_strength",
+			"question": "BTN opens, you call BB with Ad 9d. Flop: Ts 7h 3c. Check, BTN bets 50%, you call. Turn: 2d. Check, BTN bets 75%, you call. River: Kc. Check, BTN checks. What do you put BTN on most likely?",
+			"scenario": {
+				"hero_hand": "Ad 9d",
+				"position": "BB",
+				"board": "Ts 7h 3c 2d Kc"
+			},
+			"options": [
+				"A strong king (KQ, KJ)",
+				"A missed draw",
+				"A medium pair (88-99)",
+				"Top pair on the flop (Tx)"
+			],
+			"answer": "A medium pair (88-99)",
+			"explanation": "BTN bet flop and turn but checked river when the K came. A strong K would value bet the river. A missed draw would often bluff the scare card. Top pair Tx fears the K and might check, but also might thin value bet. 88-99 fits perfectly - they had value on earlier streets but the overcard to the board scared them into checking. This is a classic 'scared of overcards' line.",
+			"id": "hs_017"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open CO with As Tc, BTN calls. Flop: Ad Jh 6c. You c-bet 33%, BTN calls. Turn: 7s. What's your play?",
+			"scenario": {
+				"hero_hand": "As Tc",
+				"position": "CO",
+				"board": "Ad Jh 6c 7s",
+				"pot_size": "9bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Check",
+			"explanation": "AT is a medium-strength hand - you beat AX worse kickers but lose to AJ, AK, AQ, two pair, and sets. By checking turn, you control the pot and don't inflate it to a size where you're forced to make tough river decisions. You can call a reasonable bet or check through and value bet thin rivers. Betting turns this into a three-street commitment with a hand that doesn't want that.",
+			"id": "post_060"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open CO with Ah Kh, BTN and BB both call. Flop: Qd 8c 4h. BB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Kh",
+				"position": "CO",
+				"board": "Qd 8c 4h",
+				"pot_size": "9.5bb",
+				"stack_depth": "95bb"
+			},
+			"options": [
+				"Check",
+				"Bet 25% pot",
+				"Bet 50% pot"
+			],
+			"answer": "Check",
+			"explanation": "In multiway pots, c-bet frequency should drop dramatically. With AK no pair and two opponents, your fold equity is low - at least one player often has a queen or better. Check and realize your backdoor equity. C-betting here burns chips against connected ranges.",
+			"id": "post_061"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open UTG with Ks Kc, MP and BTN call. Flop: Jh 6s 2c. What's your play?",
+			"scenario": {
+				"hero_hand": "Ks Kc",
+				"position": "UTG",
+				"board": "Jh 6s 2c",
+				"pot_size": "9.5bb",
+				"stack_depth": "95bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "Unlike AK on a Q-high board, KK on J62 is a clear value bet even multiway. You have a significant overpair on a dry board. Bet for value and protection against Jx, pocket pairs, and overcards. Players with draws and weaker pairs will call.",
+			"id": "post_062"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You open BTN with 7s 6s, SB and BB call. Flop: 9s 8d 4s. SB checks, BB bets 75% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "7s 6s",
+				"position": "BTN",
+				"board": "9s 8d 4s",
+				"pot_size": "9.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "BB bets 75%"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 2.5x"
+			],
+			"answer": "Raise to 2.5x",
+			"explanation": "You have a flush draw (9 outs), open-ended straight draw (8 outs minus overlaps), for ~15 outs twice - a monster draw with ~55% equity. With SB still to act and BB's donk bet showing strength, raising semi-bluffs generates fold equity, builds the pot for when you hit, and protects against SB's overcards. Calling is too passive with this equity.",
+			"id": "post_063"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open CO with Ad Jd, BB calls. Flop: Tc 7c 3h. BB leads out for 33% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "Ad Jd",
+				"position": "CO",
+				"board": "Tc 7c 3h",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "33% donk bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 3x"
+			],
+			"answer": "Call",
+			"explanation": "A small donk bet is often a weak probe or draw. AJ has two overcards and backdoor potential. Folding is too tight - you have equity and position. Raising turns your hand into a bluff against a range that includes strong hands. Call, use position, and re-evaluate the turn.",
+			"id": "post_064"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open BTN with Qc Qd, BB calls. Flop: Ac Kh 7s. BB leads for 80% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "Qc Qd",
+				"position": "BTN",
+				"board": "Ac Kh 7s",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "80% donk bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise"
+			],
+			"answer": "Fold",
+			"explanation": "A large donk bet on AK7 is polarized and usually strong. BB's range for this sizing is Ax, Kx, sets, and two pair. Your QQ loses to all value and barely beats the few bluffs (which wouldn't use this sizing). Calling chases two outs. Discipline fold despite your preflop premium.",
+			"id": "post_065"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You call BTN open from BB with Kc Tc. Flop: Qh Jc 4c. Check, BTN bets 50%, you call. Turn: 6d. Check, BTN bets 66%, you call. River: 2h. Pot is 18bb, you have 65bb. What's your play?",
+			"scenario": {
+				"hero_hand": "Kc Tc",
+				"position": "BB",
+				"board": "Qh Jc 4c 6d 2h",
+				"pot_size": "18bb",
+				"stack_depth": "65bb"
+			},
+			"options": [
+				"Check/fold",
+				"Check/call",
+				"Bet 50% pot as a bluff",
+				"Overbet shove as a bluff"
+			],
+			"answer": "Check/fold",
+			"explanation": "You have K-high with a missed flush draw. You have no showdown value and minimal fold equity against a double-barrel range. BTN likely has Qx or better to barrel twice. Bluffing is unprofitable - they're not folding value on a dry runout. Check and fold to a bet.",
+			"id": "post_066"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You 3-bet CO from BTN with As 4s, CO calls. Flop: Kh 7s 3s. You bet 33%, CO calls. Turn: Jd. You bet 66%, CO calls. River: Qc. Pot is 35bb, you have 55bb. What's your play?",
+			"scenario": {
+				"hero_hand": "As 4s",
+				"position": "BTN",
+				"board": "Kh 7s 3s Jd Qc",
+				"pot_size": "35bb",
+				"stack_depth": "55bb"
+			},
+			"options": [
+				"Check/fold",
+				"Check/call",
+				"Bet 50%",
+				"Shove all-in"
+			],
+			"answer": "Shove all-in",
+			"explanation": "The Q completes the broadway straight for AT. You've represented strength throughout and the Q is a great scare card. CO's double-calling range is Kx, Jx, and floats - none of which can call a river shove comfortably. Your As blocks nut flush draws they might have had. This is a high-equity bluff spot.",
+			"id": "post_067"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You defend BB with Jh Th vs CO open. Flop: Kc 9h 2h. You check, CO bets 33%. What's your play?",
+			"scenario": {
+				"hero_hand": "Jh Th",
+				"position": "BB",
+				"board": "Kc 9h 2h",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "33% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise to 3x"
+			],
+			"answer": "Check-raise to 3x",
+			"explanation": "You have a flush draw (9 outs) plus gutshot (3-4 more outs) - a premium semi-bluff. Against a small c-bet, CO's range is wide with many folds. Check-raising generates fold equity while building a pot for when you hit. Your hand is too strong to just call and too weak to slowplay.",
+			"id": "post_068"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You defend BB with 5d 4d vs BTN open. Flop: As 6h 3c. You check, BTN bets 25%. What's your play?",
+			"scenario": {
+				"hero_hand": "5d 4d",
+				"position": "BB",
+				"board": "As 6h 3c",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "25% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise to 3.5x"
+			],
+			"answer": "Check-raise to 3.5x",
+			"explanation": "You have an open-ended straight draw on a dry ace-high board. BTN's 25% c-bet indicates range betting - they'll have many weak hands. Check-raising represents an ace strongly and folds out hands like KQ, QJ, pocket pairs that have equity against you. With 8 outs and fold equity, this is a profitable semi-bluff.",
+			"id": "post_069"
+		},
+		{
+			"type": "position_play",
+			"difficulty": "advanced",
+			"topic": "position",
+			"question": "Why is it critical to 3-bet wider from the SB vs late position opens compared to BB?",
+			"options": [
+				"SB posts less money than BB",
+				"SB can fold postflop more easily",
+				"SB is OOP to everyone including BB who gets good odds to call",
+				"SB has stronger hands on average"
+			],
+			"answer": "SB is OOP to everyone including BB who gets good odds to call",
+			"explanation": "From SB, if you flat, BB gets great odds to overcall (already has 1bb in) and you'll play multiway OOP to both. This is disastrous for equity realization. By 3-betting, you either take it down or get heads-up vs the original raiser with initiative. The positional disadvantage makes flatting from SB a major leak.",
+			"id": "pos_012"
+		},
+		{
+			"type": "position_play",
+			"difficulty": "elite",
+			"topic": "position",
+			"question": "In a BTN vs BB single raised pot, approximately what percentage of flops should BTN c-bet if using a range c-bet strategy?",
+			"options": [
+				"25-30%",
+				"50-60%",
+				"70-80%",
+				"90-100%"
+			],
+			"answer": "70-80%",
+			"explanation": "BTN has significant range and positional advantage vs BB in SRPs. On most board textures, BTN can c-bet their entire range with small sizing (25-33% pot) profitably. The 70-80% figure accounts for some boards where checking back is correct (monotone, very connected). This high-frequency small-bet strategy is a cornerstone of modern poker.",
+			"id": "pos_013"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You have Ac As on a flop of 9h 7c 5s heads-up as the preflop raiser. Why is betting preferable to checking?",
+			"scenario": {
+				"hero_hand": "Ac As",
+				"board": "9h 7c 5s"
+			},
+			"options": [
+				"To induce a bluff raise",
+				"To deny equity from overcards and draws",
+				"Because checking is never correct with aces",
+				"To balance your checking range"
+			],
+			"answer": "To deny equity from overcards and draws",
+			"explanation": "AA is vulnerable on coordinated boards. Hands like JT, QT, 86, and any two Broadway cards have significant equity against you (20-30%). By betting, you charge these draws incorrect prices and often get them to fold, denying their equity. Checking gives free cards to hands that can outdraw you.",
+			"id": "post_070"
+		},
+		{
+			"type": "sizing_strategy",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "On a river with a polarized range (nuts or air), why is overbetting often superior to standard sizing?",
+			"options": [
+				"It looks scarier",
+				"It maximizes value from strong hands and fold equity with bluffs",
+				"Opponents always fold to overbets",
+				"It's harder to get called"
+			],
+			"answer": "It maximizes value from strong hands and fold equity with bluffs",
+			"explanation": "When polarized, you either have the nuts (want maximum value) or air (want maximum fold equity). A pot-sized or smaller bet doesn't maximize either. Overbetting extracts more from their calling range with your value hands while making their bluff-catchers unprofitable to call with your bluffs. It's mathematically optimal when truly polarized.",
+			"id": "post_071"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "hand_strength",
+			"question": "River: Ah Kd Qc 9s 4h. You have JT (nut straight). Villain checks. Why might betting small be superior to a large bet?",
+			"scenario": {
+				"hero_hand": "Jc Ts",
+				"position": "BTN",
+				"board": "Ah Kd Qc 9s 4h"
+			},
+			"options": [
+				"You're scared of a check-raise",
+				"You hold blockers to straights, so villain is polarized toward Ax and bluffs",
+				"Small bets always get more calls",
+				"Large bets only work as bluffs"
+			],
+			"answer": "You hold blockers to straights, so villain is polarized toward Ax and bluffs",
+			"explanation": "You block the nut straight (JT) and villain checked river - they likely don't have it. Their range is primarily Ax (value hands to call small) or air (won't call any size). A small bet extracts max value from their Ax that would fold to overbets. Your blockers mean large sizing targets a non-existent calling range.",
+			"id": "hs_018"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "You're considering bluffing the river. You have Ad 2d on a board with three diamonds. Why might this be a poor bluff choice?",
+			"scenario": {
+				"hero_hand": "Ad 2d",
+				"board": "contains flush"
+			},
+			"options": [
+				"A2 is too weak",
+				"Your Ad blocks villain's bluffs and your 2d blocks their weak flushes",
+				"You should value bet instead",
+				"Two pair is never a good bluff"
+			],
+			"answer": "Your Ad blocks villain's bluffs and your 2d blocks their weak flushes",
+			"explanation": "When bluffing, you want to block villain's value hands (so they fold) not their bluffs (which would fold anyway). A2dd on a flushed board blocks both: Ad blocks flush draws they'd be bluffing with, and the flush itself blocks their weak flushes that might fold. Ideal bluffs have cards that block their value, not their air.",
+			"id": "gt_014"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "hand_strength",
+			"question": "You open BTN with Kh Td, BB calls. Board: Kc 9s 5d 3h 2c. You bet flop, check turn, BB checks. What's your river play?",
+			"scenario": {
+				"hero_hand": "Kh Td",
+				"position": "BTN",
+				"board": "Kc 9s 5d 3h 2c",
+				"pot_size": "8bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Bet 33% pot",
+			"explanation": "BB's range after checking twice is capped - no Kx or strong 9x. Their range is small pairs, missed draws, and floats. Your KT can extract thin value from 9x, pocket pairs like 77-88, and Ax floats that might call small. A small sizing gets called by these weaker holdings without over-representing.",
+			"id": "hs_019"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "CO opens, you call BTN with Qs Jc. Flop: Qh 8d 3c. CO bets 33%, you call. Turn: 5h. CO bets 66%, you call. River: Ah. CO shoves 120% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "Qs Jc",
+				"position": "BTN",
+				"board": "Qh 8d 3c 5h Ah",
+				"pot_size": "22bb",
+				"stack_depth": "60bb",
+				"villain_action": "120% pot shove"
+			},
+			"options": [
+				"Fold",
+				"Call"
+			],
+			"answer": "Call",
+			"explanation": "The Ah is a scare card but CO's line is suspicious. Would they really shove a rivered ace or AQ for value? Those hands would typically bet smaller. The overbet shove screams polarization between sets/two pair and bluffs. Your QJ beats all their bluffs. Given pot odds (need ~45% equity) and CO's bluff-heavy tendencies in this spot, call.",
+			"id": "post_072"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You 3-bet BB with Ah Jh vs BTN open. BTN calls. Flop: Jc 7s 4h. You bet 33%, BTN calls. Turn: 2d. You check, BTN bets 75%. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah Jh",
+				"position": "BB",
+				"board": "Jc 7s 4h 2d",
+				"pot_size": "15bb",
+				"stack_depth": "80bb",
+				"villain_action": "75% turn bet after you check"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise"
+			],
+			"answer": "Call",
+			"explanation": "Your turn check showed weakness and BTN attacked. But AJ is top pair top kicker - folding is way too weak. Check-raising is unnecessary and only gets action from better. BTN could have JT, J9, overpairs, or pure bluffs attacking your check. Call and evaluate the river. You have a clear bluff-catcher.",
+			"id": "post_073"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You 3-bet CO vs UTG open with As Qh. UTG calls. Flop: Kd 7c 2h. You c-bet 33%, UTG calls. Turn: Ts. What's your play?",
+			"scenario": {
+				"hero_hand": "As Qh",
+				"position": "CO",
+				"board": "Kd 7c 2h Ts",
+				"pot_size": "15bb",
+				"stack_depth": "85bb"
+			},
+			"options": [
+				"Check",
+				"Bet 50% pot",
+				"Bet 75% pot"
+			],
+			"answer": "Bet 50% pot",
+			"explanation": "The T gives you a gutshot to the nuts (J = broadway) and your range still has significant equity here. UTG's flop-calling range is capped - most Kx would 4-bet pre or check-raise flop. Continuing aggression represents KK/AA/AK and folds out pocket pairs and weaker draws. The T hits your 3-bet range well.",
+			"id": "post_074"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You open BTN with 6c 5c, SB 3-bets, you call. Flop: 8c 7h 2c. SB bets 33%, you call. Turn: Ad. SB checks. What's your play?",
+			"scenario": {
+				"hero_hand": "6c 5c",
+				"position": "BTN",
+				"board": "8c 7h 2c Ad",
+				"pot_size": "15bb",
+				"stack_depth": "80bb"
+			},
+			"options": [
+				"Check",
+				"Bet 50% pot",
+				"Bet 100% pot"
+			],
+			"answer": "Bet 100% pot",
+			"explanation": "SB's check on the A is weakness - they'd almost always continue with AA, AK, AQ. Their range is now QQ-JJ, KK (scared of A), or missed c-bets. You have an OESD plus flush draw - 15 outs. A large bet represents the ace and generates significant fold equity while building a pot for when you hit. SB is folding overpairs here often.",
+			"id": "post_075"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "200bb deep. You open BTN with Kd Kc, BB 3-bets, you 4-bet, BB calls. Flop: 7h 6h 5h. BB donk shoves for ~1.5x pot. What's your play?",
+			"scenario": {
+				"hero_hand": "Kd Kc",
+				"position": "BTN",
+				"board": "7h 6h 5h",
+				"pot_size": "50bb",
+				"stack_depth": "150bb",
+				"villain_action": "donk shove 1.5x pot"
+			},
+			"options": [
+				"Fold",
+				"Call"
+			],
+			"answer": "Fold",
+			"explanation": "This is a sickening spot but a fold. BB's 4-bet calling range is AA, KK, QQ, AK, maybe JJ. On a monotone connected board, their donk shove is extremely polarized. The only bluff is AhXh but that has huge equity. Their value range (sets, Ah with pair, made flush) crushes your one-pair hand. Even with KK, you're drawing nearly dead against their realistic range.",
+			"id": "post_076"
+		},
+		{
+			"type": "pot_odds",
+			"difficulty": "intermediate",
+			"topic": "pot_odds",
+			"question": "You have an open-ended straight draw on the turn (8 outs). Pot is 15bb, villain bets 10bb. Should you call?",
+			"scenario": {
+				"pot_size": "15bb",
+				"villain_action": "bets 10bb"
+			},
+			"options": [
+				"Yes, always",
+				"No, never",
+				"Yes, if implied odds are good",
+				"It depends on the river card"
+			],
+			"answer": "Yes, if implied odds are good",
+			"explanation": "You need to call 10bb to win 25bb = 40% equity needed. With 8 outs you have ~17% (8/46) to hit. Pure pot odds say fold. However, with implied odds (how much you'll win when you hit), calling can be profitable if villain will pay off a significant bet on the river. This is a common spot to consider stack depths.",
+			"id": "po_015"
+		},
+		{
+			"type": "pot_odds",
+			"difficulty": "advanced",
+			"topic": "pot_odds",
+			"question": "Villain is all-in. The pot is 50bb and you need to call 30bb with a combo draw (flush + gutshot = 12 outs). The turn is out. Is this a call?",
+			"scenario": {
+				"pot_size": "50bb",
+				"villain_action": "all-in for 30bb",
+				"outs": "12"
+			},
+			"options": [
+				"Yes",
+				"No",
+				"Need more information"
+			],
+			"answer": "Yes",
+			"explanation": "You need to call 30bb to win 80bb = 37.5% equity needed. With 12 outs on the turn, you have roughly 12 \u00d7 2.2 = 26% to hit by the river. Wait - that's not enough by rule of 2. But the rule of 4 applies since you see both cards: 12 \u00d7 4 = 48%. Since villain is all-in, you see both cards with guaranteed equity realization. 48% > 37.5%. Call.",
+			"id": "po_016"
+		},
+		{
+			"type": "hand_strength",
+			"difficulty": "advanced",
+			"topic": "hand_strength",
+			"question": "UTG raises, you 3-bet MP with QQ, UTG 4-bets small (2.2x your 3-bet). What does this sizing typically indicate?",
+			"scenario": {
+				"hero_hand": "Qc Qd",
+				"position": "MP",
+				"action_to_hero": "UTG 4-bets small"
+			},
+			"options": [
+				"UTG is bluffing",
+				"UTG has AA/KK and wants a call",
+				"UTG has AK and is unsure",
+				"UTG has a medium pair"
+			],
+			"answer": "UTG has AA/KK and wants a call",
+			"explanation": "A small 4-bet sizing (often called a 'clickback' or 'milking' 4-bet) typically indicates extreme strength. With AA/KK, UTG wants to keep you in and build the pot. With a bluff or medium hand, they'd usually size larger to generate fold equity or just call. This small 4-bet is a trap line - proceed with caution.",
+			"id": "hs_020"
+		},
+		{
+			"type": "hand_strength",
+			"difficulty": "elite",
+			"topic": "hand_strength",
+			"question": "You're on the BTN. MP opens, you 3-bet, MP calls. Flop: Ad Kc Qc (you have JTs). MP check-raises your c-bet. What hands is MP most likely representing?",
+			"scenario": {
+				"hero_hand": "Jh Th",
+				"position": "BTN",
+				"board": "Ad Kc Qc",
+				"villain_action": "check-raises flop"
+			},
+			"options": [
+				"A set of queens",
+				"AK for two pair",
+				"JT for the straight",
+				"A flush draw bluff"
+			],
+			"answer": "JT for the straight",
+			"explanation": "On AKQ with a flush draw, MP's check-raise is most naturally the nuts (JT for Broadway) or a combo draw. Sets wouldn't typically check-raise this wet board - they'd call and let you barrel into their trap. AK would play similarly. The most common check-raise line here is made straight or strong semi-bluff with club draws.",
+			"id": "hs_021"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open HJ with Tc 9c, CO calls. Flop: Jh 8c 4d. You c-bet 33%, CO raises to 3x. What's your play?",
+			"scenario": {
+				"hero_hand": "Tc 9c",
+				"position": "HJ",
+				"board": "Jh 8c 4d",
+				"pot_size": "10bb",
+				"stack_depth": "90bb",
+				"villain_action": "raises to 3x"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 2.5x their raise"
+			],
+			"answer": "Call",
+			"explanation": "You have an open-ended straight draw (8 outs) plus backdoor flush draw. CO's raise could be value (JT+, sets) or semi-bluff (draws, 98). Folding 8 outs with backdoors is too tight. 3-betting turns your hand into a bluff when you have good equity to realize. Call and hit your draw.",
+			"id": "post_077"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You defend BB with Ah 4h vs BTN open. Flop: Ks 9h 6h. Check, BTN bets 75%. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah 4h",
+				"position": "BB",
+				"board": "Ks 9h 6h",
+				"pot_size": "6.5bb",
+				"stack_depth": "95bb",
+				"villain_action": "75% pot bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Check-raise to 2.5x"
+			],
+			"answer": "Call",
+			"explanation": "The nut flush draw is extremely valuable but check-raising against a large sizing is risky - you'll face a 3-bet often with significant equity denied. Calling keeps the pot manageable, disguises your hand, and lets you stack villain when you hit. Check-raising is higher variance without enough fold equity against this sizing.",
+			"id": "post_078"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open CO with As Js, BTN calls. Flop: Ac 8h 5c. You c-bet 33%, BTN calls. Turn: 2d. What's your play?",
+			"scenario": {
+				"hero_hand": "As Js",
+				"position": "CO",
+				"board": "Ac 8h 5c 2d",
+				"pot_size": "9bb",
+				"stack_depth": "90bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "You have top pair good kicker. BTN flatted a small c-bet with a range of weak aces, club draws, and middle pairs. The 2d changes nothing. Continue betting for value - worse aces and all draws call. Checking lets them realize free equity and misses value from hands that would fold to a second barrel.",
+			"id": "post_079"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open BTN with Jh Jd, SB 3-bets, you call. Flop: Ts 6s 3c. SB bets 66%. What's your play?",
+			"scenario": {
+				"hero_hand": "Jh Jd",
+				"position": "BTN",
+				"board": "Ts 6s 3c",
+				"pot_size": "13bb",
+				"stack_depth": "85bb",
+				"villain_action": "66% c-bet"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 2.5x"
+			],
+			"answer": "Call",
+			"explanation": "JJ is an overpair on a board that doesn't hit SB's 3-betting range hard (no AK, AQ connections). You beat all their bluffs and many value bets (TT, 99). Folding is way too weak. Raising bloats the pot when you're often against overpairs that have you crushed. Call and evaluate the turn.",
+			"id": "post_080"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You defend BB with 8c 7c vs CO open. Board runs out: 9c 6h 2d - 5c - Ac. You check-called flop, check-called turn. River Ac completes backdoor flush and you made your straight. CO checks. What's your play?",
+			"scenario": {
+				"hero_hand": "8c 7c",
+				"position": "BB",
+				"board": "9c 6h 2d 5c Ac",
+				"pot_size": "15bb",
+				"stack_depth": "75bb"
+			},
+			"options": [
+				"Check back",
+				"Bet 50% pot",
+				"Bet 100% pot",
+				"Overbet 150% pot"
+			],
+			"answer": "Overbet 150% pot",
+			"explanation": "You have the 2nd nuts (9-high straight loses only to T8). CO's check indicates weakness - they likely have a pair or missed draw. An overbet maximizes value from their Ax that might hero-call and prices out any consideration of bluff-raising. Your range is super strong here after the passive line - they'll pay.",
+			"id": "post_081"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You 3-bet SB with Kc Qc vs BTN open, BTN calls. Flop: Qh 7s 4d. You bet 33%, BTN calls. Turn: 3c. You bet 66%, BTN calls. River: 8h. What's your play?",
+			"scenario": {
+				"hero_hand": "Kc Qc",
+				"position": "SB",
+				"board": "Qh 7s 4d 3c 8h",
+				"pot_size": "32bb",
+				"stack_depth": "55bb"
+			},
+			"options": [
+				"Check",
+				"Bet 33% pot",
+				"Bet 66% pot",
+				"Shove"
+			],
+			"answer": "Bet 66% pot",
+			"explanation": "You have top pair second kicker. BTN called two streets - their range is Qx, 77, slow-played sets, and stubborn floats. Your KQ beats all Qx except AQ (rare given no 4-bet). Value bet confidently - 66% extracts from QJ, QT, Q9 and doesn't over-commit. Checking misses significant value.",
+			"id": "post_082"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "intermediate",
+			"topic": "preflop",
+			"question": "You're in the BB with Ah 7h. CO opens 2.5bb, BTN calls. SB folds. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah 7h",
+				"position": "BB",
+				"action_to_hero": "CO open, BTN call",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 11bb"
+			],
+			"answer": "Call",
+			"explanation": "A7s is playable multiway with its suited ace potential but not strong enough to 3-bet against a CO open with a caller. 3-betting would isolate you against stronger ranges. Calling closes the action with good pot odds (need to call 1.5bb to win ~7bb) and lets you realize equity in a multiway pot where suited aces perform well.",
+			"id": "pf_032"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "advanced",
+			"topic": "preflop",
+			"question": "UTG opens 2.5bb, you're in MP with Ac Kd. What's your play at 60bb effective (short-stacked)?",
+			"scenario": {
+				"hero_hand": "Ac Kd",
+				"position": "MP",
+				"action_to_hero": "UTG open 2.5bb",
+				"stack_depth": "60bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet to 8bb",
+				"3-bet shove"
+			],
+			"answer": "3-bet to 8bb",
+			"explanation": "At 60bb, AKo is too strong to flat (plays poorly multiway OOP) but shoving is unnecessarily risky when you have fold equity with a standard 3-bet. 3-betting to ~3x the open size generates fold equity against weaker opens and sets up a comfortable SPR if called. If 4-bet, you can evaluate - AK has the equity to get in at 60bb.",
+			"id": "pf_033"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "elite",
+			"topic": "preflop",
+			"question": "You're on the BTN with 6h 5h. UTG opens 2.5bb, MP 3-bets to 8bb. What's your play?",
+			"scenario": {
+				"hero_hand": "6h 5h",
+				"position": "BTN",
+				"action_to_hero": "UTG open, MP 3-bet to 8bb",
+				"stack_depth": "100bb"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"4-bet to 20bb"
+			],
+			"answer": "Fold",
+			"explanation": "65s needs multiway action and good implied odds. Facing a 3-bet with UTG still to act is the worst possible spot - you'll often face a 4-bet or play heads-up OOP against a strong range. Even if you call, UTG might squeeze. Suited connectors thrive in single-raised multiway pots, not 3-bet scenarios.",
+			"id": "pf_034"
+		},
+		{
+			"type": "range_check",
+			"difficulty": "advanced",
+			"topic": "ranges",
+			"question": "Which of these hands should be in your CO opening range but NOT in your UTG opening range at 100bb 6-max?",
+			"options": [
+				"AQo",
+				"JTs",
+				"K9s",
+				"99"
+			],
+			"answer": "K9s",
+			"explanation": "AQo, JTs, and 99 are all standard opens from both UTG and CO. K9s is the marginal hand - from UTG it's too weak (dominated by AK, KQ, KJ when called) but from CO with only 3 players behind, it's a profitable open. This illustrates how position widens your range.",
+			"id": "rng_023"
+		},
+		{
+			"type": "range_check",
+			"difficulty": "elite",
+			"topic": "ranges",
+			"question": "In a BB vs BTN 3-bet pot, which hand category should comprise the largest portion of BB's checking range on a Kh 7c 2d flop?",
+			"options": [
+				"Overpairs (AA, QQ)",
+				"Top pair hands (Kx)",
+				"Underpairs (99-JJ)",
+				"Strong draws and air"
+			],
+			"answer": "Top pair hands (Kx)",
+			"explanation": "On dry K-high boards as the OOP 3-bettor, your Kx hands (KQ, KJ) are often better as checks than bets. They're strong enough to call down but not strong enough to build a big pot. AA/QQ prefer betting for protection. Underpairs can mix. This is why Kx dominates the checking range - they want pot control and to induce.",
+			"id": "rng_024"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "What does 'capped range' mean in poker terminology?",
+			"options": [
+				"A range with a maximum number of combos",
+				"A range that cannot contain the nuts or very strong hands",
+				"A range limited by position",
+				"A range that has been 3-bet"
+			],
+			"answer": "A range that cannot contain the nuts or very strong hands",
+			"explanation": "A capped range is one where the player's previous actions have removed strong hands from their possible holdings. For example, if BTN checks back a coordinated flop, their range is capped - they would have bet sets and strong draws. Recognizing capped ranges lets you apply pressure with bluffs.",
+			"id": "gt_015"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "You're deciding whether to use a 'merged' or 'polarized' c-bet strategy on a flop. Which board texture favors a merged (linear) strategy?",
+			"options": [
+				"Ah Kd 7c (dry, high)",
+				"Jh Tc 9c (wet, connected)",
+				"7s 6s 5s (monotone, connected)",
+				"Kh Kd 4c (paired)"
+			],
+			"answer": "Ah Kd 7c (dry, high)",
+			"explanation": "Merged strategies work on boards where medium-strength hands can value bet and expect calls from worse. AK7 favors the preflop raiser heavily - you can bet Ax, Kx, and even some Qx for thin value because villain's range is weak. On wet/connected boards, medium hands can't value bet safely and polarized strategies (nuts or air) are superior.",
+			"id": "gt_016"
+		},
+		{
+			"type": "position_play",
+			"difficulty": "advanced",
+			"topic": "position",
+			"question": "Why should your BTN flatting range vs CO open be relatively wide?",
+			"options": [
+				"Because you have position on everyone postflop",
+				"Because CO's range is weak",
+				"Because 3-betting is always wrong",
+				"Because the blinds always fold"
+			],
+			"answer": "Because you have position on everyone postflop",
+			"explanation": "Position lets you see opponent actions before deciding, control pot size, and bluff more effectively. From BTN vs CO, you're guaranteed position postflop, so hands that play well with position (suited connectors, suited aces, broadway) can flat profitably. You'll outplay opponents on later streets.",
+			"id": "pos_014"
+		},
+		{
+			"type": "position_play",
+			"difficulty": "elite",
+			"topic": "position",
+			"question": "In a HJ vs BB single raised pot, why does HJ have less of a c-betting advantage than BTN vs BB?",
+			"options": [
+				"HJ has weaker hands",
+				"HJ's range is narrower so the equity advantage is smaller",
+				"BB defends wider vs HJ",
+				"HJ should never c-bet"
+			],
+			"answer": "HJ's range is narrower so the equity advantage is smaller",
+			"explanation": "HJ opens a tighter range than BTN (more premiums, fewer weak hands). This means on most boards, HJ's range advantage over BB is smaller - BB's defending range hits boards almost as well. BTN's wide opens create huge equity edges on many textures. This is why optimal c-bet frequency decreases as open position moves earlier.",
+			"id": "pos_015"
+		},
+		{
+			"type": "preflop_action",
+			"difficulty": "intermediate",
+			"topic": "preflop",
+			"question": "You open BTN with 8c 8d, SB 3-bets to 10bb. At what stack depth does calling become better than folding?",
+			"scenario": {
+				"hero_hand": "8c 8d",
+				"position": "BTN",
+				"action_to_hero": "SB 3-bet to 10bb"
+			},
+			"options": [
+				"Any depth - always call",
+				"50bb+",
+				"80bb+",
+				"Fold at all depths vs SB 3-bet"
+			],
+			"answer": "80bb+",
+			"explanation": "Pocket pairs need set mining odds - roughly 15:1 implied odds to call for set value. At 80bb+, you can win ~75bb when you hit a set (8x your call of ~9bb). Shorter stacks don't offer enough implied odds. 88 also has some playability but against SB's polar 3-bet range OOP, set mining math drives the decision.",
+			"id": "pf_035"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "hand_strength",
+			"question": "You have Qh Qd on a board of As Kd 7c 4h 2s after check-calling flop and turn. Villain bets 50% pot on the river. What category is your hand?",
+			"scenario": {
+				"hero_hand": "Qh Qd",
+				"position": "BB",
+				"board": "As Kd 7c 4h 2s",
+				"villain_action": "50% river bet"
+			},
+			"options": [
+				"Value hand",
+				"Bluff catcher",
+				"Drawing hand",
+				"Air"
+			],
+			"answer": "Bluff catcher",
+			"explanation": "QQ on AK742 is a classic bluff catcher. You beat all of villain's bluffs (missed draws, floats, pure air) but lose to all their value (Ax, Kx, sets, two pair). The decision isn't about whether your hand is 'good' - it's about whether villain is bluffing frequently enough relative to their bet size.",
+			"id": "hs_022"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "elite",
+			"topic": "postflop",
+			"question": "You're in BB with 4h 4d. Board: 4c 9s 7h Jd Ks after you check-raised flop, bet turn, and now face a river shove from BTN. Pot was 25bb, BTN shoved 60bb. What's your play?",
+			"scenario": {
+				"hero_hand": "4h 4d",
+				"position": "BB",
+				"board": "4c 9s 7h Jd Ks",
+				"pot_size": "25bb",
+				"stack_depth": "60bb",
+				"villain_action": "river shove 60bb into 25bb"
+			},
+			"options": [
+				"Fold",
+				"Call"
+			],
+			"answer": "Call",
+			"explanation": "You have bottom set - one of the strongest hands possible. The board ran out with no flush and only JT makes a straight. BTN's shove could be a higher set (99, 77 - you block neither), J9, K9, or a bluff. Given you showed strength and they're shoving huge, they could be turning a hand like KJ into a bluff. Bottom set can't fold in this spot.",
+			"id": "post_083"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "advanced",
+			"topic": "postflop",
+			"question": "You open CO with Ah 9h, BTN calls. Flop: Ac 6c 3s. You bet 33%, BTN calls. Turn: Tc. You bet 50%, BTN raises to 2.5x. What's your play?",
+			"scenario": {
+				"hero_hand": "Ah 9h",
+				"position": "CO",
+				"board": "Ac 6c 3s Tc",
+				"pot_size": "18bb",
+				"stack_depth": "75bb",
+				"villain_action": "raises turn 2.5x"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"3-bet shove"
+			],
+			"answer": "Call",
+			"explanation": "A9 is top pair with a decent kicker. BTN's turn raise could be value (AT, A6, sets, two pair, flush) or semi-bluff (club draws, 98cc type hands). Folding top pair to one raise is too weak. 3-bet shoving bloats the pot when you're often behind or flipping. Call and evaluate the river - you can fold to aggression or call down.",
+			"id": "post_084"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "advanced",
+			"topic": "game_theory",
+			"question": "Villain check-raises the flop 35% of the time (very high frequency). How should you adjust your c-betting strategy?",
+			"scenario": {
+				"villain_action": "check-raises flop 35%"
+			},
+			"options": [
+				"C-bet more frequently with strong hands only",
+				"C-bet less frequently overall, check back more medium hands",
+				"Always c-bet and call the raise",
+				"Never c-bet against this player"
+			],
+			"answer": "C-bet less frequently overall, check back more medium hands",
+			"explanation": "Against a high check-raise frequency, your c-bets get punished often. Adjust by: 1) checking back more medium-strength hands that hate raises, 2) c-betting only strong hands and select bluffs, 3) calling raises more liberally since their range is wider/bluffier. This narrows your c-bet range and protects your checking range.",
+			"id": "gt_017"
+		},
+		{
+			"type": "game_theory",
+			"difficulty": "elite",
+			"topic": "game_theory",
+			"question": "Villain folds to 3-bets 75% of the time. What adjustment maximizes your profit?",
+			"scenario": {
+				"villain_action": "folds to 3-bets 75%"
+			},
+			"options": [
+				"3-bet only premium hands for max value",
+				"3-bet extremely wide with any two cards",
+				"3-bet wider but maintain some value range",
+				"Stop 3-betting entirely to trap"
+			],
+			"answer": "3-bet wider but maintain some value range",
+			"explanation": "At 75% fold, 3-betting is immediately profitable with any two cards. However, the 25% of the time they call/4-bet, you need some value. Exploit by 3-betting very wide (including suited junk that plays OK if called) but keep premium hands for value when they continue. Pure any-two-cards 3-betting leaves you crushed when they fight back.",
+			"id": "gt_018"
+		},
+		{
+			"type": "pot_odds",
+			"difficulty": "elite",
+			"topic": "pot_odds",
+			"question": "You want to get 100bb stacks in over 3 streets. Pot is 10bb on the flop. What sizing on each street accomplishes this geometrically?",
+			"options": [
+				"33% flop, 50% turn, 100% river",
+				"50% each street",
+				"75% flop, 75% turn, 75% river",
+				"75% each street"
+			],
+			"answer": "75% each street",
+			"explanation": "Geometric growth: Starting with 10bb pot, betting 75% each street grows the pot optimally. Flop: 10bb + 7.5bb call = 25bb. Turn: 25bb + 18.75bb = 62.5bb. River: 62.5bb + ~47bb = shove ~100bb remaining. Three 75% pot bets is roughly geometric for getting stacks in over three streets at 100bb depth.",
+			"id": "po_017"
+		},
+		{
+			"type": "postflop_action",
+			"difficulty": "intermediate",
+			"topic": "postflop",
+			"question": "You open CO with Kh Jh, BB calls. Flop: Kd 9c 5h. BB donks 50% pot. What's your play?",
+			"scenario": {
+				"hero_hand": "Kh Jh",
+				"position": "CO",
+				"board": "Kd 9c 5h",
+				"villain_action": "BB donk bets 50%"
+			},
+			"options": [
+				"Fold",
+				"Call",
+				"Raise to 2.5x"
+			],
+			"answer": "Call",
+			"explanation": "You have top pair good kicker. A donk bet often indicates a marginal made hand or draw testing the waters. Raising would only get action from better (K9, KQ, sets) and fold out bluffs. By calling, you keep in their weaker range and can extract value on later streets. Evaluate based on turn action.",
+			"id": "post_085"
 		}
 	]
 }

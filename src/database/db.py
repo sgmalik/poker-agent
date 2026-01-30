@@ -1,15 +1,11 @@
 """Database engine setup and session management."""
 
-from pathlib import Path
 from typing import Generator
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, declarative_base
 
-# Database configuration
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-DATABASE_FILE = DATA_DIR / "poker_coach.db"
-DATABASE_URL = f"sqlite:///{DATABASE_FILE}"
+from ..config import DATABASE_URL
 
 # Create engine
 engine = create_engine(

@@ -22,6 +22,8 @@ from .quiz_tools import (
     get_quiz_performance,
     find_study_leaks,
     get_recent_quiz_sessions,
+    add_quiz_question,
+    get_quiz_bank_stats,
     QUIZ_TOOLS,
 )
 from .session_tools import (
@@ -58,6 +60,8 @@ __all__ = [
     "get_quiz_performance",
     "find_study_leaks",
     "get_recent_quiz_sessions",
+    "add_quiz_question",
+    "get_quiz_bank_stats",
     "QUIZ_TOOLS",
     # Session tools
     "get_session_statistics",
