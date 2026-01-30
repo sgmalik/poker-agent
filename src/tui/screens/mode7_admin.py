@@ -19,6 +19,7 @@ from ...database.service import (
     delete_hand_history,
     get_admin_stats,
 )
+from .mode7_detail import Mode7DetailScreen
 
 
 class TableConfigEntry(TypedDict):
@@ -245,6 +246,7 @@ class Mode7AdminScreen(Screen):
 
     BINDINGS = [
         Binding("escape", "back", "Back", show=True),
+        Binding("enter", "view_detail", "View", show=True),
         Binding("r", "refresh", "Refresh", show=True),
         Binding("d", "delete_selected", "Delete", show=True),
     ]
@@ -528,6 +530,14 @@ class Mode7AdminScreen(Screen):
                 return "[red]Lost[/red]"
             return str(value)
 
+        # Tags formatting - show as comma-separated or "-" if empty
+        if key == "tags":
+            if isinstance(value, list):
+                if value:
+                    return ", ".join(str(t) for t in value)
+                return "-"
+            return str(value) if value else "-"
+
         # Truncate long strings
         str_value = str(value)
         max_len = 18
@@ -677,3 +687,29 @@ class Mode7AdminScreen(Screen):
             self._update_stats_display()
         else:
             self.notify("Failed to delete record", severity="error")
+
+    def action_view_detail(self) -> None:
+        """View detail for selected row."""
+        self._open_detail_screen()
+
+    def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
+        """Handle double-click or Enter on a row."""
+        self._open_detail_screen()
+
+    def _open_detail_screen(self) -> None:
+        """Open detail screen for currently selected row."""
+        table = self.query_one("#table", DataTable)
+
+        if table.cursor_row is None or table.cursor_row < 0:
+            self.notify("No row selected", severity="warning")
+            return
+
+        cursor_row = table.cursor_row
+        if cursor_row >= len(table.rows):
+            self.notify("No row selected", severity="warning")
+            return
+
+        row_key = list(table.rows.keys())[cursor_row]
+        record_id = int(str(row_key.value))
+
+        self.app.push_screen(Mode7DetailScreen(self.current_table, record_id))

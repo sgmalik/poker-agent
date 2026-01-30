@@ -139,6 +139,7 @@ uv run python -m src.tui.app
 | **4. Session Tracker** | Log sessions and track bankroll with graphs |
 | **5. Hand History** | Store, tag, and analyze your hands |
 | **6. AI Agent Coach** | Chat with an AI coach that uses all tools |
+| **7. Admin Dashboard** | View and manage raw database tables |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -155,6 +156,7 @@ uv run python -m src.tui.app
 - [x] Mode 4: Session Tracker (bankroll graphs, stats dashboard)
 - [x] Mode 5: Hand History Manager (tagging, search, pattern analysis)
 - [x] Mode 6: AI Agent Coach (LangChain integration, 17 tools)
+- [x] Mode 7: Admin Dashboard (view/manage database tables)
 - [x] Centralized configuration (`src/config.py`)
 - [x] 415+ tests passing
 
@@ -170,7 +172,7 @@ uv run python -m src.tui.app
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Core TUI application with all 6 modes
+- [x] Core TUI application with all 7 modes
 - [x] AI coaching integration with LangChain
 - [x] Quiz question expansion (216 situational scenarios)
 - [x] Agent tools for quiz creation and leak identification
@@ -230,7 +232,7 @@ Project Link: [https://github.com/sgmalik/poker-agent](https://github.com/sgmali
 <!-- PROJECT INFO -->
 ## Project Info
 
-**Current Phase**: Phase 1 Complete - All 6 Modes + Quiz Expansion
+**Current Phase**: Phase 1 Complete - All 7 Modes + Quiz Expansion
 **Last Updated**: January 30, 2026
 **Version**: 0.2.0-alpha
 

@@ -256,6 +256,8 @@ def parse_range(range_notation: str) -> dict:
 - 216 questions across 7 topics (preflop, ranges, pot_odds, hand_strength, position, postflop, game_theory) ✅
 - Focus on situational scenarios that require thinking (intermediate/advanced/elite difficulty weighted)
 - Performance tracking with SQLite persistence ✅
+- Saves quiz attempts and sessions to database (including partial quizzes) ✅
+- `questions_attempted` tracking for accurate stats on early quit ✅
 - Study leak identification (find weak areas) ✅
 - Results screen with incorrect answer review ✅
 
@@ -303,9 +305,12 @@ quiz_attempts (
 
 quiz_sessions (
     id, user_id, topic, difficulty,
-    total_questions, correct_answers,
-    time_total, created_at
+    total_questions, questions_attempted,
+    correct_answers, time_total, created_at
 )
+
+-- Note: Accuracy is calculated as (correct_answers / questions_attempted) * 100
+-- This allows proper tracking when user quits a quiz early
 ```
 
 **Service Functions** (for persistence):
@@ -640,6 +645,7 @@ while True:
 
 **Features**:
 - View all 4 database tables: Quiz Attempts, Quiz Sessions, Poker Sessions, Hand Histories ✅
+- All columns viewable for every table (including Scenario, Notes, Hand Text, etc.) ✅
 - Dynamic filter dropdowns based on selected table ✅
 - Table record counts in summary panel ✅
 - Delete records by ID ✅

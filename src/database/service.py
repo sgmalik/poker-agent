@@ -1290,6 +1290,93 @@ def get_quiz_sessions_list(
         db.close()
 
 
+def get_quiz_attempt_by_id(
+    attempt_id: int,
+    user_id: int = 1,
+) -> Optional[Dict[str, Any]]:
+    """
+    Get a single quiz attempt by ID.
+
+    Args:
+        attempt_id: Quiz attempt ID
+        user_id: User ID (for verification)
+
+    Returns:
+        Quiz attempt as dict, or None if not found
+    """
+    db = SessionLocal()
+    try:
+        a = (
+            db.query(QuizAttempt)
+            .filter(
+                QuizAttempt.id == attempt_id,
+                QuizAttempt.user_id == user_id,
+            )
+            .first()
+        )
+
+        if not a:
+            return None
+
+        return {
+            "id": a.id,
+            "question_id": a.question_id,
+            "scenario": a.scenario,
+            "user_answer": a.user_answer,
+            "correct_answer": a.correct_answer,
+            "is_correct": a.is_correct,
+            "time_taken": a.time_taken,
+            "difficulty": a.difficulty,
+            "topic": a.topic,
+            "created_at": a.created_at.isoformat() if a.created_at else None,
+        }
+    finally:
+        db.close()
+
+
+def get_quiz_session_by_id(
+    session_id: int,
+    user_id: int = 1,
+) -> Optional[Dict[str, Any]]:
+    """
+    Get a single quiz session by ID.
+
+    Args:
+        session_id: Quiz session ID
+        user_id: User ID (for verification)
+
+    Returns:
+        Quiz session as dict, or None if not found
+    """
+    db = SessionLocal()
+    try:
+        s = (
+            db.query(QuizSession)
+            .filter(
+                QuizSession.id == session_id,
+                QuizSession.user_id == user_id,
+            )
+            .first()
+        )
+
+        if not s:
+            return None
+
+        return {
+            "id": s.id,
+            "topic": s.topic or "All",
+            "difficulty": s.difficulty or "All",
+            "total_questions": s.total_questions,
+            "questions_attempted": s.questions_attempted,
+            "correct_answers": s.correct_answers,
+            "percentage": s.percentage,
+            "time_total": s.time_total,
+            "created_at": s.created_at.isoformat() if s.created_at else None,
+        }
+    finally:
+        db.close()
+
+
 def delete_quiz_attempt(attempt_id: int, user_id: int = 1) -> bool:
     """
     Delete a quiz attempt by ID.
