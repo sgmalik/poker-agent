@@ -317,15 +317,23 @@ def get_recent_sessions(user_id: int, limit: int = 10) -> list
 def get_question_performance(user_id: int, question_id: str = None) -> dict
 ```
 
-**Tool Signatures** (for Agent - pending):
+**Tool Signatures** (for Agent):
 ```python
 @tool
-def get_quiz_stats(user_id: int, topic: str = None) -> dict:
+def get_quiz_performance(topic: str = None, days: int = 30) -> dict:
     """Get quiz performance statistics."""
 
 @tool
-def identify_study_leaks(user_id: int) -> list:
+def find_study_leaks(min_attempts: int = 5, threshold: float = 60.0) -> list:
     """Analyze quiz history to identify knowledge gaps."""
+
+@tool
+def add_quiz_question(topic: str, difficulty: str, question_type: str, ...) -> dict:
+    """Add a new quiz question to the question bank."""
+
+@tool
+def get_quiz_bank_stats() -> dict:
+    """Get statistics about current quiz bank coverage."""
 ```
 
 ---
@@ -337,6 +345,7 @@ def identify_study_leaks(user_id: int) -> list:
 **TUI Interface**:
 - Session entry form with validation ✅
 - Session history table with filtering/sorting ✅
+- Session detail view on row click ✅
 - Stats dashboard with graphs and charts ✅
 - Bankroll progression visualization ✅
 - Menu screen with quick stats ✅
@@ -349,11 +358,13 @@ def identify_study_leaks(user_id: int) -> list:
 - Streak tracking (current and longest win/loss streaks) ✅
 - Bankroll health analysis with recommendations ✅
 - Session filtering by date range and stake level ✅
+- "All Stakes" as default filter ✅
+- Notes column in session history table ✅
 - Beautiful tables for session history ✅
 - All-time view with `days=0` parameter ✅
 
 **Core Classes**: `PokerSession` (model), session service functions
-**TUI Screens**: `Mode4MenuScreen`, `Mode4EntryScreen`, `Mode4HistoryScreen`, `Mode4StatsScreen`
+**TUI Screens**: `Mode4MenuScreen`, `Mode4EntryScreen`, `Mode4HistoryScreen`, `Mode4StatsScreen`, `Mode4DetailScreen`
 **Core Logic**: `session_tracker.py` (variance, drawdown, health analysis, streaks, plotext graphs with `uncolorize()` for Textual compatibility)
 **Tests**: `test_session_service.py`, `test_session_tracker.py` (isolated with `TEST_USER_ID=99999` to preserve user data)
 
@@ -419,7 +430,8 @@ def get_bankroll_health(user_id: int) -> dict:
 **TUI Interface**:
 - Hand entry form with validation ✅
 - Searchable hand library with filters (tags, date, position, result) ✅
-- Hand detail view with full breakdown ✅
+- Hand history table with Stake and Notes columns ✅
+- Hand detail view with full breakdown (all fields visible) ✅
 - Tagging interface (23 predefined tags) ✅
 - Pattern analysis with insights ✅
 
@@ -428,6 +440,7 @@ def get_bankroll_health(user_id: int) -> dict:
 - Tagging system (23 predefined tags: bluff, value, mistake, hero_call, etc.) ✅
 - Search and filter by position, result, tags, date ✅
 - Display hands with formatting ✅
+- Click-to-view detail screen showing all hand data ✅
 - Pattern analysis with insights ✅
 - Win rate by position and tag ✅
 - Bluff success rate tracking ✅
@@ -704,6 +717,7 @@ CREATE INDEX idx_hands_tags ON hand_histories(tags);
 ```
 poker-agent/
 ├── src/
+│   ├── config.py               # Centralized configuration (API keys, paths, DB URL)
 │   ├── core/                    # Core poker engine
 │   │   ├── __init__.py
 │   │   ├── hand_evaluator.py   # Hand eval + equity (treys)
