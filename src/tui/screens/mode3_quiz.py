@@ -8,6 +8,8 @@ from textual.widgets import Header, Footer, Button, Static, ProgressBar
 from textual.binding import Binding
 
 from ...quiz import QuizEngine, format_options, format_question_display
+from ...database.service import save_quiz_session
+from .mode3_results import Mode3ResultsScreen
 
 
 class Mode3QuizScreen(Screen):
@@ -355,10 +357,19 @@ class Mode3QuizScreen(Screen):
             self._display_current_question()
 
     def _show_results(self) -> None:
-        """Show quiz results screen."""
-        from .mode3_results import Mode3ResultsScreen
-
+        """Show quiz results screen and save to database."""
         results = self.engine.get_results()
+
+        # Save session (also saves individual attempts internally)
+        try:
+            save_quiz_session(
+                results=results,
+                topic=self.topic,
+                difficulty=self.difficulty,
+            )
+        except Exception:
+            pass  # Continue to show results even if save fails
+
         self.app.switch_screen(Mode3ResultsScreen(results=results))
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -412,5 +423,17 @@ class Mode3QuizScreen(Screen):
             self._next_question()
 
     def action_quit_quiz(self) -> None:
-        """Quit quiz and return to setup."""
+        """Quit quiz and return to setup, saving any progress."""
+        results = self.engine.get_results()
+        if results.get("answers"):
+            # Save session (also saves individual attempts internally)
+            try:
+                save_quiz_session(
+                    results=results,
+                    topic=self.topic,
+                    difficulty=self.difficulty,
+                )
+            except Exception:
+                pass
+
         self.app.pop_screen()

@@ -11,6 +11,7 @@ from .screens import (
     Mode4MenuScreen,
     Mode5MenuScreen,
     Mode6ChatScreen,
+    Mode7AdminScreen,
 )
 
 
@@ -30,6 +31,7 @@ class WelcomeScreen(Static):
         yield Button("Session Tracker", id="mode_4", variant="default")
         yield Button("Hand History Manager", id="mode_5", variant="default")
         yield Button("AI Agent Coach", id="mode_6", variant="success")
+        yield Button("Admin Dashboard", id="mode_7", variant="warning")
         yield Button("Quit", id="quit", variant="error")
 
 
@@ -79,6 +81,7 @@ class PokerCoachApp(App):
         Binding("4", "mode_4", "Sessions", show=True),
         Binding("5", "mode_5", "Hands", show=True),
         Binding("6", "mode_6", "Agent", show=True),
+        Binding("7", "mode_7", "Admin", show=True),
     ]
 
     TITLE = "Poker Coach"
@@ -108,6 +111,8 @@ class PokerCoachApp(App):
             self.action_mode_5()
         elif button_id == "mode_6":
             self.action_mode_6()
+        elif button_id == "mode_7":
+            self.action_mode_7()
 
     def action_mode_1(self) -> None:
         """Open Mode 1: Hand Evaluator & Spot Analyzer."""
@@ -136,6 +141,10 @@ class PokerCoachApp(App):
     def action_mode_6(self) -> None:
         """Open Mode 6: AI Agent Coach."""
         self.push_screen(Mode6ChatScreen())
+
+    def action_mode_7(self) -> None:
+        """Open Mode 7: Admin Dashboard."""
+        self.push_screen(Mode7AdminScreen())
 
 
 def run_app():
