@@ -134,7 +134,7 @@ uv run python -m src.tui.app
 | Mode | Description |
 |------|-------------|
 | **1. Hand Evaluator** | Analyze hand strength, equity, pot odds, EV, and get recommendations |
-| **2. Range Tools** | Explore GTO preflop ranges with visual 13x13 matrix |
+| **2. Range Tools** | Explore GTO preflop ranges (open, 3-bet, call) with visual 13x13 matrix |
 | **3. Quiz System** | Test your knowledge with 216 scenario-based questions |
 | **4. Session Tracker** | Log sessions and track bankroll with graphs |
 | **5. Hand History** | Store, tag, and analyze your hands |
@@ -151,7 +151,7 @@ uv run python -m src.tui.app
 ### Phase 1: TUI Application (Complete)
 - [x] Core poker engine (hand evaluation, equity, outs, pot odds)
 - [x] Mode 1: Hand Evaluator & Spot Analyzer
-- [x] Mode 2: Range Tools (GTO charts, 13x13 matrix visualization)
+- [x] Mode 2: Range Tools (GTO open/3bet/call ranges for all positions, 13x13 matrix)
 - [x] Mode 3: Quiz System (216 questions, 7 topics, database persistence)
 - [x] Mode 4: Session Tracker (bankroll graphs, stats dashboard)
 - [x] Mode 5: Hand History Manager (tagging, search, pattern analysis)
@@ -233,7 +233,7 @@ Project Link: [https://github.com/sgmalik/poker-agent](https://github.com/sgmali
 ## Project Info
 
 **Current Phase**: Phase 1 Complete - All 7 Modes + Quiz Expansion
-**Last Updated**: January 30, 2026
+**Last Updated**: February 3, 2026
 **Version**: 0.2.0-alpha
 
 

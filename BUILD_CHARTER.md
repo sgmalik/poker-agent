@@ -1,7 +1,7 @@
 # Poker Coach Agent - Build Charter
 
-> **Version**: 2.2
-> **Last Updated**: 2026-01-30
+> **Version**: 2.3
+> **Last Updated**: 2026-02-03
 > **Status**: Phase 1 Complete - All 7 Modes Implemented + Quiz Expansion
 
 ## Project Vision
@@ -193,7 +193,17 @@ def analyze_spot(
 - 9-handed GTO preflop ranges for 1/2 and 1/3 cash games ✅
 - Open ranges for all 9 positions ✅
 - 3-bet ranges for all positions vs earlier positions ✅
-- BB call ranges vs each position (no overlap with 3-bet) ✅
+- **Call ranges for all positions vs earlier opens** ✅ (NEW in v2.0)
+  - UTG+1 call vs UTG
+  - MP call vs UTG, UTG+1
+  - LJ call vs UTG, UTG+1, MP
+  - HJ call vs UTG through LJ
+  - CO call vs UTG through HJ
+  - BTN call vs UTG through CO (widest - guaranteed position)
+  - SB call vs UTG through BTN (tighter due to OOP)
+  - BB call vs all positions (unchanged)
+- Call ranges based on GTO principles: position advantage, squeeze risk, hand playability ✅
+- No overlap between call and 3-bet ranges ✅
 - 13×13 hand matrix with colors (Red=Pairs, Green=Suited, Blue=Offsuit) ✅
 - Bright highlighting for in-range, faded for not-in-range ✅
 - Range parser (QQ+, AKs, 98s+, QQ-88, A5s-A2s) ✅
@@ -201,7 +211,7 @@ def analyze_spot(
 
 **Core Classes**: `RangeParser`, `GTOCharts`
 **TUI Screens**: `Mode2InputScreen`, `Mode2MatrixScreen`
-**Data**: `data/gto_ranges.json`
+**Data**: `data/gto_ranges.json` (v2.0 with full call ranges)
 **Tests**: `test_range_parser.py`, `test_gto_charts.py`
 
 **Pending Enhancement**:

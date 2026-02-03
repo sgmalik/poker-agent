@@ -487,6 +487,26 @@ def count_overcard_outs(self, hero_ranks, board_ranks) -> Dict[str, Any]:
 - `range_parser` - Range notation parsing
 - `config` - GTO_RANGES_FILE path
 
+**Range Data (v2.0):**
+The GTO ranges file includes comprehensive preflop ranges:
+- **Open ranges** for all 9 positions
+- **3-bet ranges** for all positions vs earlier opens
+- **Call ranges** for all positions vs earlier opens (NEW in v2.0):
+  - UTG+1 call vs UTG
+  - MP call vs UTG, UTG+1
+  - LJ call vs UTG, UTG+1, MP
+  - HJ call vs UTG through LJ
+  - CO call vs UTG through HJ
+  - BTN call vs UTG through CO (widest due to position advantage)
+  - SB call vs UTG through BTN (tighter due to OOP)
+  - BB call vs all positions
+
+**GTO Call Range Principles:**
+- Position advantage: Later positions can flat wider
+- Squeeze risk: EP positions have tighter call ranges
+- Hand selection: Pairs (set mining), suited connectors, suited aces
+- No overlap: Call ranges exclude hands in 3-bet ranges
+
 ### Class: GTOCharts
 
 #### Constructor
@@ -527,7 +547,16 @@ def get_actions(self, position: str) -> List[str]:
         position: Position name (e.g., "UTG", "BTN")
 
     Returns:
-        List of action names (e.g., ["open"], ["call_vs_BTN", "3bet_vs_BTN"])
+        List of action names including:
+        - "open" - Opening range for all positions
+        - "3bet_vs_X" - 3-bet range vs position X
+        - "call_vs_X" - Call range vs position X (v2.0)
+
+    Example actions by position:
+        - UTG: ["open"]
+        - MP: ["open", "3bet_vs_UTG", "3bet_vs_UTG+1", "call_vs_UTG", "call_vs_UTG+1"]
+        - BTN: ["open", "3bet_vs_*", "call_vs_*"] (all earlier positions)
+        - BB: ["3bet_vs_*", "call_vs_*"] (no open - acts last preflop)
     """
 ```
 
